@@ -28,5 +28,7 @@ export interface IAuthState {
     user: IUser | null;
     accessToken: string | null;
     loading: boolean;
-    error: string | null;
+    error: IAuthError;
 }
+
+export type IAuthError = string | string[] | null;

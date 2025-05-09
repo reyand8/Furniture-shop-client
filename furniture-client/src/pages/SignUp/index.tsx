@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -16,18 +16,29 @@ import {
     TextFieldBox
 } from '../../styles/Auth.styles';
 import theme from '../../assets/theme';
-import { IRegister } from '../../features/types/user.interface';
-import { register } from '../../features/slice/user/userSlice';
+import { IAuthError, IRegister } from '../../features/types/user.interface';
+import { registerRequest, selectUser } from '../../features/slice/user/userSlice';
 import { AppDispatch } from '../../features/store';
 import { handleAuthError } from '../../common/utils/errorHandler/authErrorHandler';
 import { registerSchema } from '../../common/utils/validation/authValidation';
-import AuthFormInput from "../../components/auth-form-input";
+import AuthFormInput from '../../components/auth-form-input';
 
 
 const SignUp: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
-    const [submitError, setSubmitError] = useState<string | null>(null);
+    const { error, accessToken } = useSelector(selectUser);
+    const [submitError, setSubmitError] = useState<IAuthError>(null);
+
+    useEffect((): void => {
+        if (error) {
+            handleAuthError(error, setSubmitError);
+            return;
+        }
+        if (accessToken) {
+            navigate('/profile');
+        }
+    }, [error, accessToken, navigate]);
 
     const {
         register: formRegister,
@@ -37,14 +48,9 @@ const SignUp: React.FC = () => {
         resolver: yupResolver(registerSchema),
     });
 
-    const onSubmit = async (data: IRegister): Promise<void> => {
+    const onSubmit = (data: IRegister): void => {
         setSubmitError(null);
-        try {
-            await dispatch(register(data)).unwrap();
-            navigate('/profile');
-        } catch (err: any) {
-            handleAuthError(err, setSubmitError);
-        }
+        dispatch(registerRequest(data));
     };
 
     return (
