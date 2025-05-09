@@ -10,4 +10,6 @@ export const VALIDATION_MESSAGES = {
     PASSWORD_TOO_SHORT: 'Password must be at least 6 characters long.',
     PASSWORD_TOO_LONG: 'Password can not be longer than 30 characters.',
     EMAIL_INVALID: 'Please provide a valid email address.',
+    FIRST_NAME_INVALID: 'First name can only contain letters and hyphens.',
+    LAST_NAME_INVALID: 'Last name can only contain letters and hyphens.',
 };
