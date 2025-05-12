@@ -17,7 +17,7 @@ import {
 } from '../../styles/Auth.styles';
 import theme from '../../assets/theme';
 import { IAuthError, IRegister } from '../../types/authUser.interface';
-import { registerRequest, selectUser } from '../../store/slice/authUser/authUserSlice';
+import { registerRequest, selectAuthUser } from '../../store/slice/authUser/authUserSlice';
 import { AppDispatch } from '../../store/store';
 import { handleAuthError } from '../../common/utils/errorHandler/authErrorHandler';
 import { registerSchema } from '../../common/utils/validation/authValidation';
@@ -27,7 +27,7 @@ import AuthFormInput from '../../components/auth-form-input';
 const SignUp: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
-    const { error, accessToken } = useSelector(selectUser);
+    const { error, accessToken } = useSelector(selectAuthUser);
     const [submitError, setSubmitError] = useState<IAuthError>(null);
 
     useEffect((): void => {

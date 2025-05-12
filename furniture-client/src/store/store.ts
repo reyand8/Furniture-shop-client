@@ -9,7 +9,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
     reducer: {
-        user: userReducer,
+        authUser: userReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware),

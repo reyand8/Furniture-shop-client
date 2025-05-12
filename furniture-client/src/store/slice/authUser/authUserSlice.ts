@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import {
     IAuthResponse,
-    IAuthState,
+    IAuthState, ILogin,
     IRegister,
 } from '../../../types/authUser.interface';
 import { RootState } from '../../store';
@@ -30,6 +30,19 @@ const authUserSlice = createSlice({
             state.loading = false;
             state.error = action.payload || 'Unknown error';
         },
+
+        loginRequest(state, _action: PayloadAction<ILogin>): void {
+            state.loading = true;
+            state.error = null;
+        },
+        loginSuccess(state, action: PayloadAction<IAuthResponse>): void {
+            state.loading = false;
+            state.accessToken = action.payload.access_token;
+        },
+        loginFailure(state, action: PayloadAction<string>): void {
+            state.loading = false;
+            state.error = action.payload || 'Unknown error';
+        },
         logout(state): void {
             state.accessToken = null;
             localStorage.removeItem('accessToken');
@@ -37,7 +50,10 @@ const authUserSlice = createSlice({
     },
 });
 
-export const { registerRequest, registerSuccess, registerFailure, logout } = authUserSlice.actions;
+export const {
+    registerRequest, registerSuccess, registerFailure,
+    loginRequest, loginSuccess, loginFailure, logout
+} = authUserSlice.actions;
 
-export const selectUser = (state: RootState) => state.user;
+export const selectAuthUser = (state: RootState): IAuthState => state.authUser;
 export default authUserSlice.reducer;
