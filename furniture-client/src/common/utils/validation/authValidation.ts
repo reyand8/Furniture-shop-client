@@ -36,3 +36,18 @@ export const registerSchema = yup.object().shape({
         .min(6, PASSWORD_TOO_SHORT)
         .max(30, PASSWORD_TOO_LONG),
 });
+
+export const loginSchema = yup.object().shape({
+    email: yup
+        .string()
+        .trim()
+        .required(EMAIL_REQUIRED)
+        .email(EMAIL_INVALID)
+        .max(60, EMAIL_TOO_LONG),
+    password: yup
+        .string()
+        .trim()
+        .required(PASSWORD_REQUIRED)
+        .min(6, PASSWORD_TOO_SHORT)
+        .max(30, PASSWORD_TOO_LONG),
+});
