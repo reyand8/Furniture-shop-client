@@ -1,13 +1,13 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { PayloadAction } from '@reduxjs/toolkit';
 
-import { registerUser } from '../../api/userApi';
-import { IRegister, IAuthResponse } from '../../types/user.interface';
+import { registerUser } from '../../../services/api/authUserApi';
+import { IRegister, IAuthResponse } from '../../../types/authUser.interface';
 import {
     registerRequest,
     registerSuccess,
     registerFailure,
-} from './userSlice';
+} from './authUserSlice';
 
 
 function* handleRegister(action: PayloadAction<IRegister>) {
@@ -20,6 +20,6 @@ function* handleRegister(action: PayloadAction<IRegister>) {
     }
 }
 
-export function* userSaga() {
+export function* authUserSaga() {
     yield takeLatest(registerRequest.type, handleRegister);
 }

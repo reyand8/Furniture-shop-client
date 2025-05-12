@@ -5,7 +5,7 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 
 import theme from './assets/theme';
 import AppRoutes from './routes';
-import { store } from './features/store';
+import { store } from './store/store';
 
 
 function App() {

@@ -4,19 +4,18 @@ import {
     IAuthResponse,
     IAuthState,
     IRegister,
-} from '../../types/user.interface';
+} from '../../../types/authUser.interface';
 import { RootState } from '../../store';
 
 
 const initialState: IAuthState = {
-    user: null,
     accessToken: localStorage.getItem('accessToken'),
     loading: false,
     error: null,
 };
 
-const userSlice = createSlice({
-    name: 'user',
+const authUserSlice = createSlice({
+    name: 'authUser',
     initialState,
     reducers: {
         registerRequest(state, _action: PayloadAction<IRegister>) {
@@ -25,22 +24,20 @@ const userSlice = createSlice({
         },
         registerSuccess(state, action: PayloadAction<IAuthResponse>) {
             state.loading = false;
-            state.user = action.payload.user;
             state.accessToken = action.payload.access_token;
         },
         registerFailure(state, action: PayloadAction<string>) {
             state.loading = false;
             state.error = action.payload || 'Unknown error';
         },
-        logout(state) {
-            state.user = null;
+        logout(state): void {
             state.accessToken = null;
             localStorage.removeItem('accessToken');
         },
     },
 });
 
-export const { registerRequest, registerSuccess, registerFailure, logout } = userSlice.actions;
+export const { registerRequest, registerSuccess, registerFailure, logout } = authUserSlice.actions;
 
 export const selectUser = (state: RootState) => state.user;
-export default userSlice.reducer;
+export default authUserSlice.reducer;

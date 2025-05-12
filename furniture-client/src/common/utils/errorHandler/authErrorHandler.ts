@@ -1,4 +1,4 @@
-import { IAuthError } from '../../../features/types/user.interface';
+import { IAuthError } from '../../../types/authUser.interface';
 
 /**
  * Handles authentication-related errors from API responses.

@@ -16,9 +16,9 @@ import {
     TextFieldBox
 } from '../../styles/Auth.styles';
 import theme from '../../assets/theme';
-import { IAuthError, IRegister } from '../../features/types/user.interface';
-import { registerRequest, selectUser } from '../../features/slice/user/userSlice';
-import { AppDispatch } from '../../features/store';
+import { IAuthError, IRegister } from '../../types/authUser.interface';
+import { registerRequest, selectUser } from '../../store/slice/authUser/authUserSlice';
+import { AppDispatch } from '../../store/store';
 import { handleAuthError } from '../../common/utils/errorHandler/authErrorHandler';
 import { registerSchema } from '../../common/utils/validation/authValidation';
 import AuthFormInput from '../../components/auth-form-input';
