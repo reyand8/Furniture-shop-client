@@ -16,19 +16,21 @@ import {
     TextFieldBox
 } from '../../styles/Auth.styles';
 import theme from '../../assets/theme';
-import { IAuthError, IRegister } from '../../types/authUser.interface';
-import { registerRequest, selectAuthUser } from '../../store/slice/authUser/authUserSlice';
+import { IRegister } from '../../types/authUser.interface';
+import { registerRequest, selectAuthUser } from '../../store/slice/authUser/authUser.slice';
 import { AppDispatch } from '../../store/store';
 import { handleAuthError } from '../../common/utils/errorHandler/authErrorHandler';
 import { registerSchema } from '../../common/utils/validation/authValidation';
-import AuthFormInput from '../../components/auth-form-input';
+import UserFormInput from '../../components/user-form-input';
+import { IApiError } from '../../types/error.interface';
+import { PATHS } from '../../routes/paths';
 
 
 const SignUp: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const { error, accessToken } = useSelector(selectAuthUser);
-    const [submitError, setSubmitError] = useState<IAuthError>(null);
+    const [submitError, setSubmitError] = useState<IApiError>(null);
 
     useEffect((): void => {
         if (error) {
@@ -36,7 +38,7 @@ const SignUp: React.FC = () => {
             return;
         }
         if (accessToken) {
-            navigate('/profile');
+            navigate(PATHS.PROFILE);
         }
     }, [error, accessToken, navigate]);
 
@@ -58,25 +60,25 @@ const SignUp: React.FC = () => {
             <AuthPaper elevation={10}>
                 <AuthTitle>Sign Up</AuthTitle>
                 <TextFieldBox onSubmit={handleSubmit(onSubmit)}>
-                    <AuthFormInput
+                    <UserFormInput
                         label="First Name"
                         type="text"
                         registration={formRegister('firstName')}
                         error={errors.firstName}
                     />
-                    <AuthFormInput
+                    <UserFormInput
                         label="Last Name"
                         type="text"
                         registration={formRegister('lastName')}
                         error={errors.lastName}
                     />
-                    <AuthFormInput
+                    <UserFormInput
                         label="Email"
                         type="email"
                         registration={formRegister('email')}
                         error={errors.email}
                     />
-                    <AuthFormInput
+                    <UserFormInput
                         label="Password"
                         type="password"
                         registration={formRegister('password')}

@@ -1,5 +1,5 @@
-import { IAuthResponse, ILogin, IRegister } from '../../types/authUser.interface';
-import axiosInstance from '../instance/axiosInstance';
+import { IAuthResponse, ILogin, IRegister } from '../../../types/authUser.interface';
+import axiosInstance from '../../instance/axiosInstance';
 
 
 export const registerUser = async (data: IRegister): Promise<IAuthResponse> => {

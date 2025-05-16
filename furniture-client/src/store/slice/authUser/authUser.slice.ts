@@ -6,7 +6,9 @@ import {
     IRegister,
 } from '../../../types/authUser.interface';
 import { RootState } from '../../store';
+import { SERVER_RESPONSE_ERROR_MESSAGES } from '../../../common/utils/messages/messages';
 
+const { UNKNOWN_ERROR } = SERVER_RESPONSE_ERROR_MESSAGES;
 
 const initialState: IAuthState = {
     accessToken: localStorage.getItem('accessToken'),
@@ -28,7 +30,7 @@ const authUserSlice = createSlice({
         },
         registerFailure(state, action: PayloadAction<string>) {
             state.loading = false;
-            state.error = action.payload || 'Unknown error';
+            state.error = action.payload || UNKNOWN_ERROR;
         },
 
         loginRequest(state, _action: PayloadAction<ILogin>): void {
@@ -41,7 +43,7 @@ const authUserSlice = createSlice({
         },
         loginFailure(state, action: PayloadAction<string>): void {
             state.loading = false;
-            state.error = action.payload || 'Unknown error';
+            state.error = action.payload || UNKNOWN_ERROR;
         },
         logout(state): void {
             state.accessToken = null;

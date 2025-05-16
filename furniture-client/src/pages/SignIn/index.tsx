@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {Link as RouterLink, useNavigate} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import {
     Button, Link, Typography
 } from '@mui/material';
@@ -17,18 +17,19 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import { handleAuthError } from '../../common/utils/errorHandler/authErrorHandler';
 import { loginSchema } from '../../common/utils/validation/authValidation';
-import AuthFormInput from '../../components/auth-form-input';
+import UserFormInput from '../../components/user-form-input';
 import { AppDispatch } from '../../store/store';
-import { IAuthError, ILogin } from '../../types/authUser.interface';
-import { loginRequest, selectAuthUser } from '../../store/slice/authUser/authUserSlice';
+import { ILogin } from '../../types/authUser.interface';
+import { loginRequest, selectAuthUser } from '../../store/slice/authUser/authUser.slice';
+import { IApiError } from '../../types/error.interface';
+import { PATHS } from '../../routes/paths';
 
 
 const SignIn: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const { error, accessToken } = useSelector(selectAuthUser);
-    const [submitError, setSubmitError] = useState<IAuthError>(null);
-
+    const [submitError, setSubmitError] = useState<IApiError>(null);
 
     useEffect((): void => {
         if (error) {
@@ -36,7 +37,7 @@ const SignIn: React.FC = () => {
             return;
         }
         if (accessToken) {
-            navigate('/profile');
+            navigate(PATHS.PROFILE);
         }
     }, [error, accessToken, navigate]);
 
@@ -58,13 +59,13 @@ const SignIn: React.FC = () => {
             <AuthPaper elevation={10}>
                 <AuthTitle>Sign In</AuthTitle>
                 <TextFieldBox onSubmit={handleSubmit(onSubmit)}>
-                    <AuthFormInput
+                    <UserFormInput
                         label="Email"
                         type="email"
                         registration={formLogin('email')}
                         error={errors.email}
                     />
-                    <AuthFormInput
+                    <UserFormInput
                         label="Password"
                         type="password"
                         registration={formLogin('password')}
