@@ -24,6 +24,7 @@ import { registerSchema } from '../../common/utils/validation/authValidation';
 import UserFormInput from '../../components/user-form-input';
 import { IApiError } from '../../types/error.interface';
 import { PATHS } from '../../routes/paths';
+import Header from '../../components/header';
 
 
 const SignUp: React.FC = () => {
@@ -57,6 +58,7 @@ const SignUp: React.FC = () => {
 
     return (
         <AuthBox>
+            <Header />
             <AuthPaper elevation={10}>
                 <AuthTitle>Sign Up</AuthTitle>
                 <TextFieldBox onSubmit={handleSubmit(onSubmit)}>

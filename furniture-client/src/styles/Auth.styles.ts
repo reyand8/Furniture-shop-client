@@ -13,8 +13,6 @@ export const AuthBox = styled(Box)(({ theme }) => ({
     backgroundPosition: 'center',
     width: '100%',
     height: '100vh',
-    display: 'flex',
-    alignItems: 'center',
     [theme.breakpoints.down('lg')]: {
         height: 'auto',
         textAlign: 'center'
@@ -38,7 +36,7 @@ export const AuthPaper = styled(Paper)(() => ({
     padding: 20,
     minHeight: '42vh',
     maxWidth: 360,
-    margin: '0 auto'
+    margin: '120px auto'
 }));
 
 export const AuthTitle = styled(Typography)(({ theme }) => ({
