@@ -34,7 +34,7 @@ const theme = createTheme({
         background: {
             default: '#ffffff',
             container: '#fff',
-            group: '#878686',
+            group: '#989696',
             card: 'rgba(128, 128, 128, 0.8)',
             btnHover: '#f1f0f0',
             footer: 'rgba(35, 37, 40)',

@@ -1,4 +1,7 @@
-import { IAuthError } from '../../../types/authUser.interface';
+import { IApiError } from '../../../types/error.interface';
+import { SERVER_RESPONSE_ERROR_MESSAGES } from "../messages/messages";
+
+const { FAILED } = SERVER_RESPONSE_ERROR_MESSAGES;
 
 /**
  * Handles authentication-related errors from API responses.
@@ -12,15 +15,15 @@ import { IAuthError } from '../../../types/authUser.interface';
  * @param setSubmitError - A function to update the error state (e.g., to show in UI).
  */
 export const handleAuthError = (
-    error: IAuthError,
-    setSubmitError: (message: IAuthError) => void
+    error: IApiError,
+    setSubmitError: (message: IApiError) => void
 ): void => {
     if (Array.isArray(error)) {
-        const allMessages: IAuthError = error.flatMap((item: any): any => item.errors);
+        const allMessages: IApiError = error.flatMap((item: any): any => item.errors);
         setSubmitError(allMessages);
     } else if (typeof error === 'string') {
         setSubmitError(error);
     } else {
-        setSubmitError('Something went wrong');
+        setSubmitError(FAILED);
     }
 };

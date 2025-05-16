@@ -12,4 +12,24 @@ export const VALIDATION_MESSAGES = {
     EMAIL_INVALID: 'Please provide a valid email address.',
     FIRST_NAME_INVALID: 'First name can only contain letters and hyphens.',
     LAST_NAME_INVALID: 'Last name can only contain letters and hyphens.',
+
+    PHONE_REQUIRED: 'Phone is required.',
+    PHONE_INVALID: 'Phone number must be valid and up to 13 digits.',
+    ADDRESS_REQUIRED: 'Address is required.',
+    ADDRESS_TOO_LONG: 'Address must be at most 200 characters.',
+    ZIP_CODE_REQUIRED: 'Zip code is required.',
+    ZIP_CODE_TOO_LONG: 'Zip code must be at most 30 characters.',
+    CITY_REQUIRED: 'City is required.',
+    CITY_TOO_LONG: 'City must be at most 100 characters.',
+    REGION_REQUIRED: 'Region is required.',
+    REGION_TOO_LONG: 'Region must be at most 100 characters.',
+    COUNTRY_REQUIRED: 'Country is required.',
+    COMPANY_NAME_TOO_LONG: 'Company name must be at most 100 characters.',
+    COMPANY_TAX_ID_TOO_LONG: 'Company Tax ID must be at most 40 characters.',
 };
+
+
+export const SERVER_RESPONSE_ERROR_MESSAGES = {
+    FAILED: 'Something went wrong',
+    UNKNOWN_ERROR: 'Unknown error',
+}

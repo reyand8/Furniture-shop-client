@@ -1,3 +1,6 @@
+import { IApiError } from './error.interface';
+
+
 export interface ILogin {
     email: string;
     password: string;
@@ -18,7 +21,5 @@ export interface IAuthResponse {
 export interface IAuthState {
     accessToken: string | null;
     loading: boolean;
-    error: IAuthError;
+    error: IApiError;
 }
-
-export type IAuthError = string | string[] | null;

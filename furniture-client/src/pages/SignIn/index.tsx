@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useForm } from 'react-hook-form';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { yupResolver } from '@hookform/resolvers/yup';
 import {
-    Button,
-    Link,
-    Typography,
+    Button, Link, Typography
 } from '@mui/material';
 
 import {
@@ -16,17 +11,21 @@ import {
     TextFieldBox
 } from '../../styles/Auth.styles';
 import theme from '../../assets/theme';
-import { IRegister } from '../../types/authUser.interface';
-import { registerRequest, selectAuthUser } from '../../store/slice/authUser/authUser.slice';
-import { AppDispatch } from '../../store/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+
 import { handleAuthError } from '../../common/utils/errorHandler/authErrorHandler';
-import { registerSchema } from '../../common/utils/validation/authValidation';
+import { loginSchema } from '../../common/utils/validation/authValidation';
 import UserFormInput from '../../components/user-form-input';
+import { AppDispatch } from '../../store/store';
+import { ILogin } from '../../types/authUser.interface';
+import { loginRequest, selectAuthUser } from '../../store/slice/authUser/authUser.slice';
 import { IApiError } from '../../types/error.interface';
 import { PATHS } from '../../routes/paths';
 
 
-const SignUp: React.FC = () => {
+const SignIn: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const { error, accessToken } = useSelector(selectAuthUser);
@@ -43,45 +42,33 @@ const SignUp: React.FC = () => {
     }, [error, accessToken, navigate]);
 
     const {
-        register: formRegister,
+        register: formLogin,
         handleSubmit,
         formState: { errors },
-    } = useForm<IRegister>({
-        resolver: yupResolver(registerSchema),
+    } = useForm<ILogin>({
+        resolver: yupResolver(loginSchema),
     });
 
-    const onSubmit = (data: IRegister): void => {
+    const onSubmit = (data: ILogin): void => {
         setSubmitError(null);
-        dispatch(registerRequest(data));
+        dispatch(loginRequest(data));
     };
 
     return (
         <AuthBox>
             <AuthPaper elevation={10}>
-                <AuthTitle>Sign Up</AuthTitle>
+                <AuthTitle>Sign In</AuthTitle>
                 <TextFieldBox onSubmit={handleSubmit(onSubmit)}>
-                    <UserFormInput
-                        label="First Name"
-                        type="text"
-                        registration={formRegister('firstName')}
-                        error={errors.firstName}
-                    />
-                    <UserFormInput
-                        label="Last Name"
-                        type="text"
-                        registration={formRegister('lastName')}
-                        error={errors.lastName}
-                    />
                     <UserFormInput
                         label="Email"
                         type="email"
-                        registration={formRegister('email')}
+                        registration={formLogin('email')}
                         error={errors.email}
                     />
                     <UserFormInput
                         label="Password"
                         type="password"
-                        registration={formRegister('password')}
+                        registration={formLogin('password')}
                         error={errors.password}
                     />
                     { submitError && (
@@ -96,12 +83,12 @@ const SignUp: React.FC = () => {
                         sx={{ margin: '14px 0' }}
                         fullWidth
                     >
-                        Sign Up
+                        Sign In
                     </Button>
                 </TextFieldBox>
                 <Typography sx={{ color: theme.palette.text.secondary }}>
-                    <Link component={RouterLink} to="/login">
-                        Already have an account?
+                    <Link component={RouterLink} to="/signup">
+                        Don't have an account? Sign up
                     </Link>
                 </Typography>
             </AuthPaper>
@@ -109,4 +96,5 @@ const SignUp: React.FC = () => {
     );
 };
 
-export default SignUp;
+
+export default SignIn;
