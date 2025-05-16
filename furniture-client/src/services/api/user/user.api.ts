@@ -16,6 +16,5 @@ export const updateProfile = async (data: IUpdateUser): Promise<IUser> => {
 export const deleteProfile = async (): Promise<IUser> => {
     const response =
         await axiosInstance.put<IUser>('/users/me', {isActive: false});
-    console.log(response);
     return response.data;
 };
