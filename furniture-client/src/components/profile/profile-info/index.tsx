@@ -26,9 +26,10 @@ import theme from '../../../assets/theme';
 import ModalConfirmDelete from '../../modal-confirm-delete';
 
 
-const ProfileInfo: React.FC<IProfileInfoProps> = ({user}) => {
+const ProfileInfo: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
+    const { user } = useSelector(selectUser);
     const [submitError, setSubmitError] = useState<IApiError>(null);
     const [modalDeleteConfirm, setModalDeleteConfirm] = useState(false);
     const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
