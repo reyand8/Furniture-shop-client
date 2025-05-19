@@ -29,7 +29,7 @@ export const ProfileMainDataBox = styled(Box)(({ theme }) => ({
     flexDirection: 'row',
     justifyContent: 'center',
     gap: '32px',
-    margin: '100px 40px 140px 40px',
+    margin: theme.spacing(12.5, 5, 17.5, 5),
     [theme.breakpoints.down('md')]: {
         flexWrap: 'wrap',
         justifyContent: 'flex-start',
@@ -59,7 +59,7 @@ export const DeleteProfileBtn = styled(Button)(({ theme }) => ({
 }));
 
 export const ProfileMenuSection = styled(Paper)(({ theme }) => ({
-    backgroundColor: '#fff',
+    backgroundColor: theme.palette.background.default,
     ...theme.typography.body2,
     padding: theme.spacing(1),
     color: theme.palette.text.secondary,
