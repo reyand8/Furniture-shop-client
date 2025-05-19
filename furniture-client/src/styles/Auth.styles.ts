@@ -27,9 +27,6 @@ export const TextFieldBox = styled('form')(({ theme }) => ({
     [theme.breakpoints.up('md')]: {
         maxWidth: '320px',
     },
-    [theme.breakpoints.up('lg')]: {
-        maxWidth: '320px',
-    },
 }));
 
 export const AuthPaper = styled(Paper)(() => ({

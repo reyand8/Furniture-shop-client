@@ -95,7 +95,7 @@ export const ProfileMenuNavItem = styled(Button)<ButtonProps & { to?: string }>(
         transition: 'width 0.4s ease-in-out',
     },
     '&:hover::after': {
-        width: '270px',
+        width: '240px',
     },
     '&:hover': {
         backgroundColor: 'transparent',
