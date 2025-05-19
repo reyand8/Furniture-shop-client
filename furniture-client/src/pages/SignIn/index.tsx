@@ -23,6 +23,7 @@ import { ILogin } from '../../types/authUser.interface';
 import { loginRequest, selectAuthUser } from '../../store/slice/authUser/authUser.slice';
 import { IApiError } from '../../types/error.interface';
 import { PATHS } from '../../routes/paths';
+import Header from '../../components/header';
 
 
 const SignIn: React.FC = () => {
@@ -56,6 +57,7 @@ const SignIn: React.FC = () => {
 
     return (
         <AuthBox>
+            <Header />
             <AuthPaper elevation={10}>
                 <AuthTitle>Sign In</AuthTitle>
                 <TextFieldBox onSubmit={handleSubmit(onSubmit)}>

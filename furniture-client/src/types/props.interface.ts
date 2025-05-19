@@ -7,3 +7,10 @@ export interface IAuthInputProps {
     error?: FieldError;
     placeholder?: string;
 }
+
+export interface IModalConfirmDeleteProps {
+    message: string;
+    setModalConfirm: (confirm: boolean) => void;
+    setModalOpen: (open: boolean) => void;
+
+}

@@ -1,7 +1,44 @@
+import React, {ReactNode} from 'react';
+
+import { IApiError } from './error.interface';
+
+
 export interface IUser {
     id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    role: string;
+    isActive: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface IUpdateUser {
     email: string;
     firstName: string;
     lastName: string;
-    role: string;
 }
+
+export interface IUserState {
+    user: IUser | null;
+    loading: boolean;
+    error: IApiError;
+    updateError: IApiError;
+    updateSuccess: boolean;
+}
+
+export interface IProfileInfoProps {
+    user: IUser | null;
+}
+
+export interface IProfileMenuProps {
+    setSelectedSection: React.Dispatch<React.SetStateAction<ProfileSection>>;
+}
+
+export interface IProfileMenuItems {
+    label: string;
+    icon: ReactNode;
+}
+
+export type ProfileSection = 'Profile' | 'Contact Info' | 'Orders';
