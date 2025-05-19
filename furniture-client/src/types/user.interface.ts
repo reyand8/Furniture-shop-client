@@ -1,4 +1,4 @@
-import React, {ReactNode} from 'react';
+import { ReactNode } from 'react';
 
 import { IApiError } from './error.interface';
 
@@ -32,13 +32,8 @@ export interface IProfileInfoProps {
     user: IUser | null;
 }
 
-export interface IProfileMenuProps {
-    setSelectedSection: React.Dispatch<React.SetStateAction<ProfileSection>>;
-}
-
 export interface IProfileMenuItems {
     label: string;
     icon: ReactNode;
+    path?: string;
 }
-
-export type ProfileSection = 'Profile' | 'Contact Info' | 'Orders';
