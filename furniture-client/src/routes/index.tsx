@@ -4,12 +4,18 @@ import Home from '../pages/Home';
 import Profile from '../pages/Profile';
 import SignUp from '../pages/SignUp';
 import SignIn from '../pages/SignIn';
+import ProfileInfo from '../components/profile/profile-info';
+import ContactInfo from '../components/contact-info';
+import Contact from '../pages/Contact';
+import About from '../pages/About';
 import { PATHS } from './paths';
-import ProfileInfo from "../components/profile/profile-info";
-import ContactInfo from "../components/contact-info";
 
 
-const { PROFILE, SIGN_UP, LOGIN, CONTACT_INFO, ORDERS } = PATHS;
+const {
+    PROFILE, SIGN_UP, LOGIN,
+    CONTACT_INFO, ORDERS, ABOUT,
+    CONTACT
+} = PATHS;
 
 const AppRoutes = () => (
     <Routes>
@@ -21,6 +27,8 @@ const AppRoutes = () => (
         </Route>
         <Route path={SIGN_UP} element={<SignUp />} />
         <Route path={LOGIN} element={<SignIn />} />
+        <Route path={ABOUT} element={<About />} />
+        <Route path={CONTACT} element={<Contact />} />
     </Routes>
 );
 
