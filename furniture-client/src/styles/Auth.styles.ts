@@ -27,9 +27,6 @@ export const TextFieldBox = styled('form')(({ theme }) => ({
     [theme.breakpoints.up('md')]: {
         maxWidth: '320px',
     },
-    [theme.breakpoints.up('lg')]: {
-        maxWidth: '320px',
-    },
 }));
 
 export const AuthPaper = styled(Paper)(() => ({
@@ -47,7 +44,7 @@ export const AuthTitle = styled(Typography)(({ theme }) => ({
     padding: '8px 0 21px 0'
 }));
 
-export const AuthTextField = styled(TextField)(({ theme }) => ({
+export const InputTextField = styled(TextField)(({ theme }) => ({
     marginBottom: '16px',
     '&:hover .MuiOutlinedInput-notchedOutline': {
         borderColor: theme.palette.primary.main,

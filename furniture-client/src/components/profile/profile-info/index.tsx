@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import {Box, Button, Typography} from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -8,7 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import { handleAuthError } from '../../../common/utils/errorHandler/authErrorHandler';
 import { updateProfileSchema } from '../../../common/utils/validation/profileValidation';
-import { IProfileInfoProps, IUpdateUser } from '../../../types/user.interface';
+import { IUpdateUser } from '../../../types/user.interface';
 import { IApiError } from '../../../types/error.interface';
 import { AppDispatch } from '../../../store/store';
 import {
@@ -24,16 +24,19 @@ import {
 } from '../../../styles/Profile.styles';
 import theme from '../../../assets/theme';
 import ModalConfirmDelete from '../../modal-confirm-delete';
+import SubmitError from '../../submit-error';
 
 
-const ProfileInfo: React.FC<IProfileInfoProps> = ({user}) => {
+const ProfileInfo = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
+
+    const { user, updateError, updateSuccess } = useSelector(selectUser);
+
     const [submitError, setSubmitError] = useState<IApiError>(null);
     const [modalDeleteConfirm, setModalDeleteConfirm] = useState(false);
     const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
-    const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false);
-    const { updateError, updateSuccess } = useSelector(selectUser);
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
     useEffect(() => {
         if (updateError) {
@@ -55,15 +58,12 @@ const ProfileInfo: React.FC<IProfileInfoProps> = ({user}) => {
         email: user?.email || ''
     }), [user]);
 
-    const {
-        register: formUpdate,
-        handleSubmit,
-        formState: { errors },
-        reset,
-    } = useForm<IUpdateUser>({
+    const methods = useForm<IUpdateUser>({
         resolver: yupResolver(updateProfileSchema),
         defaultValues,
     });
+
+    const { handleSubmit, reset } = methods;
 
     useEffect((): void => {
         if (user) reset(defaultValues);
@@ -89,47 +89,30 @@ const ProfileInfo: React.FC<IProfileInfoProps> = ({user}) => {
     return (
         <Box>
             <ProfileTitle>Profile</ProfileTitle>
-            <TextFieldBox onSubmit={handleSubmit(onSubmit)}>
-                <ProfileInfoLabel>First Name</ProfileInfoLabel>
-                <UserFormInput
-                    label=""
-                    type="text"
-                    registration={formUpdate('firstName')}
-                    error={errors.firstName}
-                />
-                <ProfileInfoLabel>Last Name</ProfileInfoLabel>
-                <UserFormInput
-                    label=""
-                    type="text"
-                    registration={formUpdate('lastName')}
-                    error={errors.lastName}
-                />
-                <ProfileInfoLabel>Email</ProfileInfoLabel>
-                <UserFormInput
-                    label=""
-                    type="email"
-                    registration={formUpdate('email')}
-                    error={errors.email}
-                />
-                { submitError && (
-                    <Typography color="error" variant="body2">
-                        {submitError}
-                    </Typography>
-                )}
-                { showSuccessMessage && (
-                    <Typography color="success.main" variant="body2">
-                        Your profile was updated successfully.
-                    </Typography>
-                )}
-                <Button
-                    type="submit"
-                    color="primary"
-                    variant="contained"
-                    sx={{ margin: '14px 0 38px 0' }}
-                    fullWidth>
-                    Update
-                </Button>
-            </TextFieldBox>
+            <FormProvider {...methods}>
+                <TextFieldBox onSubmit={handleSubmit(onSubmit)}>
+                    <ProfileInfoLabel>First Name</ProfileInfoLabel>
+                    <UserFormInput name="firstName" label="" />
+                    <ProfileInfoLabel>Last Name</ProfileInfoLabel>
+                    <UserFormInput name="lastName" label="" />
+                    <ProfileInfoLabel>Email</ProfileInfoLabel>
+                    <UserFormInput type="email" name="email" label="" />
+                    {submitError && <SubmitError submitError={submitError} />}
+                    { showSuccessMessage && (
+                        <Typography color="success.main" variant="body2">
+                            Your profile was updated successfully.
+                        </Typography>
+                    )}
+                    <Button
+                        type="submit"
+                        color="primary"
+                        variant="contained"
+                        sx={{ margin: '14px 0 38px 0' }}
+                        fullWidth>
+                        Update
+                    </Button>
+                </TextFieldBox>
+            </FormProvider>
             <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                 <DeleteProfileBtn onClick={handleDeleteClick}>
                     <Typography color={theme.palette.error.dark}>Delete Profile</Typography>

@@ -3,6 +3,7 @@ import createSagaMiddleware from 'redux-saga';
 
 import authUserReducer from './slice/authUser/authUser.slice';
 import userReducer from './slice/user/user.slice';
+import contactInfoReducer from './slice/contactInfo/contactInfo.slice';
 import rootSaga from './rootSaga';
 
 
@@ -12,6 +13,7 @@ export const store = configureStore({
     reducer: {
         authUser: authUserReducer,
         user: userReducer,
+        contactInfo: contactInfoReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware),
