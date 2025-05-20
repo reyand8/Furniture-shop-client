@@ -16,7 +16,7 @@ import { AppDispatch } from '../../../store/store';
 import { contactInfoSchema } from '../../../common/utils/validation/contactInfoValidation';
 import { ContactInfoForm } from '../../../styles/ContactInfo.styles';
 import { IContactInfo } from '../../../types/contactInfo.interface';
-import { contactFields } from '../../../common/commonItems';
+import { contactFieldsFirstColumn, contactFieldsSecondColumn } from '../../../common/commonItems';
 import SubmitError from '../../submit-error';
 
 
@@ -62,12 +62,12 @@ const ContactInfoCreate: React.FC = () => {
             <ContactInfoForm onSubmit={handleSubmit(onSubmit)}>
                 <Box sx={{ display: 'flex', gap: '14px', marginTop: '18px' }}>
                     <Box sx={{ flex: 1 }}>
-                        {contactFields.slice(0, 4).map(({ name, label }) => (
+                        {contactFieldsFirstColumn.map(({ name, label }) => (
                             <UserFormInput key={name} name={name} label={label} />
                         ))}
                     </Box>
                     <Box sx={{ flex: 1 }}>
-                        {contactFields.slice(4).map(({ name, label }) => (
+                        {contactFieldsSecondColumn.map(({ name, label }) => (
                             <UserFormInput key={name} name={name} label={label} />
                         ))}
                     </Box>

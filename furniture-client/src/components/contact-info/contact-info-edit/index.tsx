@@ -19,7 +19,7 @@ import {
 } from '../../../store/slice/contactInfo/contactInfo.slice';
 import { contactInfoSchema } from '../../../common/utils/validation/contactInfoValidation';
 import { IContactInfoEdit } from '../../../types/props.interface';
-import { contactFields } from '../../../common/commonItems';
+import { contactFieldsFirstColumn, contactFieldsSecondColumn } from '../../../common/commonItems';
 import { IApiError } from '../../../types/error.interface';
 import { handleAuthError } from '../../../common/utils/errorHandler/authErrorHandler';
 import SubmitError from '../../submit-error';
@@ -70,8 +70,10 @@ const ContactInfoEdit: React.FC<IContactInfoEdit> = ({ item, modalEditOpen, setM
     }, [item, reset]);
 
     const onSubmit = (data: IUpdateContactInfo): void => {
-        const formFieldNames: string[] = contactFields.map(
-            (field: { name: string, label: string }): string => field.name);
+        const formFieldNames: string[] = [
+            ...contactFieldsFirstColumn.map(field => field.name),
+            ...contactFieldsSecondColumn.map(field => field.name)
+        ];
 
         const filteredData = Object.fromEntries(
             Object.entries(data).filter(
@@ -90,12 +92,12 @@ const ContactInfoEdit: React.FC<IContactInfoEdit> = ({ item, modalEditOpen, setM
                     <TextFieldBox onSubmit={handleSubmit(onSubmit)}>
                         <Box sx={{ display: 'flex', gap: '14px', mt: 2 }}>
                             <Box sx={{ flex: 1 }}>
-                                {contactFields.slice(0, 4).map(({ name, label }) => (
+                                {contactFieldsFirstColumn.map(({ name, label }) => (
                                     <UserFormInput key={name} name={name} label={label} />
                                 ))}
                             </Box>
                             <Box sx={{ flex: 1 }}>
-                                {contactFields.slice(4).map(({ name, label }) => (
+                                {contactFieldsSecondColumn.map(({ name, label }) => (
                                     <UserFormInput key={name} name={name} label={label} />
                                 ))}
                             </Box>
