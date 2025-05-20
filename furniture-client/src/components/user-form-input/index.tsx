@@ -1,21 +1,31 @@
 import React from 'react';
 
-import { AuthTextField } from '../../styles/Auth.styles';
-import { IAuthInputProps } from '../../types/props.interface';
+import { InputTextField } from '../../styles/Auth.styles';
+import {useFormContext} from "react-hook-form";
 
 
-const UserFormInput: React.FC<IAuthInputProps> = ({ label, type, registration, error, placeholder }) => {
+const UserFormInput = ({ name, label, type="text" }
+                       : { name: string; label: string, type?: string }) => {
+
+    const {
+        register,
+        formState: { errors },
+    } = useFormContext();
+
+    const error = errors[name];
+
+
     return (
-        <AuthTextField
-            label={label}
-            placeholder={placeholder || label}
+        <InputTextField
             type={type}
+            label={label}
+            placeholder={label}
             fullWidth
-            {...registration}
+            {...register(name)}
             error={!!error}
-            helperText={error?.message}
+            helperText={error?.message?.toString()}
         />
-    );
+    )
 };
 
 export default UserFormInput;

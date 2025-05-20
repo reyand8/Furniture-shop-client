@@ -86,6 +86,7 @@ const ContactInfoItem: React.FC<IContactInfoProps> = ({ item }) => {
             {isEditModalOpen && (
                 <ContactInfoEdit
                     item={item}
+                    modalEditOpen={isEditModalOpen}
                     setModalEditOpen={setIsEditModalOpen}
                 />
             )}

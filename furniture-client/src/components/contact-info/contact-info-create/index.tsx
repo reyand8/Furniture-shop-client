@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import {FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, Typography } from '@mui/material';
@@ -16,6 +16,8 @@ import { AppDispatch } from '../../../store/store';
 import { contactInfoSchema } from '../../../common/utils/validation/contactInfoValidation';
 import { ContactInfoForm } from '../../../styles/ContactInfo.styles';
 import { IContactInfo } from '../../../types/contactInfo.interface';
+import { contactFields } from '../../../common/commonItems';
+import SubmitError from '../../submit-error';
 
 
 const ContactInfoCreate: React.FC = () => {
@@ -25,18 +27,15 @@ const ContactInfoCreate: React.FC = () => {
 
     const { error, success } = useSelector(selectContactInfo);
 
-    const {
-        register: createContactInfo,
-        handleSubmit,
-        formState: { errors },
-        reset,
-    } = useForm({
+    const methods = useForm({
         resolver: yupResolver(contactInfoSchema),
         defaultValues: {
             companyName: null,
-            companyTaxId: null
-        }
+            companyTaxId: null,
+        },
     });
+
+    const { handleSubmit, reset } = methods;
 
     useEffect((): void => {
         if (error) {
@@ -59,66 +58,21 @@ const ContactInfoCreate: React.FC = () => {
     };
 
     return (
+        <FormProvider {...methods}>
             <ContactInfoForm onSubmit={handleSubmit(onSubmit)}>
-                <Box sx={{ display: 'flex', gap:'14px', marginTop: '18px' }}>
-                    <Box>
-                        <UserFormInput
-                            label={'Phone'}
-                            type="text"
-                            registration={createContactInfo('phone')}
-                            error={errors.phone}
-                        />
-                        <UserFormInput
-                            label={'Address'}
-                            type="text"
-                            registration={createContactInfo('address')}
-                            error={errors.address}
-                        />
-                        <UserFormInput
-                            label={'Zip Code'}
-                            type="text"
-                            registration={createContactInfo('zipCode')}
-                            error={errors.zipCode}
-                        />
-                        <UserFormInput
-                            label={'City'}
-                            type="text"
-                            registration={createContactInfo('city')}
-                            error={errors.city}
-                        />
+                <Box sx={{ display: 'flex', gap: '14px', marginTop: '18px' }}>
+                    <Box sx={{ flex: 1 }}>
+                        {contactFields.slice(0, 4).map(({ name, label }) => (
+                            <UserFormInput key={name} name={name} label={label} />
+                        ))}
                     </Box>
-                    <Box>
-                        <UserFormInput
-                            label={'Region'}
-                            type="text"
-                            registration={createContactInfo('region')}
-                            error={errors.region}
-                        />
-                        <UserFormInput
-                            label={'Country'}
-                            type="text"
-                            registration={createContactInfo('country')}
-                            error={errors.country}
-                        />
-                        <UserFormInput
-                            label={'Company Name'}
-                            type="text"
-                            registration={createContactInfo('companyName')}
-                            error={errors.companyName}
-                        />
-                        <UserFormInput
-                            label={'Company Tax Id'}
-                            type="text"
-                            registration={createContactInfo('companyTaxId')}
-                            error={errors.companyTaxId}
-                        />
+                    <Box sx={{ flex: 1 }}>
+                        {contactFields.slice(4).map(({ name, label }) => (
+                            <UserFormInput key={name} name={name} label={label} />
+                        ))}
                     </Box>
                 </Box>
-                { submitError && (
-                    <Typography color="error" variant="body2">
-                        {submitError}
-                    </Typography>
-                )}
+                {submitError && <SubmitError submitError={submitError} />}
                 {showSuccessMessage && (
                     <Typography color="success.main" variant="body2">
                         Contact Info was successfully created
@@ -134,6 +88,7 @@ const ContactInfoCreate: React.FC = () => {
                     Add Contact Info
                 </Button>
             </ContactInfoForm>
+        </FormProvider>
     )
 }
 

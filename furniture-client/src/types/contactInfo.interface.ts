@@ -46,5 +46,7 @@ export interface IContactInfoState {
     loading: boolean;
     error: string | null;
     deleteSuccess: boolean;
+    updateSuccess: boolean;
+    updateError: string | null;
     success: boolean;
 }

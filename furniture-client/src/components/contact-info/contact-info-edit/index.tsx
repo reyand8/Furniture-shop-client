@@ -4,32 +4,39 @@ import {
     DialogActions, DialogContent,
     DialogTitle
 } from '@mui/material';
-import React, {useCallback, useEffect} from 'react';
-import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import React, { useCallback, useEffect, useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { IUpdateContactInfo } from '../../../types/contactInfo.interface';
 import UserFormInput from '../../user-form-input';
 import { TextFieldBox } from '../../../styles/Auth.styles';
 import { AppDispatch } from '../../../store/store';
-import { updateContactInfoRequest } from '../../../store/slice/contactInfo/contactInfo.slice';
+import {
+    clearUpdateError,
+    selectContactInfo,
+    updateContactInfoRequest
+} from '../../../store/slice/contactInfo/contactInfo.slice';
 import { contactInfoSchema } from '../../../common/utils/validation/contactInfoValidation';
 import { IContactInfoEdit } from '../../../types/props.interface';
+import { contactFields } from '../../../common/commonItems';
+import { IApiError } from '../../../types/error.interface';
+import { handleAuthError } from '../../../common/utils/errorHandler/authErrorHandler';
+import SubmitError from '../../submit-error';
 
 
-const ContactInfoEdit: React.FC<IContactInfoEdit> = ({ item, setModalEditOpen }) => {
+const ContactInfoEdit: React.FC<IContactInfoEdit> = ({ item, modalEditOpen, setModalEditOpen }) => {
     const dispatch = useDispatch<AppDispatch>();
+    const [submitError, setSubmitError] = useState<IApiError>(null);
+    const { updateError, updateSuccess } = useSelector(selectContactInfo);
 
     const handleClose = useCallback(() => {
+        dispatch(clearUpdateError());
         setModalEditOpen(false);
+        setSubmitError(null);
     }, [setModalEditOpen]);
 
-    const {
-        register: editContactInfo,
-        handleSubmit,
-        formState: { errors },
-        reset
-    } = useForm({
+    const methods = useForm({
         resolver: yupResolver(contactInfoSchema),
         defaultValues: {
             phone: item.phone,
@@ -39,87 +46,71 @@ const ContactInfoEdit: React.FC<IContactInfoEdit> = ({ item, setModalEditOpen })
             region: item.region,
             country: item.country,
             companyName: item.companyName,
-            companyTaxId: item.companyTaxId
-        }
+            companyTaxId: item.companyTaxId,
+        },
     });
+
+    const { handleSubmit, reset } = methods;
+
+    useEffect((): void => {
+        if (updateError) {
+            handleAuthError(updateError, setSubmitError);
+            return
+        }
+    }, [updateError]);
+
+    useEffect((): void => {
+        if (updateSuccess && !updateError) {
+            handleClose();
+        }
+    }, [updateSuccess, updateError, handleClose]);
 
     useEffect((): void => {
         reset(item);
     }, [item, reset]);
 
     const onSubmit = (data: IUpdateContactInfo): void => {
-        handleClose();
-        dispatch(updateContactInfoRequest({ data, id: item.id }));
+        const formFieldNames: string[] = contactFields.map(
+            (field: { name: string, label: string }): string => field.name);
+
+        const filteredData = Object.fromEntries(
+            Object.entries(data).filter(
+                ([key]): boolean => formFieldNames.includes(key))
+        ) as IUpdateContactInfo;
+
+        setSubmitError(null);
+        dispatch(updateContactInfoRequest({ data: filteredData, id: item.id }));
     };
 
     return (
-        <Dialog open onClose={handleClose} fullWidth maxWidth="sm">
+        <Dialog open={modalEditOpen} onClose={handleClose} fullWidth maxWidth="sm">
             <DialogTitle>Edit Contact Info</DialogTitle>
             <DialogContent>
-                <TextFieldBox onSubmit={handleSubmit(onSubmit)}>
-                    <Box sx={{ display: 'flex', gap: '14px', mt: 2 }}>
-                        <Box sx={{ flex: 1 }}>
-                            <UserFormInput
-                                label="Phone"
-                                type="text"
-                                registration={editContactInfo('phone')}
-                                error={errors.phone}
-                            />
-                            <UserFormInput
-                                label="Address"
-                                type="text"
-                                registration={editContactInfo('address')}
-                                error={errors.address}
-                            />
-                            <UserFormInput
-                                label="Zip Code"
-                                type="text"
-                                registration={editContactInfo('zipCode')}
-                                error={errors.zipCode}
-                            />
-                            <UserFormInput
-                                label="City"
-                                type="text"
-                                registration={editContactInfo('city')}
-                                error={errors.city}
-                            />
+                <FormProvider {...methods}>
+                    <TextFieldBox onSubmit={handleSubmit(onSubmit)}>
+                        <Box sx={{ display: 'flex', gap: '14px', mt: 2 }}>
+                            <Box sx={{ flex: 1 }}>
+                                {contactFields.slice(0, 4).map(({ name, label }) => (
+                                    <UserFormInput key={name} name={name} label={label} />
+                                ))}
+                            </Box>
+                            <Box sx={{ flex: 1 }}>
+                                {contactFields.slice(4).map(({ name, label }) => (
+                                    <UserFormInput key={name} name={name} label={label} />
+                                ))}
+                            </Box>
                         </Box>
-                        <Box sx={{ flex: 1 }}>
-                            <UserFormInput
-                                label="Region"
-                                type="text"
-                                registration={editContactInfo('region')}
-                                error={errors.region}
-                            />
-                            <UserFormInput
-                                label="Country"
-                                type="text"
-                                registration={editContactInfo('country')}
-                                error={errors.country}
-                            />
-                            <UserFormInput
-                                label="Company Name"
-                                type="text"
-                                registration={editContactInfo('companyName')}
-                                error={errors.companyName}
-                            />
-                            <UserFormInput
-                                label="Company Tax Id"
-                                type="text"
-                                registration={editContactInfo('companyTaxId')}
-                                error={errors.companyTaxId}
-                            />
-                        </Box>
-                    </Box>
-                    <DialogActions>
-                        <Button onClick={handleClose} color="primary">
-                            Cancel
-                        </Button>
-                        <Button type="submit" variant="contained" color="primary">
-                            Edit
-                        </Button>
-                    </DialogActions>
-                </TextFieldBox>
+                        {submitError && <SubmitError submitError={submitError} />}
+                        <DialogActions>
+                            <Button onClick={handleClose} color="primary">
+                                Cancel
+                            </Button>
+                            <Button type="submit" variant="contained" color="primary">
+                                Edit
+                            </Button>
+                        </DialogActions>
+                    </TextFieldBox>
+                </FormProvider>
             </DialogContent>
         </Dialog>
     );

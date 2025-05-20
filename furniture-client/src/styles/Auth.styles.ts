@@ -44,7 +44,7 @@ export const AuthTitle = styled(Typography)(({ theme }) => ({
     padding: '8px 0 21px 0'
 }));
 
-export const AuthTextField = styled(TextField)(({ theme }) => ({
+export const InputTextField = styled(TextField)(({ theme }) => ({
     marginBottom: '16px',
     '&:hover .MuiOutlinedInput-notchedOutline': {
         borderColor: theme.palette.primary.main,

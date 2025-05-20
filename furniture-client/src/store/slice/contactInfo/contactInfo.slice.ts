@@ -22,6 +22,8 @@ const initialState: IContactInfoState = {
     error: null,
     success: false,
     deleteSuccess: false,
+    updateSuccess: false,
+    updateError: null
 }
 
 const contactInfoSlice = createSlice({
@@ -67,7 +69,8 @@ const contactInfoSlice = createSlice({
         updateContactInfoRequest(state,
                                  _action: PayloadAction<{ data: IUpdateContactInfo, id: string }>): void {
             state.loading = true;
-            state.error = null;
+            state.updateError = null;
+            state.updateSuccess = false;
         },
         updateContactInfoSuccess(state,
                                  action: PayloadAction<IAllContactInfo>): void {
@@ -77,11 +80,13 @@ const contactInfoSlice = createSlice({
             );
             state.contactInfo[index] = action.payload;
             state.totalPages = Math.ceil(state.contactInfo.length / PAGE_SIZE);
+            state.updateSuccess = true;
         },
         updateContactInfoFailure(state,
                                  action: PayloadAction<string>): void {
             state.loading = false;
-            state.error = action.payload || UNKNOWN_ERROR;
+            state.updateError = action.payload || UNKNOWN_ERROR;
+            state.updateSuccess = false;
         },
 
         deleteContactInfoRequest(state,
@@ -106,6 +111,10 @@ const contactInfoSlice = createSlice({
         clearSuccess(state): void {
             state.success = false;
         },
+
+        clearUpdateError(state): void {
+            state.updateError = null;
+        },
     },
 });
 
@@ -114,7 +123,7 @@ export const {
     createContactInfoRequest, createContactInfoSuccess, createContactInfoFailure,
     deleteContactInfoRequest, deleteContactInfoSuccess, deleteContactInfoFailure,
     updateContactInfoRequest, updateContactInfoSuccess, updateContactInfoFailure,
-    clearSuccess
+    clearSuccess, clearUpdateError
 } = contactInfoSlice.actions;
 
 export const selectContactInfo =

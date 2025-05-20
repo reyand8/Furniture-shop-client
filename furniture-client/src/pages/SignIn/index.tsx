@@ -12,7 +12,7 @@ import {
 } from '../../styles/Auth.styles';
 import theme from '../../assets/theme';
 import { useDispatch, useSelector } from 'react-redux';
-import { useForm } from 'react-hook-form';
+import {FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { handleAuthError } from '../../common/utils/errorHandler/authErrorHandler';
@@ -24,6 +24,7 @@ import { loginRequest, selectAuthUser } from '../../store/slice/authUser/authUse
 import { IApiError } from '../../types/error.interface';
 import { PATHS } from '../../routes/paths';
 import Header from '../../components/header';
+import SubmitError from '../../components/submit-error';
 
 
 const SignIn: React.FC = () => {
@@ -42,13 +43,12 @@ const SignIn: React.FC = () => {
         }
     }, [error, accessToken, navigate]);
 
-    const {
-        register: formLogin,
-        handleSubmit,
-        formState: { errors },
-    } = useForm<ILogin>({
+    const methods = useForm<ILogin>({
         resolver: yupResolver(loginSchema),
     });
+
+    const { handleSubmit } = methods;
+
 
     const onSubmit = (data: ILogin): void => {
         setSubmitError(null);
@@ -58,42 +58,30 @@ const SignIn: React.FC = () => {
     return (
         <AuthBox>
             <Header />
-            <AuthPaper elevation={10}>
-                <AuthTitle>Sign In</AuthTitle>
-                <TextFieldBox onSubmit={handleSubmit(onSubmit)}>
-                    <UserFormInput
-                        label="Email"
-                        type="email"
-                        registration={formLogin('email')}
-                        error={errors.email}
-                    />
-                    <UserFormInput
-                        label="Password"
-                        type="password"
-                        registration={formLogin('password')}
-                        error={errors.password}
-                    />
-                    { submitError && (
-                        <Typography color="error" variant="body2">
-                            {submitError}
-                        </Typography>
-                    )}
-                    <Button
-                        type="submit"
-                        color="primary"
-                        variant="contained"
-                        sx={{ margin: '14px 0' }}
-                        fullWidth
-                    >
-                        Sign In
-                    </Button>
-                </TextFieldBox>
-                <Typography sx={{ color: theme.palette.text.secondary }}>
-                    <Link component={RouterLink} to="/signup">
-                        Don't have an account? Sign up
-                    </Link>
-                </Typography>
-            </AuthPaper>
+                <AuthPaper elevation={10}>
+                    <AuthTitle>Sign In</AuthTitle>
+                    <FormProvider {...methods}>
+                        <TextFieldBox onSubmit={handleSubmit(onSubmit)}>
+                            <UserFormInput type="email" name="email" label="Email" />
+                            <UserFormInput type="password" name="password" label="Password" />
+                            {submitError && <SubmitError submitError={submitError} />}
+                            <Button
+                                type="submit"
+                                color="primary"
+                                variant="contained"
+                                sx={{ margin: '14px 0' }}
+                                fullWidth
+                            >
+                                Sign In
+                            </Button>
+                        </TextFieldBox>
+                    </FormProvider>
+                    <Typography sx={{ color: theme.palette.text.secondary }}>
+                        <Link component={RouterLink} to="/signup">
+                            Don't have an account? Sign up
+                        </Link>
+                    </Typography>
+                </AuthPaper>
         </AuthBox>
     );
 };

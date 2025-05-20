@@ -1,19 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
-import {
-    Button,
-    Link,
-    Typography,
-} from '@mui/material';
+import { Button, Link, Typography } from '@mui/material';
 
-import {
-    AuthBox,
-    AuthPaper,
-    AuthTitle,
-    TextFieldBox
+import { AuthBox, AuthPaper, AuthTitle, TextFieldBox
 } from '../../styles/Auth.styles';
 import theme from '../../assets/theme';
 import { IRegister } from '../../types/authUser.interface';
@@ -25,6 +17,7 @@ import UserFormInput from '../../components/user-form-input';
 import { IApiError } from '../../types/error.interface';
 import { PATHS } from '../../routes/paths';
 import Header from '../../components/header';
+import SubmitError from '../../components/submit-error';
 
 
 const SignUp: React.FC = () => {
@@ -43,13 +36,11 @@ const SignUp: React.FC = () => {
         }
     }, [error, accessToken, navigate]);
 
-    const {
-        register: formRegister,
-        handleSubmit,
-        formState: { errors },
-    } = useForm<IRegister>({
+    const methods = useForm<IRegister>({
         resolver: yupResolver(registerSchema),
     });
+
+    const { handleSubmit } = methods;
 
     const onSubmit = (data: IRegister): void => {
         setSubmitError(null);
@@ -61,46 +52,24 @@ const SignUp: React.FC = () => {
             <Header />
             <AuthPaper elevation={10}>
                 <AuthTitle>Sign Up</AuthTitle>
-                <TextFieldBox onSubmit={handleSubmit(onSubmit)}>
-                    <UserFormInput
-                        label="First Name"
-                        type="text"
-                        registration={formRegister('firstName')}
-                        error={errors.firstName}
-                    />
-                    <UserFormInput
-                        label="Last Name"
-                        type="text"
-                        registration={formRegister('lastName')}
-                        error={errors.lastName}
-                    />
-                    <UserFormInput
-                        label="Email"
-                        type="email"
-                        registration={formRegister('email')}
-                        error={errors.email}
-                    />
-                    <UserFormInput
-                        label="Password"
-                        type="password"
-                        registration={formRegister('password')}
-                        error={errors.password}
-                    />
-                    { submitError && (
-                        <Typography color="error" variant="body2">
-                            {submitError}
-                        </Typography>
-                    )}
-                    <Button
-                        type="submit"
-                        color="primary"
-                        variant="contained"
-                        sx={{ margin: '14px 0' }}
-                        fullWidth
-                    >
-                        Sign Up
-                    </Button>
-                </TextFieldBox>
+                <FormProvider {...methods}>
+                    <TextFieldBox onSubmit={handleSubmit(onSubmit)}>
+                        <UserFormInput name="firstName" label="First Name"/>
+                        <UserFormInput name="lastName" label="Last Name"  />
+                        <UserFormInput type="email" name="email" label="Email"  />
+                        <UserFormInput type="password" name="password" label="Password"  />
+                        {submitError && <SubmitError submitError={submitError} />}
+                        <Button
+                            type="submit"
+                            color="primary"
+                            variant="contained"
+                            sx={{ margin: '14px 0' }}
+                            fullWidth
+                        >
+                            Sign Up
+                        </Button>
+                    </TextFieldBox>
+                </FormProvider>
                 <Typography sx={{ color: theme.palette.text.secondary }}>
                     <Link component={RouterLink} to="/login">
                         Already have an account?
