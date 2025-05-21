@@ -37,7 +37,7 @@ const theme = createTheme({
             group: '#c1bfbf',
             card: 'rgba(128, 128, 128, 0.8)',
             btnHover: '#f1f0f0',
-            footer: 'rgba(35, 37, 40)',
+            headerFooterBg: 'rgba(35, 37, 40)',
         },
         error: {
             main: '#d32f2f',

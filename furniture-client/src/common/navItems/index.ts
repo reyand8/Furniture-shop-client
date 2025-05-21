@@ -1,7 +1,5 @@
-interface INavItem {
-    label: string;
-    path: string;
-}
+import { INavItem } from '../../types/common.interface';
+
 
 export const navItems: INavItem[] = [
     { label: 'Home', path: '/' },

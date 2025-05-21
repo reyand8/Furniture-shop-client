@@ -16,7 +16,7 @@ import ContactInfoItem from './contact-info-item';
 import { IAllContactInfo } from '../../types/contactInfo.interface';
 import theme from '../../assets/theme';
 import { ContactInfoAllItemsBox, EmptySectionBox, PaginationBox } from '../../styles/ContactInfo.styles';
-import { PAGE_SIZE } from '../../common/commonItems';
+import { PAGE_SIZE } from '../../common/common-items';
 
 
 const ContactInfo: React.FC = () => {

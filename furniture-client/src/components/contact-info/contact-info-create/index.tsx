@@ -6,7 +6,7 @@ import { Box, Button, Typography } from '@mui/material';
 
 import UserFormInput from '../../user-form-input';
 import { IApiError } from '../../../types/error.interface';
-import { handleAuthError } from '../../../common/utils/errorHandler/authErrorHandler';
+import { handleAuthError } from '../../../common/utils/error-handler/authErrorHandler';
 import {
     clearSuccess,
     createContactInfoRequest,
@@ -16,7 +16,7 @@ import { AppDispatch } from '../../../store/store';
 import { contactInfoSchema } from '../../../common/utils/validation/contactInfoValidation';
 import { ContactInfoForm } from '../../../styles/ContactInfo.styles';
 import { IContactInfo } from '../../../types/contactInfo.interface';
-import { contactFieldsFirstColumn, contactFieldsSecondColumn } from '../../../common/commonItems';
+import { contactFieldsFirstColumn, contactFieldsSecondColumn } from '../../../common/common-items';
 import SubmitError from '../../submit-error';
 
 

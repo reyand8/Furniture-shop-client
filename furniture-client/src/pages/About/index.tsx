@@ -26,7 +26,7 @@ import aboutUsFour from '../../assets/img/about4.jpg'
 const About: React.FC = () => {
     return (
         <Box>
-            <Box sx={{ backgroundColor: theme.palette.background.group }}>
+            <Box sx={{ backgroundColor: theme.palette.background.headerFooterBg }}>
                 <Header />
             </Box>
             <Box>

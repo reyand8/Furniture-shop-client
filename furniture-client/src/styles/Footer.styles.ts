@@ -6,7 +6,7 @@ export const FooterBox = styled(Box)(({ theme }) => ({
     justifyContent: 'space-between',
     alignItems: 'flex-end',
     padding: `${theme.spacing(4.5)} ${theme.spacing(3.25)}`,
-    backgroundColor: theme.palette.background.footer,
+    backgroundColor: theme.palette.background.headerFooterBg,
     [theme.breakpoints.down('md')]: {
         flexDirection: 'column',
         alignItems: 'flex-start',

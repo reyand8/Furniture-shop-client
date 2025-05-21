@@ -1,4 +1,5 @@
 import { IAllContactInfo } from './contactInfo.interface';
+import {ButtonProps} from "@mui/material";
 
 
 export interface IModalConfirmDeleteProps {
@@ -19,4 +20,14 @@ export interface IContactInfoProps {
 
 export interface ISubmitErrorProps {
     submitError: string | string[] | null;
+}
+
+export interface IStyledButtonProps extends ButtonProps {
+    isSelected: boolean;
+}
+
+export interface ICarouselSettingsParams {
+    itemCount: number;
+    maxVisibleSlides?: number;
+    infiniteThreshold?: number;
 }

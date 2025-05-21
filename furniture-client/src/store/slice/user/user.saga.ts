@@ -12,7 +12,7 @@ import {
 } from './user.slice';
 import { IUpdateUser, IUser } from '../../../types/user.interface';
 import { deleteProfile, getProfile, updateProfile } from '../../../services/api/user/user.api';
-import { getErrorMessage } from '../../../common/utils/errorHandler/getErrorMessage';
+import { getErrorMessage } from '../../../common/utils/error-handler/getErrorMessage';
 import { SERVER_RESPONSE_ERROR_MESSAGES } from '../../../common/utils/messages/messages';
 import { logout } from '../authUser/authUser.slice';
 

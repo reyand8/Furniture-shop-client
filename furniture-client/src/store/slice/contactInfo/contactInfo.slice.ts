@@ -9,7 +9,7 @@ import {
 import {
     SERVER_RESPONSE_ERROR_MESSAGES
 } from '../../../common/utils/messages/messages';
-import { PAGE_SIZE } from '../../../common/commonItems';
+import { PAGE_SIZE } from '../../../common/common-items';
 
 
 const { UNKNOWN_ERROR } = SERVER_RESPONSE_ERROR_MESSAGES;

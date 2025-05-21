@@ -11,7 +11,7 @@ import theme from '../../assets/theme';
 import { IRegister } from '../../types/authUser.interface';
 import { registerRequest, selectAuthUser } from '../../store/slice/authUser/authUser.slice';
 import { AppDispatch } from '../../store/store';
-import { handleAuthError } from '../../common/utils/errorHandler/authErrorHandler';
+import { handleAuthError } from '../../common/utils/error-handler/authErrorHandler';
 import { registerSchema } from '../../common/utils/validation/authValidation';
 import UserFormInput from '../../components/user-form-input';
 import { IApiError } from '../../types/error.interface';

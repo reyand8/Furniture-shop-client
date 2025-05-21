@@ -1,9 +1,12 @@
-import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from '@mui/material';
+import {
+    Button, Dialog, DialogActions,
+    DialogContent, DialogContentText,
+    DialogTitle
+} from '@mui/material';
 import React from 'react';
 
-import theme from '../../assets/theme';
 import { IModalConfirmDeleteProps } from '../../types/props.interface';
-
+import theme from '../../assets/theme';
 
 
 const ModalConfirmDelete: React.FC<IModalConfirmDeleteProps> =
