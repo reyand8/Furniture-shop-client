@@ -3,6 +3,7 @@ import React from 'react';
 import Hero from '../../components/hero';
 import Footer from '../../components/footer';
 import MaterialsInfo from '../../components/materials-info';
+import BestSeller from '../../components/best-seller';
 
 
 const Home: React.FC = () => {
@@ -10,6 +11,7 @@ const Home: React.FC = () => {
         <>
             <Hero />
             <MaterialsInfo />
+            <BestSeller />
             <Footer />
         </>
     );

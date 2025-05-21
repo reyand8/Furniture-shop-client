@@ -1,4 +1,4 @@
-import { Typography, Box, TextField, styled } from '@mui/material';
+import { Typography, Box, styled } from '@mui/material';
 
 import hero_bg from '../assets/img/hero_bg.webp';
 
@@ -57,40 +57,3 @@ export const HeroSubTitle = styled(Typography)(({ theme }) => ({
         padding: '0 24px',
     },
 }))
-
-export const SearchBox = styled(Box)(() => ({
-    maxWidth: '364px',
-    width: '100%',
-    margin: '34px 0 290px 0',
-}))
-
-export const SearchTextField = styled(TextField)(({ theme }) => ({
-    '& .MuiOutlinedInput-root': {
-        backgroundColor: theme.palette.background.card,
-        borderRadius: '24px',
-    },
-    '& .MuiOutlinedInput-notchedOutline': {
-        borderColor: theme.palette.primary.contrastText,
-        borderWidth: '0.8px',
-    },
-    '&:hover .MuiOutlinedInput-notchedOutline': {
-        borderColor: theme.palette.primary.contrastText,
-    },
-    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-        borderColor: theme.palette.primary.contrastText,
-    },
-    '& .MuiInputBase-input': {
-        color: theme.palette.primary.contrastText,
-    },
-}))
-
-export const SearchBtnBox = styled(Box)(({ theme }) => ({
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '36px',
-    height: '36px',
-    borderRadius: '30px',
-    backgroundColor: theme.palette.primary.main,
-}))
-
