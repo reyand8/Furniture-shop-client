@@ -6,7 +6,7 @@ import {Box, Button, Typography} from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 
-import { handleAuthError } from '../../../common/utils/errorHandler/authErrorHandler';
+import { handleAuthError } from '../../../common/utils/error-handler/authErrorHandler';
 import { updateProfileSchema } from '../../../common/utils/validation/profileValidation';
 import { IUpdateUser } from '../../../types/user.interface';
 import { IApiError } from '../../../types/error.interface';

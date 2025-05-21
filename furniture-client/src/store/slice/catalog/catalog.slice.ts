@@ -8,7 +8,7 @@ import { SERVER_RESPONSE_ERROR_MESSAGES } from '../../../common/utils/messages/m
 const { UNKNOWN_ERROR } = SERVER_RESPONSE_ERROR_MESSAGES;
 
 const initialState: ICatalogState = {
-    bestSeller: [],
+    bestSellers: [],
     searchResults: [],
     allProducts: [],
     loading: false,
@@ -19,15 +19,15 @@ const catalogSlice = createSlice({
     name: 'catalog',
     initialState,
     reducers: {
-        fetchBestSellerRequest(state) {
+        fetchBestSellersRequest(state) {
             state.loading = true;
             state.error = null;
         },
-        fetchBestSellerSuccess(state, action: PayloadAction<IProduct[]>) {
+        fetchBestSellersSuccess(state, action: PayloadAction<IProduct[]>) {
             state.loading = false;
-            state.bestSeller = action.payload;
+            state.bestSellers = action.payload;
         },
-        fetchBestSellerFailure(state, action: PayloadAction<string>) {
+        fetchBestSellersFailure(state, action: PayloadAction<string>) {
             state.loading = false;
             state.error = action.payload || UNKNOWN_ERROR;
         },
@@ -51,7 +51,7 @@ const catalogSlice = createSlice({
 });
 
 export const {
-    fetchBestSellerRequest, fetchBestSellerSuccess, fetchBestSellerFailure,
+    fetchBestSellersRequest, fetchBestSellersSuccess, fetchBestSellersFailure,
     searchRequest, searchSuccess, searchFailure, clearSearchResults
 } = catalogSlice.actions;
 

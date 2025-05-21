@@ -26,7 +26,7 @@ export interface IProduct {
 }
 
 export interface ICatalogState {
-    bestSeller: IProduct[];
+    bestSellers: IProduct[];
     searchResults: IProduct[];
     allProducts: IProduct[];
     loading: boolean;

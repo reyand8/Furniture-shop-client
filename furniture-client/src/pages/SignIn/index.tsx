@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { handleAuthError } from '../../common/utils/errorHandler/authErrorHandler';
+import { handleAuthError } from '../../common/utils/error-handler/authErrorHandler';
 import { loginSchema } from '../../common/utils/validation/authValidation';
 import UserFormInput from '../../components/user-form-input';
 import { AppDispatch } from '../../store/store';

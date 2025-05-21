@@ -19,10 +19,11 @@ import {
 } from '../../../store/slice/contactInfo/contactInfo.slice';
 import { contactInfoSchema } from '../../../common/utils/validation/contactInfoValidation';
 import { IContactInfoEdit } from '../../../types/props.interface';
-import { contactFieldsFirstColumn, contactFieldsSecondColumn } from '../../../common/commonItems';
+import { contactFieldsFirstColumn, contactFieldsSecondColumn } from '../../../common/common-items';
 import { IApiError } from '../../../types/error.interface';
-import { handleAuthError } from '../../../common/utils/errorHandler/authErrorHandler';
+import { handleAuthError } from '../../../common/utils/error-handler/authErrorHandler';
 import SubmitError from '../../submit-error';
+import theme from '../../../assets/theme';
 
 
 const ContactInfoEdit: React.FC<IContactInfoEdit> = ({ item, modalEditOpen, setModalEditOpen }) => {
@@ -34,7 +35,7 @@ const ContactInfoEdit: React.FC<IContactInfoEdit> = ({ item, modalEditOpen, setM
         dispatch(clearUpdateError());
         setModalEditOpen(false);
         setSubmitError(null);
-    }, [setModalEditOpen]);
+    }, [setModalEditOpen, dispatch]);
 
     const methods = useForm({
         resolver: yupResolver(contactInfoSchema),
@@ -86,7 +87,7 @@ const ContactInfoEdit: React.FC<IContactInfoEdit> = ({ item, modalEditOpen, setM
 
     return (
         <Dialog open={modalEditOpen} onClose={handleClose} fullWidth maxWidth="sm">
-            <DialogTitle>Edit Contact Info</DialogTitle>
+            <DialogTitle color={theme.palette.text.secondary}>Edit Contact Info</DialogTitle>
             <DialogContent>
                 <FormProvider {...methods}>
                     <TextFieldBox onSubmit={handleSubmit(onSubmit)}>

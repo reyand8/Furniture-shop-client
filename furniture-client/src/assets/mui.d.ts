@@ -13,6 +13,6 @@ declare module '@mui/material/styles' {
         container: string;
         group: string;
         btnHover: string;
-        footer: string;
+        headerFooterBg: string;
     }
 }

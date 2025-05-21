@@ -13,7 +13,7 @@ import { IProduct } from '../../types/catalog.interface';
 const CarouselItem = (item: IProduct)=>  {
     const { name, images, discountPrice, price, currency } = item;
     return (
-        <CarouselItemBox sx={{ maxWidth: '300px', width: '100%', mx: 'auto' }}>
+        <CarouselItemBox>
             <CarouselImageBox className="carousel-image">
                 <Box
                     component="img"

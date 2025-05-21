@@ -7,7 +7,7 @@ import {
     registerRequest, registerSuccess, registerFailure,
     loginSuccess, loginFailure, loginRequest,
 } from './authUser.slice';
-import { getErrorMessage } from '../../../common/utils/errorHandler/getErrorMessage';
+import { getErrorMessage } from '../../../common/utils/error-handler/getErrorMessage';
 import { SERVER_RESPONSE_ERROR_MESSAGES } from '../../../common/utils/messages/messages';
 
 const { FAILED } = SERVER_RESPONSE_ERROR_MESSAGES;

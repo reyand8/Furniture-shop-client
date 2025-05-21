@@ -25,3 +25,9 @@ export interface ISubmitErrorProps {
 export interface IStyledButtonProps extends ButtonProps {
     isSelected: boolean;
 }
+
+export interface ICarouselSettingsParams {
+    itemCount: number;
+    maxVisibleSlides?: number;
+    infiniteThreshold?: number;
+}

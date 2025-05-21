@@ -5,7 +5,7 @@ import 'slick-carousel/slick/slick-theme.css';
 
 import CarouselItem from '../carousel-item';
 import { AppDispatch } from '../../store/store';
-import { fetchBestSellerRequest, selectCatalog } from '../../store/slice/catalog/catalog.slice';
+import { fetchBestSellersRequest, selectCatalog } from '../../store/slice/catalog/catalog.slice';
 import { IProduct } from '../../types/catalog.interface';
 import {
     BestSellerBox,
@@ -16,22 +16,23 @@ import {
     StyledSliderBox,
     TypesBox
 } from '../../styles/BestSeller.styles';
+import { carouselSettings } from '../../common/utils/carousel-settings';
 
 
 const BestSeller = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const { bestSeller, loading, error } = useSelector(selectCatalog);
+    const { bestSellers, loading, error } = useSelector(selectCatalog);
 
     const [selectedCategory, setSelectedCategory] = useState('');
 
     const categories: string[] = useMemo((): string[] => {
-        const uniqueCategories = new Set(bestSeller.map((item: IProduct) =>
+        const uniqueCategories = new Set(bestSellers.map((item: IProduct) =>
             item.category.name));
         return Array.from(uniqueCategories);
-    }, [bestSeller]);
+    }, [bestSellers]);
 
     useEffect((): void => {
-        dispatch(fetchBestSellerRequest());
+        dispatch(fetchBestSellersRequest());
     }, [dispatch]);
 
     useEffect((): void => {
@@ -41,25 +42,11 @@ const BestSeller = () => {
     }, [categories, selectedCategory]);
 
     const filteredItems: IProduct[] = useMemo((): IProduct[] => {
-        return bestSeller.filter((item: IProduct): boolean => item.category.name === selectedCategory);
-    }, [bestSeller, selectedCategory]);
+        return bestSellers.filter((item: IProduct): boolean => item.category.name === selectedCategory);
+    }, [bestSellers, selectedCategory]);
 
     const settings = useMemo(() => {
-        const slidesCount: number = filteredItems.length;
-
-        return {
-            dots: false,
-            infinite: slidesCount > 4,
-            speed: 500,
-            slidesToShow: Math.min(3, slidesCount),
-            slidesToScroll: 1,
-            arrows: true,
-            responsive: [
-                { breakpoint: 1200, settings: { slidesToShow: Math.min(2, slidesCount) } },
-                { breakpoint: 900, settings: { slidesToShow: Math.min(1, slidesCount) } },
-                { breakpoint: 600, settings: { slidesToShow: 1 } },
-            ],
-        };
+        return carouselSettings({ itemCount: filteredItems.length });
     }, [filteredItems]);
 
     if (loading || error) {
