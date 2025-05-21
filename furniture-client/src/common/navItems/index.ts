@@ -6,6 +6,6 @@ interface INavItem {
 export const navItems: INavItem[] = [
     { label: 'Home', path: '/' },
     { label: 'Catalog', path: '/shop' },
-    { label: 'Contact Us', path: '/contact' },
+    { label: 'Contact', path: '/contact' },
     { label: 'About Us', path: '/about' },
 ];
