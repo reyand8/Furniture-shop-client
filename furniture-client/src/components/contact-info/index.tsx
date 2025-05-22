@@ -1,9 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Button, Typography } from '@mui/material';
-import FolderOpenIcon from '@mui/icons-material/FolderOpen';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { Box } from '@mui/material';
 
 import { AppDispatch } from '../../store/store';
 import {
@@ -14,9 +11,10 @@ import {
 import ContactInfoAdd from './contact-info-add';
 import ContactInfoItem from './contact-info-item';
 import { IAllContactInfo } from '../../types/contactInfo.interface';
-import theme from '../../assets/theme';
-import { ContactInfoAllItemsBox, EmptySectionBox, PaginationBox } from '../../styles/ContactInfo.styles';
+import { ContactInfoAllItemsBox } from '../../styles/ContactInfo.styles';
 import { PAGE_SIZE } from '../../common/common-items';
+import Pagination from '../pagination';
+import Empty from '../status/empty';
 
 
 const ContactInfo: React.FC = () => {
@@ -53,16 +51,8 @@ const ContactInfo: React.FC = () => {
     return (
         <Box>
             <ContactInfoAdd />
-            {isEmpty && (
-                <EmptySectionBox>
-                    <FolderOpenIcon sx={{
-                        color: theme.palette.text.defaultBtn,
-                        fontSize: 92
-                    }} />
-                    <Typography sx={{ color: theme.palette.text.defaultBtn }}>
-                        Contact Info Section Is Empty
-                    </Typography>
-                </EmptySectionBox>
+            { isEmpty && (
+                <Empty />
             )}
             {hasData && (
                 <>
@@ -71,17 +61,12 @@ const ContactInfo: React.FC = () => {
                             <ContactInfoItem item={item} key={item.id || index} />
                         ))}
                     </ContactInfoAllItemsBox>
-                    <PaginationBox>
-                        <Button onClick={handlePrevPage} disabled={currentPage === 1}>
-                            <ArrowBackIosIcon />
-                        </Button>
-                        <Typography color={theme.palette.text.secondary}>
-                            Page {currentPage} of {totalPages}
-                        </Typography>
-                        <Button onClick={handleNextPage} disabled={currentPage === totalPages}>
-                            <ArrowForwardIosIcon />
-                        </Button>
-                    </PaginationBox>
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPrev={handlePrevPage}
+                        onNext={handleNextPage}
+                    />
                 </>
             )}
         </Box>

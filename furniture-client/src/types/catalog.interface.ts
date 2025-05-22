@@ -31,10 +31,35 @@ export interface ICatalogState {
     allProducts: IProduct[];
     relative: IProduct[];
     singleProduct: IProduct | null;
-    loadingSingle: boolean,
-    loadingRelative: boolean,
+    categories: ICategory[];
+
+    selectedCategory: string | null;
+    minPrice: number;
+    maxPrice: number;
+
+    currentPage: number;
+    totalPages: number;
+
+    loadingCategories: boolean;
+    loadingSingle: boolean;
+    loadingRelative: boolean;
     loading: boolean;
+
+    errorCategories: string | null;
     errorSingle: string | null;
     errorRelative: string | null;
     error: string | null;
+}
+
+export interface IProductQueryParams {
+    minPrice?: number;
+    maxPrice?: number;
+    page?: number;
+    pageSize?: number;
+    category?: string;
+}
+
+export interface IAllProductsResponse {
+    products: IProduct[];
+    totalPages: number;
 }

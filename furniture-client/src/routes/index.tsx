@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 
+import { PATHS } from './paths';
 import Home from '../pages/Home';
 import Profile from '../pages/Profile';
 import SignUp from '../pages/SignUp';
@@ -10,11 +11,11 @@ import Contact from '../pages/Contact';
 import About from '../pages/About';
 import SingleProduct from '../pages/SingleProduct';
 import NotFound from '../pages/NotFound';
-import { PATHS } from './paths';
+import Catalog from '../pages/Catalog';
 
 
 const {
-    PROFILE, SIGN_UP, LOGIN,
+    PROFILE, SIGN_UP, LOGIN, CATALOG,
     CONTACT_INFO, ORDERS, ABOUT,
     CONTACT, SINGLE_PRODUCT, UNEXPECTED_PATHS
 } = PATHS;
@@ -31,6 +32,7 @@ const AppRoutes = () => (
         <Route path={LOGIN} element={<SignIn />} />
         <Route path={ABOUT} element={<About />} />
         <Route path={CONTACT} element={<Contact />} />
+        <Route path={CATALOG} element={<Catalog />} />
         <Route path={SINGLE_PRODUCT} element={<SingleProduct />} />
         <Route path={UNEXPECTED_PATHS} element={<NotFound />} />
     </Routes>

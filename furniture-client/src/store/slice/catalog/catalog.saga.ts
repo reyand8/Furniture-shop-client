@@ -3,13 +3,16 @@ import { PayloadAction } from '@reduxjs/toolkit';
 
 import { getErrorMessage } from '../../../common/utils/error-handler/getErrorMessage';
 import { SERVER_RESPONSE_ERROR_MESSAGES } from '../../../common/utils/messages/messages';
-import { IProduct } from '../../../types/catalog.interface';
+import {ICategory, IProduct, IProductQueryParams, IAllProductsResponse} from '../../../types/catalog.interface';
 import {
-    getBestSellerProductsApi, getProductsBySearchQueryApi,
+    getAllProductsApi,
+    getBestSellerProductsApi, getCategoriesApi, getProductsBySearchQueryApi,
     getRelativeProductsApi, getSingleProductApi
 } from '../../../services/api/catalog/catalog.api';
 import {
+    fetchAllProductsFailure, fetchAllProductsRequest, fetchAllProductsSuccess,
     fetchBestSellersFailure, fetchBestSellersRequest, fetchBestSellersSuccess,
+    fetchCategoriesFailure, fetchCategoriesRequest, fetchCategoriesSuccess,
     fetchRelativeFailure, fetchRelativeRequest, fetchRelativeSuccess,
     fetchSingleProductFailure, fetchSingleProductRequest, fetchSingleProductSuccess,
     searchFailure, searchRequest, searchSuccess
@@ -17,6 +20,16 @@ import {
 
 
 const { FAILED } = SERVER_RESPONSE_ERROR_MESSAGES;
+
+
+export function* fetchAllProducts(action: PayloadAction<IProductQueryParams>) {
+    try {
+        const response: IAllProductsResponse = yield call(getAllProductsApi, action.payload);
+        yield put(fetchAllProductsSuccess(response));
+    } catch (error: any) {
+        yield put(fetchAllProductsFailure(getErrorMessage(error, FAILED)));
+    }
+}
 
 function* fetchSingleProduct(action: PayloadAction<string>) {
     try {
@@ -54,9 +67,20 @@ function* fetchProductsBySearchQuery(action: PayloadAction<string>) {
     }
 }
 
+function* fetchCategories() {
+    try {
+        const response: ICategory[] = yield call(getCategoriesApi);
+        yield put(fetchCategoriesSuccess(response));
+    } catch (error: any) {
+        yield put(fetchCategoriesFailure(getErrorMessage(error, FAILED)));
+    }
+}
+
 export function* catalogSaga() {
+    yield takeLatest(fetchAllProductsRequest.type, fetchAllProducts);
     yield takeLatest(fetchSingleProductRequest.type, fetchSingleProduct);
     yield takeLatest(fetchRelativeRequest.type, fetchRelativeProducts);
     yield takeLatest(fetchBestSellersRequest.type, fetchBestSellerProducts);
     yield takeLatest(searchRequest.type, fetchProductsBySearchQuery);
+    yield takeLatest(fetchCategoriesRequest.type, fetchCategories);
 }

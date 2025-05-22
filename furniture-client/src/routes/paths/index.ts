@@ -5,6 +5,7 @@ export const PATHS = {
     PROFILE_CONTACT_INFO: '/profile/contact-info',
     PROFILE_ORDERS: '/profile/orders',
     ORDERS: 'orders',
+    CATALOG: 'catalog',
     SIGN_UP: '/signup',
     LOGIN: '/login',
     CONTACT: '/contact',

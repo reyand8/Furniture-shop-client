@@ -1,6 +1,14 @@
 import axiosInstance from '../../instance/axiosInstance';
-import { IProduct } from '../../../types/catalog.interface';
+import {ICategory, IProduct, IProductQueryParams, IAllProductsResponse} from '../../../types/catalog.interface';
 
+
+
+export const getAllProductsApi = async (
+    params: IProductQueryParams): Promise<IAllProductsResponse> => {
+    const response =
+        await axiosInstance.get<IAllProductsResponse>('/catalog/products', {params});
+    return response.data;
+};
 
 export const getBestSellerProductsApi = async (): Promise<IProduct[]> => {
     const response = await axiosInstance.get<IProduct[]>('/catalog/top-products');
@@ -27,3 +35,9 @@ export const getSingleProductApi =
             await axiosInstance.get<IProduct>(`/catalog/product/${id}`);
         return response.data;
 };
+
+export const getCategoriesApi = async (): Promise<ICategory[]> => {
+        const response =
+            await axiosInstance.get<ICategory[]>(`/catalog/categories`);
+        return response.data;
+    };
