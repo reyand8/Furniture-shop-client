@@ -18,7 +18,7 @@ export const ProfileBox = styled(Box)(({ theme }) => ({
     },
 }));
 
-export const ProfileData = styled(Paper)(({ theme }) => ({
+export const ProfileData = styled(Paper)(() => ({
     maxWidth: '830px',
     width: '100%',
     padding: '40px 20px',
