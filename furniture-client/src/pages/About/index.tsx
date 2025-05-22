@@ -3,6 +3,7 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import { Box } from '@mui/material';
+
 import {
     AboutItemBox,
     AboutWelcomeBox,
@@ -15,8 +16,7 @@ import {
 } from '../../styles/About.styles';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
-import theme from '../../assets/theme';
-
+import { HeaderBox } from '../../styles/Header.styles';
 import aboutUsOne from '../../assets/img/about1.jpg'
 import aboutUsTwo from '../../assets/img/about2.png'
 import aboutUsThree from '../../assets/img/about3.png'
@@ -26,9 +26,9 @@ import aboutUsFour from '../../assets/img/about4.jpg'
 const About: React.FC = () => {
     return (
         <Box>
-            <Box sx={{ backgroundColor: theme.palette.background.headerFooterBg }}>
+            <HeaderBox>
                 <Header />
-            </Box>
+            </HeaderBox>
             <Box>
                 <AboutItemBox>
                     <AboutWelcomeBox>
@@ -99,7 +99,6 @@ const About: React.FC = () => {
             </Box>
             <Footer />
         </Box>
-
     );
 };
 

@@ -8,13 +8,15 @@ import ProfileInfo from '../components/profile/profile-info';
 import ContactInfo from '../components/contact-info';
 import Contact from '../pages/Contact';
 import About from '../pages/About';
+import SingleProduct from '../pages/SingleProduct';
+import NotFound from '../pages/NotFound';
 import { PATHS } from './paths';
 
 
 const {
     PROFILE, SIGN_UP, LOGIN,
     CONTACT_INFO, ORDERS, ABOUT,
-    CONTACT
+    CONTACT, SINGLE_PRODUCT, UNEXPECTED_PATHS
 } = PATHS;
 
 const AppRoutes = () => (
@@ -29,6 +31,8 @@ const AppRoutes = () => (
         <Route path={LOGIN} element={<SignIn />} />
         <Route path={ABOUT} element={<About />} />
         <Route path={CONTACT} element={<Contact />} />
+        <Route path={SINGLE_PRODUCT} element={<SingleProduct />} />
+        <Route path={UNEXPECTED_PATHS} element={<NotFound />} />
     </Routes>
 );
 

@@ -64,3 +64,7 @@ export const BurgerList = styled(List)(() => ({
     flexDirection: 'column',
     alignItems: 'flex-start',
 }))
+
+export const HeaderBox = styled(Box)(({theme}) => ({
+    backgroundColor: theme.palette.background.headerFooterBg,
+}))

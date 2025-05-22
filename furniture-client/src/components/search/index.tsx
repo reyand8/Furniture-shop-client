@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import {
     CircularProgress,
@@ -23,6 +24,7 @@ import { IProduct } from '../../types/catalog.interface';
 
 const Search: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
     const [inputValue, setInputValue] = useState('');
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const { searchResults, loading } = useSelector((state: RootState) => state.catalog);
@@ -36,7 +38,6 @@ const Search: React.FC = () => {
                 dispatch(clearSearchResults());
             }
         }, 500);
-
         return (): void => clearTimeout(delayDebounce);
     }, [inputValue, dispatch]);
 
@@ -50,15 +51,22 @@ const Search: React.FC = () => {
                 setAnchorEl(null);
             }
         };
-        document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener('click', handleClickOutside);
         return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('click', handleClickOutside);
         };
     }, [dispatch]);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         setInputValue(event.target.value);
         setAnchorEl(event.currentTarget);
+    };
+
+    const handleItemClick = (item: IProduct): void => {
+        navigate(`/single-product/${item.id}`);
+        setInputValue(item.name);
+        dispatch(clearSearchResults());
+        setAnchorEl(null);
     };
 
     return  (
@@ -84,7 +92,6 @@ const Search: React.FC = () => {
                     }}
                 />
             </SearchBox>
-
             <Popper
                 open={(!!searchResults.length || loading) && !!anchorEl}
                 anchorEl={anchorEl}
@@ -98,16 +105,13 @@ const Search: React.FC = () => {
                         </ListItem>
                     )}
                     {!loading && searchResults.map((item: IProduct) => (
-                        <ListItem
-                            key={item.id}
-                            component="div"
-                            onClick={() => {
-                                setInputValue(item.name);
-                                dispatch(clearSearchResults());
-                            }}
-                        >
-                            <ListItemSearchText primary={item.name} />
-                        </ListItem>
+                            <ListItem
+                                key={item.id}
+                                component="div"
+                                onClick={() => handleItemClick(item)}
+                            >
+                                <ListItemSearchText primary={item.name} />
+                            </ListItem>
                     ))}
                 </SearchResultList>
             </Popper>

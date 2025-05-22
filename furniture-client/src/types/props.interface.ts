@@ -1,5 +1,7 @@
+import {ButtonProps} from '@mui/material';
+
 import { IAllContactInfo } from './contactInfo.interface';
-import {ButtonProps} from "@mui/material";
+import { IProduct } from './catalog.interface';
 
 
 export interface IModalConfirmDeleteProps {
@@ -30,4 +32,16 @@ export interface ICarouselSettingsParams {
     itemCount: number;
     maxVisibleSlides?: number;
     infiniteThreshold?: number;
+}
+
+export interface ISingleItemProduct {
+    item: IProduct | null;
+}
+
+export interface IImageItemBoxProps {
+    selected?: boolean;
+}
+
+export interface IRelativeProductsProps {
+    type?: string;
 }

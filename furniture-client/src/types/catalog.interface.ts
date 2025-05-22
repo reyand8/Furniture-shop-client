@@ -29,6 +29,12 @@ export interface ICatalogState {
     bestSellers: IProduct[];
     searchResults: IProduct[];
     allProducts: IProduct[];
+    relative: IProduct[];
+    singleProduct: IProduct | null;
+    loadingSingle: boolean,
+    loadingRelative: boolean,
     loading: boolean;
+    errorSingle: string | null;
+    errorRelative: string | null;
     error: string | null;
 }

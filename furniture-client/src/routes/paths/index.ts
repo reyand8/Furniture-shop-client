@@ -9,4 +9,7 @@ export const PATHS = {
     LOGIN: '/login',
     CONTACT: '/contact',
     ABOUT: '/about',
+    UNEXPECTED_PATHS: '*',
+
+    SINGLE_PRODUCT: 'single-product/:id',
 };

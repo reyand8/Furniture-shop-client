@@ -8,8 +8,8 @@ import { AppDispatch } from '../../store/store';
 import { fetchBestSellersRequest, selectCatalog } from '../../store/slice/catalog/catalog.slice';
 import { IProduct } from '../../types/catalog.interface';
 import {
-    BestSellerBox,
-    BestSellerTitle,
+    OfferBox,
+    OfferTitle,
     StyledButton,
     StyledButtonGroup,
     StyledSlider,
@@ -54,10 +54,10 @@ const BestSeller = () => {
     }
 
     return (
-        <BestSellerBox>
-            <BestSellerTitle>
+        <OfferBox>
+            <OfferTitle>
                 Best Selling Product
-            </BestSellerTitle>
+            </OfferTitle>
             <TypesBox>
                 <StyledButtonGroup>
                     {categories.map((category: string) => (
@@ -81,7 +81,7 @@ const BestSeller = () => {
                     ))}
                 </StyledSlider>
             </StyledSliderBox>
-        </BestSellerBox>
+        </OfferBox>
     );
 };
 

@@ -8,7 +8,7 @@ import theme from '../assets/theme';
 import { IStyledButtonProps } from "../types/props.interface";
 
 
-export const BestSellerBox = styled(Box)({
+export const OfferBox = styled(Box)({
     backgroundColor: theme.palette.background.container,
     paddingBottom: theme.spacing(4),
     [theme.breakpoints.down('md')]: {
@@ -16,7 +16,7 @@ export const BestSellerBox = styled(Box)({
     },
 });
 
-export const BestSellerTitle = styled(Typography)(({ theme }) => ({
+export const OfferTitle = styled(Typography)(({ theme }) => ({
     fontSize: '40px',
     fontWeight: 700,
     color: theme.palette.text.secondary,
