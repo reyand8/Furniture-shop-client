@@ -9,10 +9,15 @@ import {
     IconCrossBox
 } from '../../styles/CarouselItem.styles';
 import { IProduct } from '../../types/catalog.interface';
+import { addToBasket } from '../../common/utils/basket/basket';
 
 
 const CarouselItem = (item: IProduct)=>  {
     const { id, name, images, discountPrice, price, currency } = item;
+
+    const handleAddToBasket = (): void => {
+        addToBasket(id);
+    };
     return (
         <CarouselItemBox>
             <Link to={`/single-product/${id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
@@ -50,7 +55,7 @@ const CarouselItem = (item: IProduct)=>  {
                     }
                 </Box>
             </Link>
-            <IconCrossBox className="icon-cross">
+            <IconCrossBox onClick={handleAddToBasket} className="icon-cross">
                 <AddIcon fontSize="medium" />
             </IconCrossBox>
         </CarouselItemBox>
