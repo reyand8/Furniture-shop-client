@@ -14,5 +14,6 @@ declare module '@mui/material/styles' {
         group: string;
         btnHover: string;
         headerFooterBg: string;
+        successBg: stirng;
     }
 }
