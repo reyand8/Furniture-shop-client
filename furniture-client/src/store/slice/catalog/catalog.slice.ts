@@ -15,6 +15,7 @@ const { UNKNOWN_ERROR } = SERVER_RESPONSE_ERROR_MESSAGES;
 
 const initialState: ICatalogState = {
     allProducts: [],
+    productsByIds: [],
     bestSellers: [],
     searchResults: [],
     relative: [],
@@ -27,11 +28,13 @@ const initialState: ICatalogState = {
     maxPrice: 2000,
     selectedCategory: null,
 
+    loadingProductsByIds: false,
     loadingCategories: false,
     loadingSingle: false,
     loadingRelative: false,
     loading: false,
 
+    errorProductsByIds: null,
     errorCategories: null,
     errorSingle: null,
     errorRelative: null,
@@ -55,6 +58,20 @@ const catalogSlice = createSlice({
         fetchAllProductsFailure(state, action: PayloadAction<string>) {
             state.loading = false;
             state.error = action.payload || UNKNOWN_ERROR;
+        },
+
+
+        fetchProductsByIdsRequest(state, _action: PayloadAction<{ ids: string[] }>) {
+            state.loadingProductsByIds = true;
+            state.errorProductsByIds = null;
+        },
+        fetchProductsByIdsSuccess(state, action: PayloadAction<IProduct[]>) {
+            state.loadingProductsByIds = false;
+            state.productsByIds = action.payload;
+        },
+        fetchProductsByIdsFailure(state, action: PayloadAction<string>) {
+            state.loadingProductsByIds = false;
+            state.errorProductsByIds = action.payload || UNKNOWN_ERROR;
         },
 
 
@@ -141,6 +158,7 @@ const catalogSlice = createSlice({
 
 export const {
     fetchAllProductsRequest, fetchAllProductsSuccess, fetchAllProductsFailure,
+    fetchProductsByIdsRequest, fetchProductsByIdsSuccess, fetchProductsByIdsFailure,
     fetchSingleProductRequest, fetchSingleProductSuccess, fetchSingleProductFailure,
     fetchRelativeRequest, fetchRelativeSuccess, fetchRelativeFailure,
     fetchBestSellersRequest, fetchBestSellersSuccess, fetchBestSellersFailure,

@@ -29,6 +29,7 @@ export interface ICatalogState {
     bestSellers: IProduct[];
     searchResults: IProduct[];
     allProducts: IProduct[];
+    productsByIds: IProduct[];
     relative: IProduct[];
     singleProduct: IProduct | null;
     categories: ICategory[];
@@ -40,11 +41,13 @@ export interface ICatalogState {
     currentPage: number;
     totalPages: number;
 
+    loadingProductsByIds: boolean;
     loadingCategories: boolean;
     loadingSingle: boolean;
     loadingRelative: boolean;
     loading: boolean;
 
+    errorProductsByIds: string | null;
     errorCategories: string | null;
     errorSingle: string | null;
     errorRelative: string | null;

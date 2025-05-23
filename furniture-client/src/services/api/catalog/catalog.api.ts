@@ -1,12 +1,22 @@
 import axiosInstance from '../../instance/axiosInstance';
-import {ICategory, IProduct, IProductQueryParams, IAllProductsResponse} from '../../../types/catalog.interface';
-
+import {
+    ICategory,
+    IProduct,
+    IProductQueryParams,
+    IAllProductsResponse
+} from '../../../types/catalog.interface';
 
 
 export const getAllProductsApi = async (
     params: IProductQueryParams): Promise<IAllProductsResponse> => {
     const response =
         await axiosInstance.get<IAllProductsResponse>('/catalog/products', {params});
+    return response.data;
+};
+
+export const getAllProductsByIdsApi = async (ids: string[]): Promise<IProduct[]> => {
+    const response =
+        await axiosInstance.post<IProduct[]>('/catalog/products-by-ids', { ids });
     return response.data;
 };
 
@@ -40,4 +50,4 @@ export const getCategoriesApi = async (): Promise<ICategory[]> => {
         const response =
             await axiosInstance.get<ICategory[]>(`/catalog/categories`);
         return response.data;
-    };
+};

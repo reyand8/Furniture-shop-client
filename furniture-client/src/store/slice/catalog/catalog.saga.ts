@@ -3,31 +3,58 @@ import { PayloadAction } from '@reduxjs/toolkit';
 
 import { getErrorMessage } from '../../../common/utils/error-handler/getErrorMessage';
 import { SERVER_RESPONSE_ERROR_MESSAGES } from '../../../common/utils/messages/messages';
-import {ICategory, IProduct, IProductQueryParams, IAllProductsResponse} from '../../../types/catalog.interface';
 import {
-    getAllProductsApi,
-    getBestSellerProductsApi, getCategoriesApi, getProductsBySearchQueryApi,
-    getRelativeProductsApi, getSingleProductApi
+    ICategory, IProduct,
+    IProductQueryParams, IAllProductsResponse
+} from '../../../types/catalog.interface';
+import {
+    getAllProductsApi, getAllProductsByIdsApi,
+    getBestSellerProductsApi, getCategoriesApi,
+    getProductsBySearchQueryApi, getRelativeProductsApi,
+    getSingleProductApi
 } from '../../../services/api/catalog/catalog.api';
 import {
-    fetchAllProductsFailure, fetchAllProductsRequest, fetchAllProductsSuccess,
-    fetchBestSellersFailure, fetchBestSellersRequest, fetchBestSellersSuccess,
-    fetchCategoriesFailure, fetchCategoriesRequest, fetchCategoriesSuccess,
-    fetchRelativeFailure, fetchRelativeRequest, fetchRelativeSuccess,
-    fetchSingleProductFailure, fetchSingleProductRequest, fetchSingleProductSuccess,
-    searchFailure, searchRequest, searchSuccess
+    fetchAllProductsFailure,
+    fetchAllProductsRequest,
+    fetchAllProductsSuccess,
+    fetchBestSellersFailure,
+    fetchBestSellersRequest,
+    fetchBestSellersSuccess,
+    fetchCategoriesFailure,
+    fetchCategoriesRequest,
+    fetchCategoriesSuccess,
+    fetchProductsByIdsFailure,
+    fetchProductsByIdsRequest,
+    fetchProductsByIdsSuccess,
+    fetchRelativeFailure,
+    fetchRelativeRequest,
+    fetchRelativeSuccess,
+    fetchSingleProductFailure,
+    fetchSingleProductRequest,
+    fetchSingleProductSuccess,
+    searchFailure,
+    searchRequest,
+    searchSuccess
 } from './catalog.slice';
 
 
 const { FAILED } = SERVER_RESPONSE_ERROR_MESSAGES;
 
-
-export function* fetchAllProducts(action: PayloadAction<IProductQueryParams>) {
+function* fetchAllProducts(action: PayloadAction<IProductQueryParams>) {
     try {
         const response: IAllProductsResponse = yield call(getAllProductsApi, action.payload);
         yield put(fetchAllProductsSuccess(response));
     } catch (error: any) {
         yield put(fetchAllProductsFailure(getErrorMessage(error, FAILED)));
+    }
+}
+
+function* fetchProductsByIds(action: PayloadAction<{ ids: string[] }>) {
+    try {
+        const response: IProduct[] = yield call(getAllProductsByIdsApi, action.payload.ids);
+        yield put(fetchProductsByIdsSuccess(response));
+    } catch (error: any) {
+        yield put(fetchProductsByIdsFailure(getErrorMessage(error, FAILED)));
     }
 }
 
@@ -78,6 +105,7 @@ function* fetchCategories() {
 
 export function* catalogSaga() {
     yield takeLatest(fetchAllProductsRequest.type, fetchAllProducts);
+    yield takeLatest(fetchProductsByIdsRequest.type, fetchProductsByIds);
     yield takeLatest(fetchSingleProductRequest.type, fetchSingleProduct);
     yield takeLatest(fetchRelativeRequest.type, fetchRelativeProducts);
     yield takeLatest(fetchBestSellersRequest.type, fetchBestSellerProducts);
