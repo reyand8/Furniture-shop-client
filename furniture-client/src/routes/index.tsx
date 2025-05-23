@@ -12,12 +12,15 @@ import About from '../pages/About';
 import SingleProduct from '../pages/SingleProduct';
 import NotFound from '../pages/NotFound';
 import Catalog from '../pages/Catalog';
+import Basket from '../pages/Basket';
+import CreateOrder from '../pages/CreateOrder';
 
 
 const {
     PROFILE, SIGN_UP, LOGIN, CATALOG,
-    CONTACT_INFO, ORDERS, ABOUT,
-    CONTACT, SINGLE_PRODUCT, UNEXPECTED_PATHS
+    CONTACT_INFO, ORDERS, ABOUT, BASKET,
+    CONTACT, SINGLE_PRODUCT, UNEXPECTED_PATHS,
+    CREATE_ORDER
 } = PATHS;
 
 const AppRoutes = () => (
@@ -33,6 +36,8 @@ const AppRoutes = () => (
         <Route path={ABOUT} element={<About />} />
         <Route path={CONTACT} element={<Contact />} />
         <Route path={CATALOG} element={<Catalog />} />
+        <Route path={BASKET} element={<Basket />} />
+        <Route path={CREATE_ORDER} element={<CreateOrder />} />
         <Route path={SINGLE_PRODUCT} element={<SingleProduct />} />
         <Route path={UNEXPECTED_PATHS} element={<NotFound />} />
     </Routes>
