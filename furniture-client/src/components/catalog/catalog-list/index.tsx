@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box } from '@mui/material';
 
@@ -22,39 +22,37 @@ const CatalogList: React.FC = () => {
         minPrice, maxPrice
     } = useSelector(selectCatalog);
 
+    const queryParams = {
+        pageSize: PAGE_SIZE_CATALOG,
+        ...(selectedCategory ? { category: selectedCategory } : {}),
+        minPrice,
+        maxPrice,
+    };
+
     useEffect((): void => {
         dispatch(fetchAllProductsRequest({
-            page: 1,
-            pageSize: PAGE_SIZE_CATALOG,
-            ...(selectedCategory ? { category: selectedCategory } : {}),
-            minPrice,
-            maxPrice,
+            page: currentPage,
+            ...queryParams
         }));
-    }, [dispatch, selectedCategory, minPrice, maxPrice]);
+    }, [dispatch, selectedCategory, minPrice, maxPrice, currentPage]);
 
-    const handleNextPage = (): void => {
-        if (currentPage < totalPages) {
+    const handleNextPage = useCallback((): void => {
+        if (currentPage < totalPages && !loading) {
             dispatch(fetchAllProductsRequest({
                 page: currentPage + 1,
-                pageSize: PAGE_SIZE_CATALOG,
-                ...(selectedCategory ? { category: selectedCategory } : {}),
-                minPrice,
-                maxPrice
+                ...queryParams
             }));
         }
-    };
+    }, [currentPage, totalPages, dispatch, selectedCategory, minPrice, maxPrice, loading]);
 
-    const handlePrevPage = (): void => {
-        if (currentPage > 1) {
+    const handlePrevPage = useCallback((): void => {
+        if (currentPage > 1 && !loading) {
             dispatch(fetchAllProductsRequest({
                 page: currentPage - 1,
-                pageSize: PAGE_SIZE_CATALOG,
-                ...(selectedCategory ? { category: selectedCategory } : {}),
-                minPrice,
-                maxPrice
+                ...queryParams
             }));
         }
-    };
+    }, [currentPage, dispatch, selectedCategory, minPrice, maxPrice, loading]);
 
     const isEmpty: boolean = !loading && !error && allProducts.length === 0;
     const hasData: boolean = !loading && !error && allProducts.length > 0;
@@ -62,9 +60,7 @@ const CatalogList: React.FC = () => {
     return (
         <Box sx={{margin: '52px auto'}}>
             {loading && <Loading />}
-            {isEmpty && (
-                <Empty />
-            )}
+            {isEmpty && <Empty />}
             {error && <ErrorInfo />}
 
             {hasData && (
