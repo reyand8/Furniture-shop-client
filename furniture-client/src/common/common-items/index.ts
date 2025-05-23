@@ -3,6 +3,11 @@ import { IContactFields } from '../../types/common.interface';
 
 export const PAGE_SIZE: number = 4;
 
+export const PAGE_SIZE_CATALOG: number = 6;
+export const DEFAULT_MIN_FILTER = 0;
+export const DEFAULT_MAX_FILTER = 2000;
+export const DEFAULT_RANGE_FILTER: [number, number] = [DEFAULT_MIN_FILTER, DEFAULT_MAX_FILTER];
+
 export const contactFieldsFirstColumn: IContactFields[] = [
     { name: 'phone', label: 'Phone' },
     { name: 'address', label: 'Address' },

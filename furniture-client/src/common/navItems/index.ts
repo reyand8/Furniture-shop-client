@@ -1,9 +1,13 @@
 import { INavItem } from '../../types/common.interface';
+import { PATHS } from '../../routes/paths';
 
+const {
+    HOME, CATALOG, ABOUT, CONTACT
+} = PATHS;
 
 export const navItems: INavItem[] = [
-    { label: 'Home', path: '/' },
-    { label: 'Catalog', path: '/shop' },
-    { label: 'Contact', path: '/contact' },
-    { label: 'About Us', path: '/about' },
+    { label: 'Home', path: HOME },
+    { label: 'Catalog', path: CATALOG },
+    { label: 'Contact', path: CONTACT },
+    { label: 'About Us', path: ABOUT },
 ];

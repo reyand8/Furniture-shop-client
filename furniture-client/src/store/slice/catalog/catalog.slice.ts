@@ -1,23 +1,38 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState } from '../../store';
-import { ICatalogState, IProduct } from '../../../types/catalog.interface';
+import {
+    ICatalogState,
+    ICategory,
+    IProduct,
+    IProductQueryParams,
+    IAllProductsResponse
+} from '../../../types/catalog.interface';
 import { SERVER_RESPONSE_ERROR_MESSAGES } from '../../../common/utils/messages/messages';
 
 
 const { UNKNOWN_ERROR } = SERVER_RESPONSE_ERROR_MESSAGES;
 
 const initialState: ICatalogState = {
+    allProducts: [],
     bestSellers: [],
     searchResults: [],
-    allProducts: [],
     relative: [],
+    categories: [],
     singleProduct: null,
 
+    currentPage: 1,
+    totalPages: 1,
+    minPrice: 0,
+    maxPrice: 2000,
+    selectedCategory: null,
+
+    loadingCategories: false,
     loadingSingle: false,
     loadingRelative: false,
     loading: false,
 
+    errorCategories: null,
     errorSingle: null,
     errorRelative: null,
     error: null,
@@ -27,6 +42,22 @@ const catalogSlice = createSlice({
     name: 'catalog',
     initialState,
     reducers: {
+        fetchAllProductsRequest(state, action: PayloadAction<IProductQueryParams>) {
+            state.loading = true;
+            state.error = null;
+            state.currentPage = action.payload.page ?? 1;
+        },
+        fetchAllProductsSuccess(state, action: PayloadAction<IAllProductsResponse>) {
+            state.loading = false;
+            state.allProducts = action.payload.products;
+            state.totalPages = action.payload.totalPages;
+        },
+        fetchAllProductsFailure(state, action: PayloadAction<string>) {
+            state.loading = false;
+            state.error = action.payload || UNKNOWN_ERROR;
+        },
+
+
         fetchSingleProductRequest(state, _action: PayloadAction<string>) {
             state.loadingSingle = true;
             state.errorSingle = null;
@@ -39,6 +70,7 @@ const catalogSlice = createSlice({
             state.loadingSingle = false;
             state.errorSingle = action.payload || UNKNOWN_ERROR;
         },
+
 
         fetchBestSellersRequest(state) {
             state.loading = true;
@@ -53,6 +85,7 @@ const catalogSlice = createSlice({
             state.error = action.payload || UNKNOWN_ERROR;
         },
 
+
         fetchRelativeRequest(state,  _action: PayloadAction<{ type: string }>) {
             state.loadingRelative = true;
             state.errorRelative = null;
@@ -66,6 +99,7 @@ const catalogSlice = createSlice({
             state.errorRelative = action.payload || UNKNOWN_ERROR;
         },
 
+
         searchRequest(state, _action: PayloadAction<string>) {
             state.loading = true;
             state.error = null;
@@ -78,6 +112,27 @@ const catalogSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
+
+
+        fetchCategoriesRequest(state) {
+            state.loadingCategories = true;
+            state.errorCategories = null;
+        },
+        fetchCategoriesSuccess(state, action: PayloadAction<ICategory[]>) {
+            state.loadingCategories = false;
+            state.categories = action.payload;
+        },
+        fetchCategoriesFailure(state, action: PayloadAction<string>) {
+            state.loadingCategories = false;
+            state.errorCategories = action.payload || UNKNOWN_ERROR;
+        },
+
+
+        setFilters(state, action: PayloadAction<{ selectedCategory: string | null; minPrice: number; maxPrice: number }>) {
+            state.selectedCategory = action.payload.selectedCategory;
+            state.minPrice = action.payload.minPrice;
+            state.maxPrice = action.payload.maxPrice;
+        },
         clearSearchResults(state) {
             state.searchResults = [];
         }
@@ -85,10 +140,14 @@ const catalogSlice = createSlice({
 });
 
 export const {
+    fetchAllProductsRequest, fetchAllProductsSuccess, fetchAllProductsFailure,
     fetchSingleProductRequest, fetchSingleProductSuccess, fetchSingleProductFailure,
     fetchRelativeRequest, fetchRelativeSuccess, fetchRelativeFailure,
     fetchBestSellersRequest, fetchBestSellersSuccess, fetchBestSellersFailure,
-    searchRequest, searchSuccess, searchFailure, clearSearchResults
+    searchRequest, searchSuccess, searchFailure,
+    fetchCategoriesRequest, fetchCategoriesSuccess, fetchCategoriesFailure,
+    setFilters,
+    clearSearchResults,
 } = catalogSlice.actions;
 
 
