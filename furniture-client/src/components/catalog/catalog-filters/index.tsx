@@ -39,6 +39,9 @@ const CatalogFilters: React.FC = () => {
 
     const [localCategory, setLocalCategory] = useState<string | null>(selectedCategory);
     const [localPriceRange, setLocalPriceRange] = useState<[number, number]>([minPrice, maxPrice]);
+    const [minSelectedPrice, maxSelectedPrice] = Array.isArray(localPriceRange)
+        ? [Math.min(localPriceRange[0] ?? 0, localPriceRange[1] ?? 0),
+            Math.max(localPriceRange[0] ?? 0, localPriceRange[1] ?? 0)] : [0, 0];
 
     useEffect((): void => {
         dispatch(fetchCategoriesRequest());
@@ -49,7 +52,7 @@ const CatalogFilters: React.FC = () => {
     };
 
     const handlePriceRangeChange = (_: Event, newValue: number | number[]) => {
-        if (Array.isArray(newValue)) {
+        if (Array.isArray(newValue) && newValue.length > 0) {
             setLocalPriceRange([newValue[0], newValue[1]]);
         }
     };
@@ -119,7 +122,7 @@ const CatalogFilters: React.FC = () => {
                         Filter By Price
                     </FiltersTitle>
                     <FilterPriceRange variant="body1" sx={{ mb: 2 }}>
-                        From ${localPriceRange[0]} to ${localPriceRange[1]}
+                        From ${minSelectedPrice} to ${maxSelectedPrice}
                     </FilterPriceRange>
 
                     <Box sx={{ width: 250, mb: 2 }}>
