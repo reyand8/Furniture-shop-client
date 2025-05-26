@@ -3,7 +3,7 @@ import { Box, Typography } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useSelector } from 'react-redux';
 
-import { ISingleItemProduct } from '../../types/props.interface';
+import { ISingleItemProductProps } from '../../types/props.interface';
 import {
     AddBasketButton, AllImagesBox, ImageItemBox,
     SelectedImageBox, SingleItemBox,
@@ -15,9 +15,11 @@ import {
 import { selectCatalog } from '../../store/slice/catalog/catalog.slice';
 import Loading from '../status/loading';
 import { addToBasket } from '../../common/utils/basket/basket';
+import noImg from '../../assets/img/noImg.png'
 
 
-const SingleItemProduct: React.FC<ISingleItemProduct> = ({ item }) => {
+const SingleItemProduct: React.FC<ISingleItemProductProps> = ({ item }) => {
+    const [isAdded, setIsAdded] = useState(false);
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const { loadingSingle } = useSelector(selectCatalog)
 
@@ -46,6 +48,8 @@ const SingleItemProduct: React.FC<ISingleItemProduct> = ({ item }) => {
 
     const handleAddToBasket = (): void => {
         addToBasket(id);
+        setIsAdded(true);
+        setTimeout(() => setIsAdded(false), 2000);
     };
 
     return (
@@ -53,7 +57,7 @@ const SingleItemProduct: React.FC<ISingleItemProduct> = ({ item }) => {
            <Box>
                {selectedImage && (
                    <SelectedImageBox
-                       src={selectedImage}
+                       src={selectedImage || noImg}
                        alt="Product img"
                    />
                )}
@@ -61,7 +65,7 @@ const SingleItemProduct: React.FC<ISingleItemProduct> = ({ item }) => {
                    {item?.images?.map((img, index) => (
                        <ImageItemBox
                            key={index}
-                           src={img}
+                           src={img || noImg}
                            alt="Product img"
                            onClick={(): void => handleImageClick(img)}
                            selected={selectedImage === img}
@@ -111,7 +115,7 @@ const SingleItemProduct: React.FC<ISingleItemProduct> = ({ item }) => {
                    disabled={!(isAvailable && isActive)}
                    onClick={handleAddToBasket}
                >
-                   Add to Basket
+                   {isAdded ? 'Added!' : 'Add to Basket'}
                </AddBasketButton>
            </SingleItemInfoBox>
        </SingleItemBox>

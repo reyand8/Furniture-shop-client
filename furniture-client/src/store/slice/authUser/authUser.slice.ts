@@ -7,11 +7,12 @@ import {
 } from '../../../types/authUser.interface';
 import { RootState } from '../../store';
 import { SERVER_RESPONSE_ERROR_MESSAGES } from '../../../common/utils/messages/messages';
+import { ACCESS_TOKEN_KEY } from '../../../common/common-items';
 
 const { UNKNOWN_ERROR } = SERVER_RESPONSE_ERROR_MESSAGES;
 
 const initialState: IAuthState = {
-    accessToken: localStorage.getItem('accessToken'),
+    accessToken: localStorage.getItem(ACCESS_TOKEN_KEY),
     loading: false,
     error: null,
 };
@@ -27,6 +28,7 @@ const authUserSlice = createSlice({
         registerSuccess(state, action: PayloadAction<IAuthResponse>) {
             state.loading = false;
             state.accessToken = action.payload.access_token;
+            localStorage.setItem(ACCESS_TOKEN_KEY,action.payload.access_token);
         },
         registerFailure(state, action: PayloadAction<string>) {
             state.loading = false;
@@ -40,6 +42,7 @@ const authUserSlice = createSlice({
         loginSuccess(state, action: PayloadAction<IAuthResponse>): void {
             state.loading = false;
             state.accessToken = action.payload.access_token;
+            localStorage.setItem(ACCESS_TOKEN_KEY,action.payload.access_token);
         },
         loginFailure(state, action: PayloadAction<string>): void {
             state.loading = false;
@@ -47,7 +50,7 @@ const authUserSlice = createSlice({
         },
         logout(state): void {
             state.accessToken = null;
-            localStorage.removeItem('accessToken');
+            localStorage.removeItem(ACCESS_TOKEN_KEY);
         },
     },
 });

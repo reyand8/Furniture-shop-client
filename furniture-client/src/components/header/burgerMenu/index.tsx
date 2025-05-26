@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box, Link } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { Box } from '@mui/material';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import PersonIcon from '@mui/icons-material/Person';
 
@@ -11,6 +12,7 @@ import {
 } from '../../../styles/Header.styles';
 import theme from '../../../assets/theme';
 import { navItems } from '../../../common/navItems';
+import { PATHS } from '../../../routes/paths';
 
 
 const BurgerMenu: React.FC = () => (
@@ -29,12 +31,12 @@ const BurgerMenu: React.FC = () => (
             ))}
             <IconBox>
                 <Box>
-                    <StyledLink to="/basket">
+                    <StyledLink to={PATHS.BASKET}>
                         <LocalMallIcon sx={{ fontSize: 36, color: theme.palette.primary.main }} />
                     </StyledLink>
                 </Box>
                 <Box>
-                    <StyledLink to="/profile">
+                    <StyledLink to={PATHS.PROFILE}>
                         <PersonIcon sx={{ fontSize: 42, color: theme.palette.primary.main}} />
                     </StyledLink>
                 </Box>

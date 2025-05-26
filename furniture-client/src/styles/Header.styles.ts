@@ -25,7 +25,9 @@ export const LogoTypography = styled(Box)(({ theme }) => ({
     color: theme.palette.text.primary,
 }));
 
-export const MenuNavItem = styled(Button)<ButtonProps & { to?: string }>(({ theme }) => ({
+export const MenuNavItem = styled(Button, {
+    shouldForwardProp: (prop) => prop !== 'active',
+})<ButtonProps & { to?: string; active?: boolean }>(({ theme, active }) => ({
     position: 'relative',
     display: 'flex',
     color: theme.palette.text.primary,
@@ -39,7 +41,7 @@ export const MenuNavItem = styled(Button)<ButtonProps & { to?: string }>(({ them
         position: 'absolute',
         left: 0,
         bottom: -1,
-        width: '0%',
+        width: active ? '100%' : '0%',
         height: '2px',
         backgroundColor: theme.palette.primary.main,
         transition: 'width 0.4s ease-in-out',

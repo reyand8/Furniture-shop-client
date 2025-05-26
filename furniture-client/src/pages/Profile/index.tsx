@@ -16,13 +16,14 @@ import {
 } from '../../store/slice/user/user.slice';
 import { logout } from '../../store/slice/authUser/authUser.slice';
 import { PATHS } from '../../routes/paths';
+import { ACCESS_TOKEN_KEY } from '../../common/common-items';
 
 
 const Profile: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const { user, loading, error } = useSelector(selectUser);
-    const token: string | null = localStorage.getItem('accessToken');
+    const token: string | null = localStorage.getItem(ACCESS_TOKEN_KEY);
 
     const isLoading: boolean = !error && loading;
     const isLoaded: boolean = !error && !loading;

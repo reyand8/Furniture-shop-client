@@ -16,7 +16,6 @@ const { FAILED } = SERVER_RESPONSE_ERROR_MESSAGES;
 function* handleRegister(action: PayloadAction<IRegister>) {
     try {
         const response: IAuthResponse = yield call(registerUser, action.payload);
-        localStorage.setItem('accessToken', response.access_token);
         yield put(registerSuccess(response));
     } catch (error: any) {
         yield put(registerFailure(getErrorMessage(error, FAILED)));
@@ -26,7 +25,6 @@ function* handleRegister(action: PayloadAction<IRegister>) {
 function* handleLogin(action: PayloadAction<ILogin>) {
     try {
         const response: IAuthResponse = yield call(loginUser, action.payload);
-        localStorage.setItem('accessToken', response.access_token);
         yield put(loginSuccess(response));
     } catch (error: any) {
         yield put(loginFailure(getErrorMessage(error, FAILED)));

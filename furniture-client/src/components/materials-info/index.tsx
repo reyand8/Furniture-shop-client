@@ -17,6 +17,7 @@ import {
     MaterialsInfoTitle,
     MoreInfoBox
 } from '../../styles/MaterialsInfo.styles';
+import { PATHS } from '../../routes/paths';
 
 
 const MaterialsInfo: React.FC = () => {
@@ -36,14 +37,14 @@ const MaterialsInfo: React.FC = () => {
                     for our environment, using a very expensive and famous
                     capital but at a relatively low price
                 </MaterialsInfoText>
-                <Link to="/" style={{textDecoration: 'none'}}>
-                    <MoreInfoBox>
+                <MoreInfoBox>
+                    <Link to={PATHS.ABOUT} style={{textDecoration: 'none'}}>
                         <Typography variant={"subtitle2"} color={theme.palette.primary.main}>
                             More Info
                         </Typography>
-                        <TrendingFlatIcon sx={{color: theme.palette.primary.main, fontSize: '18px'}}/>
-                    </MoreInfoBox>
-                </Link>
+                    </Link>
+                    <TrendingFlatIcon sx={{color: theme.palette.primary.main, fontSize: '18px'}}/>
+                </MoreInfoBox>
             </MaterialsInfoDescriptionBox>
             <ChooseUsImagesBox>
                 <ChooseUsLeftImg>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { AppBar, Container, Drawer, IconButton, Box } from '@mui/material';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import PersonIcon from '@mui/icons-material/Person';
@@ -15,9 +15,13 @@ import {
 import BurgerMenu from './burgerMenu';
 import { navItems } from '../../common/navItems';
 import { Logo } from '../logo';
+import { PATHS } from '../../routes/paths';
 
+const { BASKET, PROFILE } = PATHS;
 
 const Header: React.FC = () => {
+    const location = useLocation();
+
     const [isDrawerOpen, setDrawerOpen] = useState<boolean>(false);
 
     const handleDrawerToggle = (): void => {
@@ -40,6 +44,7 @@ const Header: React.FC = () => {
                                     key={item.label}
                                     component={Link}
                                     to={item.path}
+                                    active={location.pathname === item.path}
                                     disableRipple
                                 >
                                     {item.label}
@@ -47,10 +52,10 @@ const Header: React.FC = () => {
                             ))}
                         </Box>
                         <IconBox>
-                            <StyledLink to="/basket">
+                            <StyledLink to={BASKET}>
                                 <LocalMallIcon sx={{ fontSize: 36 }}/>
                             </StyledLink>
-                            <StyledLink to="/profile">
+                            <StyledLink to={PROFILE}>
                                 <PersonIcon sx={{ fontSize: 42, paddingTop: '2px' }} />
                             </StyledLink>
                         </IconBox>
