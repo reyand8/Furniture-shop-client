@@ -3,7 +3,7 @@ import { Box, Typography } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useSelector } from 'react-redux';
 
-import { ISingleItemProduct } from '../../types/props.interface';
+import { ISingleItemProductProps } from '../../types/props.interface';
 import {
     AddBasketButton, AllImagesBox, ImageItemBox,
     SelectedImageBox, SingleItemBox,
@@ -18,7 +18,7 @@ import { addToBasket } from '../../common/utils/basket/basket';
 import noImg from '../../assets/img/noImg.png'
 
 
-const SingleItemProduct: React.FC<ISingleItemProduct> = ({ item }) => {
+const SingleItemProduct: React.FC<ISingleItemProductProps> = ({ item }) => {
     const [isAdded, setIsAdded] = useState(false);
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const { loadingSingle } = useSelector(selectCatalog)

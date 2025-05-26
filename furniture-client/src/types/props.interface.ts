@@ -1,7 +1,10 @@
+import React from 'react';
 import {ButtonProps} from '@mui/material';
 
 import { IAllContactInfo } from './contactInfo.interface';
+import { IExistedOrder } from './order.interface';
 import { IProduct } from './catalog.interface';
+import { IUser } from './user.interface';
 
 
 export interface IModalConfirmDeleteProps {
@@ -10,7 +13,7 @@ export interface IModalConfirmDeleteProps {
     setModalOpen: (open: boolean) => void;
 }
 
-export interface IContactInfoEdit {
+export interface IContactInfoEditProps {
     item: IAllContactInfo;
     modalEditOpen: boolean;
     setModalEditOpen: (open: boolean) => void;
@@ -34,7 +37,7 @@ export interface ICarouselSettingsParams {
     infiniteThreshold?: number;
 }
 
-export interface ISingleItemProduct {
+export interface ISingleItemProductProps {
     item: IProduct | null;
 }
 
@@ -53,4 +56,29 @@ export interface IPaginationProps {
     onNext: () => void;
     disabledPrev?: boolean;
     disabledNext?: boolean;
+}
+
+export interface IOrderItemProps {
+    item: IExistedOrder;
+}
+
+export interface IOrderItemDetailsProps {
+    item: IExistedOrder;
+    modalEditOpen: boolean;
+    setModalEditOpen: (open: boolean) => void;
+}
+
+export interface IOrderModalSuccessProps {
+    openModal: boolean;
+}
+
+export interface IUserDetailsProps {
+    item: IUser;
+    isOpen: boolean;
+    setIsOpen: (value: boolean) => void;
+}
+
+export interface IAddFormWrapperProps {
+    children: React.ReactNode;
+    disabled?: boolean;
 }
