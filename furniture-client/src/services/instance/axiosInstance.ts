@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 
 import { BASE_URL } from '../../common/constants';
+import { ACCESS_TOKEN_KEY } from '../../common/common-items';
 
 
 const axiosInstance: AxiosInstance = axios.create({
@@ -8,7 +9,7 @@ const axiosInstance: AxiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((config) => {
-    const token: string | null = localStorage.getItem('accessToken');
+    const token: string | null = localStorage.getItem(ACCESS_TOKEN_KEY);
     if (token && config.headers) {
         config.headers.Authorization = `Bearer ${token}`;
     }
