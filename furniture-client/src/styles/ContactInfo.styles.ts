@@ -1,18 +1,5 @@
-import { Box, Button, styled, Typography } from '@mui/material';
+import { Box, styled, Typography } from '@mui/material';
 
-
-export const ContactInfoAddBox = styled(Box)(() => ({
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    alignItems: 'center'
-}));
-
-export const OpenContactInfoFormBtn = styled(Button)(({ theme }) => ({
-    backgroundColor: theme.palette.background.group,
-    maxWidth: '620px',
-    width: '100%',
-}));
 
 export const ContactInfoForm = styled('form')(({ theme }) => ({
     maxWidth: '620px',
@@ -38,7 +25,7 @@ export const ContactInfoItemMainSelect = styled(Box, {
     shouldForwardProp: (prop) => prop !== 'isSelected',
 })<{ isSelected?: boolean }>(({ theme, isSelected }) => ({
     borderRadius: '8px',
-    maxWidth: '280px',
+    maxWidth: '348px',
     width: '100%',
     cursor: 'pointer',
     border: isSelected
@@ -138,3 +125,10 @@ export const SelectContactSection = styled(Box)(({theme}) => ({
         backgroundColor: theme.palette.background.default,
     },
 }));
+
+export const ContactInfoDetailsBox = styled(Box)(() => ({
+    display: 'flex',
+    gap: '14px',
+    marginTop: '26px',
+}));
+

@@ -64,7 +64,7 @@ export const ProfileMenuSection = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(1),
     color: theme.palette.text.secondary,
     top: theme.spacing(2),
-    height: '420px',
+    height: '480px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
@@ -72,32 +72,40 @@ export const ProfileMenuSection = styled(Paper)(({ theme }) => ({
     width: '100%',
 }));
 
-export const ProfileMenuNavItem = styled(Button)<ButtonProps & { to?: string }>(({ theme }) => ({
-    position: 'relative',
-    display: 'flex',
-    justifyContent: 'flex-start',
-    color: theme.palette.text.secondary,
-    textTransform: 'none',
-    fontSize: '17px',
-    maxWidth: '270px',
-    width: '100%',
-    gap: '14px',
-    fontWeight: 400,
-    backgroundColor: 'transparent',
-    '&::after': {
-        content: '""',
-        position: 'absolute',
-        left: 0,
-        bottom: -1,
-        width: '0%',
-        height: '2px',
-        backgroundColor: theme.palette.primary.main,
-        transition: 'width 0.4s ease-in-out',
-    },
-    '&:hover::after': {
-        width: '240px',
-    },
-    '&:hover': {
+export const ProfileMenuNavItem = styled(Button)<ButtonProps & { to?: string; isActive?: boolean }>(
+    ({ theme, isActive }) => ({
+        position: 'relative',
+        display: 'flex',
+        justifyContent: 'flex-start',
+        color: isActive ? theme.palette.primary.main : theme.palette.text.secondary,
+        textTransform: 'none',
+        fontSize: '17px',
+        maxWidth: '270px',
+        width: '100%',
+        gap: '14px',
+        fontWeight: 400,
         backgroundColor: 'transparent',
-    },
+        '&::after': {
+            content: '""',
+            position: 'absolute',
+            left: 0,
+            bottom: -1,
+            width: isActive ? '240px' : '0%',
+            height: '2px',
+            backgroundColor: theme.palette.primary.main,
+            transition: 'width 0.4s ease-in-out',
+        },
+        '&:hover::after': {
+            width: '240px',
+        },
+        '&:hover': {
+            backgroundColor: 'transparent',
+            color: theme.palette.primary.main,
+        },
+    })
+);
+
+export const AdminMenuSection = styled(Box)(({ theme }) => ({
+    marginTop: '50px',
+    marginBottom: '20px',
 }));
