@@ -15,6 +15,7 @@ import { deleteProfile, getProfile, updateProfile } from '../../../services/api/
 import { getErrorMessage } from '../../../common/utils/error-handler/getErrorMessage';
 import { SERVER_RESPONSE_ERROR_MESSAGES } from '../../../common/utils/messages/messages';
 import { logout } from '../authUser/authUser.slice';
+import { ACCESS_TOKEN_KEY } from '../../../common/common-items';
 
 
 const { FAILED } = SERVER_RESPONSE_ERROR_MESSAGES;
@@ -24,7 +25,7 @@ function* fetchProfile() {
         const response: IUser = yield call(getProfile);
         yield put(fetchProfileSuccess(response));
     } catch (error: any) {
-        localStorage.removeItem('accessToken');
+        localStorage.removeItem(ACCESS_TOKEN_KEY);
         yield put(fetchProfileFailure(getErrorMessage(error, FAILED)));
     }
 }

@@ -67,6 +67,11 @@ const userSlice = createSlice({
         clearUpdateSuccess(state): void {
             state.updateSuccess = false;
         },
+
+        finishSession(state): void {
+            state.user = null;
+        },
+
     },
 });
 
@@ -74,7 +79,7 @@ export const {
     fetchProfileRequest, fetchProfileSuccess, fetchProfileFailure,
     updateProfileRequest, updateProfileSuccess, updateProfileFailure,
     deleteProfileRequest, deleteProfileSuccess, deleteProfileFailure,
-    clearProfileError, clearUpdateSuccess,
+    clearProfileError, clearUpdateSuccess, finishSession,
 } = userSlice.actions;
 
 export const selectUser = (state: RootState): IUserState => state.user;
