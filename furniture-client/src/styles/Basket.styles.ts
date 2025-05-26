@@ -1,4 +1,4 @@
-import { Box, Button, Paper, styled, Typography } from '@mui/material';
+import { Avatar, Box, Button, Paper, styled, Typography } from '@mui/material';
 
 
 export const BasketInfoBox = styled(Box)(() => ({
@@ -14,7 +14,7 @@ export const BasketInfoMainTitle = styled(Typography)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 
-export const BasketItemsSection = styled(Box)(() => ({
+export const BasketItemsSection = styled(Box)(({theme}) => ({
     maxHeight: '480px',
     overflowY: 'scroll',
     marginTop: '32px',
@@ -24,11 +24,11 @@ export const BasketItemsSection = styled(Box)(() => ({
         width: '8px',
     },
     '&::-webkit-scrollbar-thumb': {
-        backgroundColor: '#c1c1c1',
+        backgroundColor: theme.palette.background.group,
         borderRadius: '4px',
     },
     '&::-webkit-scrollbar-track': {
-        backgroundColor: '#f0f0f0',
+        backgroundColor: theme.palette.background.default,
     },
 }));
 
@@ -63,6 +63,18 @@ export const BasketItemQtyBox = styled(Box)(({theme}) => ({
     [theme.breakpoints.down('md')]: {
         marginLeft: '0',
     },
+}));
+
+export const BasketQtyText = styled(Typography)(({ theme }) => ({
+    color: theme.palette.text.secondary,
+    fontWeight: 700,
+    marginRight: '16px',
+}));
+
+export const BasketItemAvatar = styled(Avatar)(({ theme }) => ({
+    width: '80px',
+    height: '80px',
+    mr: '16px',
 }));
 
 export const BasketItemPrice = styled(Typography)(({ theme }) => ({

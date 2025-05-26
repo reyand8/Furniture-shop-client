@@ -10,7 +10,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import { AppDispatch } from '../../store/store';
 import { fetchProductsByIdsRequest, selectCatalog } from '../../store/slice/catalog/catalog.slice';
-import {IBasketDetailedItem, IBasketItem} from '../../types/basket.interface';
+import { IBasketDetailedItem, IBasketItem } from '../../types/basket.interface';
 import {
     BasketInfoBox, BasketInfoMainTitle, BasketItemName,
     BasketItemPaper, BasketItemPrice, BasketItemQtyBox,
@@ -25,6 +25,7 @@ import {
 import Loading from '../status/loading';
 import ErrorInfo from '../status/error';
 import Empty from '../status/empty';
+import noImg from '../../assets/img/noImg.png'
 
 
 const BasketInfo: React.FC = () => {
@@ -94,39 +95,38 @@ const BasketInfo: React.FC = () => {
                 productsWithQuantity.length > 0 ? (
                     <>
                         <Typography color="textSecondary" variant="subtitle1">
-                            You have {productsWithQuantity.length}
-                            item{productsWithQuantity.length !== 1 && 's'}
-                            in your basket
+                            You have {productsWithQuantity.length} item{productsWithQuantity.length !== 1 && 's'} in your basket
                         </Typography>
                         <BasketItemsSection>
                             <Stack spacing={2}>
-                                {productsWithQuantity.map(product => (
-                                    <BasketItemPaper key={product.id} elevation={2}>
+                                {productsWithQuantity.map(
+                                    ({ id, images, name, quantity, price, currency }: IBasketDetailedItem) => (
+                                    <BasketItemPaper key={id} elevation={2}>
                                         <Avatar
                                             variant="rounded"
-                                            src={product.images[0] || ''}
+                                            src={images[0] || noImg}
                                             sx={{ width: 80, height: 80, mr: 2 }}
                                         />
                                         <Box flex={1}>
                                             <BasketItemName>
-                                                {product.name}
+                                                {name}
                                             </BasketItemName>
                                         </Box>
                                         <BasketItemQtyBox flex={1}>
-                                            <IconButton size="small" onClick={(): void => handleIncrement(product.id)}>
+                                            <IconButton size="small" onClick={(): void => handleIncrement(id)}>
                                                 <ArrowDropUpIcon />
                                             </IconButton>
                                             <Typography color="textSecondary" fontWeight="bold" mr={1}>
-                                                {product.quantity}
+                                                {quantity}
                                             </Typography>
-                                            <IconButton size="small" onClick={(): void => handleDecrement(product.id)}>
+                                            <IconButton size="small" onClick={(): void => handleDecrement(id)}>
                                                 <ArrowDropDownIcon />
                                             </IconButton>
                                         </BasketItemQtyBox>
                                         <BasketItemPrice>
-                                            {(product.price * product.quantity).toFixed(2)} {product.currency}
+                                            {(price * quantity).toFixed(2)} {currency}
                                         </BasketItemPrice>
-                                        <IconButton onClick={() => handleDelete(product.id)}>
+                                        <IconButton onClick={() => handleDelete(id)}>
                                             <DeleteIcon />
                                         </IconButton>
                                     </BasketItemPaper>
