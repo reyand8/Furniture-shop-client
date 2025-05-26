@@ -5,6 +5,7 @@ import { IProduct } from '../../../types/catalog.interface';
 import { BASKET_KEY } from '../../common-items';
 import { fetchProductsByIdsRequest } from '../../../store/slice/catalog/catalog.slice';
 import { AppDispatch } from '../../../store/store';
+import { setNewOrderItems } from '../../../store/slice/order/order.slice';
 
 
 export const getBasket = (): IBasketItem[] => {
@@ -50,6 +51,7 @@ export const loadBasketFromStorage = (
     const stored: string | null = localStorage.getItem(BASKET_KEY);
     if (!stored) return;
     const parsed: IBasketItem[] = JSON.parse(stored);
+    dispatch(setNewOrderItems(parsed));
     setBasket(parsed);
     const ids: string[] = parsed.map(item => item.id);
     if (ids.length > 0) {

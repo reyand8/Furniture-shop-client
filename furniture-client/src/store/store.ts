@@ -5,6 +5,7 @@ import authUserReducer from './slice/authUser/authUser.slice';
 import userReducer from './slice/user/user.slice';
 import contactInfoReducer from './slice/contactInfo/contactInfo.slice';
 import catalogReducer from './slice/catalog/catalog.slice';
+import orderReducer from './slice/order/order.slice';
 import rootSaga from './rootSaga';
 
 
@@ -16,6 +17,7 @@ export const store = configureStore({
         user: userReducer,
         contactInfo: contactInfoReducer,
         catalog: catalogReducer,
+        order: orderReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware),
