@@ -45,3 +45,12 @@ export interface IImageItemBoxProps {
 export interface IRelativeProductsProps {
     type?: string;
 }
+
+export interface IPaginationProps {
+    currentPage: number;
+    totalPages: number;
+    onPrev: () => void;
+    onNext: () => void;
+    disabledPrev?: boolean;
+    disabledNext?: boolean;
+}

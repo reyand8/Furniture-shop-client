@@ -1,21 +1,16 @@
 import React from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
-interface IPaginationProps {
-    currentPage: number;
-    totalPages: number;
-    onPrev: () => void;
-    onNext: () => void;
-    disabledPrev?: boolean;
-    disabledNext?: boolean;
-}
+import { PaginationBox } from '../../styles/ContactInfo.styles';
+import { IPaginationProps } from '../../types/props.interface';
+
 
 const Pagination: React.FC<IPaginationProps> =
     ({ currentPage, totalPages, onPrev, onNext, disabledPrev, disabledNext }) => {
     return (
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+        <PaginationBox>
             <Button
                 onClick={onPrev}
                 disabled={disabledPrev || currentPage === 1}
@@ -37,7 +32,7 @@ const Pagination: React.FC<IPaginationProps> =
             >
                 Next
             </Button>
-        </Box>
+        </PaginationBox>
     );
 };
 

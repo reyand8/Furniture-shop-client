@@ -14,6 +14,7 @@ import {
 } from '../../styles/SingleItem.styles';
 import { selectCatalog } from '../../store/slice/catalog/catalog.slice';
 import Loading from '../status/loading';
+import { addToBasket } from '../../common/utils/basket/basket';
 
 
 const SingleItemProduct: React.FC<ISingleItemProduct> = ({ item }) => {
@@ -37,11 +38,15 @@ const SingleItemProduct: React.FC<ISingleItemProduct> = ({ item }) => {
     }
 
     const {
-        name, description, category,
+        id, name, description, category,
         color, price, discountPrice,
         isActive, currency, size,
         isAvailable
     } = item;
+
+    const handleAddToBasket = (): void => {
+        addToBasket(id);
+    };
 
     return (
        <SingleItemBox>
@@ -104,6 +109,7 @@ const SingleItemProduct: React.FC<ISingleItemProduct> = ({ item }) => {
                    variant="contained"
                    startIcon={<ShoppingCartIcon/>}
                    disabled={!(isAvailable && isActive)}
+                   onClick={handleAddToBasket}
                >
                    Add to Basket
                </AddBasketButton>

@@ -4,13 +4,14 @@ export const PATHS = {
     CONTACT_INFO: 'contact-info',
     PROFILE_CONTACT_INFO: '/profile/contact-info',
     PROFILE_ORDERS: '/profile/orders',
-    ORDERS: '/orders',
+    ORDERS: 'orders',
+    BASKET: '/basket',
     CATALOG: '/catalog',
+    SINGLE_PRODUCT: 'single-product/:id',
+    CREATE_ORDER: '/create-order',
     SIGN_UP: '/signup',
     LOGIN: '/login',
     CONTACT: '/contact',
     ABOUT: '/about',
     UNEXPECTED_PATHS: '*',
-
-    SINGLE_PRODUCT: 'single-product/:id',
 };

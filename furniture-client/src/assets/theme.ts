@@ -38,6 +38,7 @@ const theme = createTheme({
             card: 'rgba(128, 128, 128, 0.8)',
             btnHover: '#f1f0f0',
             headerFooterBg: 'rgba(35, 37, 40)',
+            successBg: '#abccaf',
         },
         error: {
             main: '#d32f2f',
