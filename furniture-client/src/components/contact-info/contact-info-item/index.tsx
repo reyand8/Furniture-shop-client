@@ -19,12 +19,14 @@ import {
     deleteContactInfoRequest
 } from '../../../store/slice/contactInfo/contactInfo.slice';
 import { IContactInfoProps } from '../../../types/props.interface';
+import ContactInfoDetails from '../contact-info-details';
 
 
 const ContactInfoItem: React.FC<IContactInfoProps> = ({ item }) => {
     const dispatch = useDispatch<AppDispatch>();
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
     const [modalDeleteConfirm, setModalDeleteConfirm] = useState(false);
 
     const { id, address, city, zipCode } = item;
@@ -35,6 +37,10 @@ const ContactInfoItem: React.FC<IContactInfoProps> = ({ item }) => {
 
     const handleEditClick = (): void => {
         setIsEditModalOpen(true);
+    };
+
+    const handleDetailsClick = (): void => {
+        setIsDetailsModalOpen(true);
     };
 
     useEffect((): void => {
@@ -57,7 +63,9 @@ const ContactInfoItem: React.FC<IContactInfoProps> = ({ item }) => {
                     <ContactInfoItemCity>{city}, {zipCode}</ContactInfoItemCity>
                 </Box>
                 <Box>
-                    <Button endIcon={<ArrowForwardIcon />}>
+                    <Button
+                        endIcon={<ArrowForwardIcon/>}
+                        onClick={handleDetailsClick}>
                         Details
                     </Button>
                 </Box>
@@ -88,6 +96,13 @@ const ContactInfoItem: React.FC<IContactInfoProps> = ({ item }) => {
                     item={item}
                     modalEditOpen={isEditModalOpen}
                     setModalEditOpen={setIsEditModalOpen}
+                />
+            )}
+            {isDetailsModalOpen && (
+                <ContactInfoDetails
+                    item={item}
+                    modalEditOpen={isDetailsModalOpen}
+                    setModalEditOpen={setIsDetailsModalOpen}
                 />
             )}
         </ContactInfoItemMain>
