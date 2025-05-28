@@ -1,6 +1,4 @@
-import {Box, Paper, styled, Typography} from '@mui/material';
-import theme from "../assets/theme";
-
+import { Box, Paper, styled, Typography } from '@mui/material';
 
 
 export const UserAccordionTitle = styled(Typography)(({ theme }) => ({
@@ -13,6 +11,7 @@ export const UserListItemInfo = styled(Box)(({ theme }) => ({
     display: 'flex',
     flexDirection: 'row',
     gap: '36px',
+    padding: '12px 0',
     [theme.breakpoints.down('md')]: {
         flexDirection: 'column',
         gap: '0',

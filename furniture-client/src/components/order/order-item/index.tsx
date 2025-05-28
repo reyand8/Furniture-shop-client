@@ -9,7 +9,7 @@ import OrderDetails from '../order-details';
 import {
     DialogDetailsBtn,
     DialogDetailsSection,
-    DialogInfo,
+    DialogInfoOrder,
     DialogInfoText,
     DialogInfoTitle
 } from '../../../styles/DialogDetails.styles';
@@ -29,26 +29,26 @@ const OrderItem: React.FC<IOrderItemProps> = ({item}) => {
     return (
         <OrderItemMain>
             <DialogDetailsSection>
-                <DialogInfo>
+                <DialogInfoOrder>
                     <DialogInfoTitle>Order Status:</DialogInfoTitle>
                     <DialogInfoText>{status}</DialogInfoText>
-                </DialogInfo>
-                <DialogInfo>
+                </DialogInfoOrder>
+                <DialogInfoOrder>
                     <DialogInfoTitle>Payment Status:</DialogInfoTitle>
                     <DialogInfoText>{paymentStatus}</DialogInfoText>
-                </DialogInfo>
-                <DialogInfo>
+                </DialogInfoOrder>
+                <DialogInfoOrder>
                     <DialogInfoTitle>Payment Method:</DialogInfoTitle>
                     <DialogInfoText>{paymentMethod}</DialogInfoText>
-                </DialogInfo>
-                <DialogInfo>
+                </DialogInfoOrder>
+                <DialogInfoOrder>
                     <DialogInfoTitle>Total Amount:</DialogInfoTitle>
                     <DialogInfoText>{totalAmount} $</DialogInfoText>
-                </DialogInfo>
-                <DialogInfo>
+                </DialogInfoOrder>
+                <DialogInfoOrder>
                     <DialogInfoTitle>Created at:</DialogInfoTitle>
                     <DialogInfoText>{dateOnly}</DialogInfoText>
-                </DialogInfo>
+                </DialogInfoOrder>
             </DialogDetailsSection>
             <DialogDetailsBtn>
                 <Button onClick={handleDetailsClick} variant="contained" color="primary" fullWidth>

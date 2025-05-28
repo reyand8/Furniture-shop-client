@@ -14,7 +14,6 @@ export const AuthBox = styled(Box)(({ theme }) => ({
     width: '100%',
     height: '100vh',
     [theme.breakpoints.down('lg')]: {
-        height: 'auto',
         textAlign: 'center'
     },
 }));

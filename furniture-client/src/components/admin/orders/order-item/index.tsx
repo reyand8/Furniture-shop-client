@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {
     DialogDetailsBtn,
     DialogDetailsSection,
-    DialogInfo, DialogInfoOrderAdmin, DialogInfoOrderText,
+    DialogInfo, DialogInfoOrder, DialogInfoOrderText,
     DialogInfoText,
     DialogInfoTitle
 } from '../../../../styles/DialogDetails.styles';
@@ -38,30 +38,30 @@ const OrderItem: React.FC<IOrderItemAdminProps> = ({ item }) => {
         <>
             <OrderCard variant="outlined">
                 <DialogDetailsSection sx={{ p: 3}}>
-                    <DialogInfoOrderAdmin>
+                    <DialogInfoOrder>
                         <DialogInfoTitle>Customer:</DialogInfoTitle>
                         <DialogInfoOrderText>{firstName} {lastName}</DialogInfoOrderText>
-                    </DialogInfoOrderAdmin>
-                    <DialogInfoOrderAdmin>
+                    </DialogInfoOrder>
+                    <DialogInfoOrder>
                         <DialogInfoTitle>Email:</DialogInfoTitle>
                         <DialogInfoOrderText>{email}</DialogInfoOrderText>
-                    </DialogInfoOrderAdmin>
-                    <DialogInfoOrderAdmin>
+                    </DialogInfoOrder>
+                    <DialogInfoOrder>
                         <DialogInfoTitle>Total:</DialogInfoTitle>
                         <DialogInfoOrderText>{totalAmount} $</DialogInfoOrderText>
-                    </DialogInfoOrderAdmin>
-                    <DialogInfoOrderAdmin>
+                    </DialogInfoOrder>
+                    <DialogInfoOrder>
                         <DialogInfoTitle>Payment Method:</DialogInfoTitle>
                         <DialogInfoOrderText>{paymentMethod}</DialogInfoOrderText>
-                    </DialogInfoOrderAdmin>
-                    <DialogInfoOrderAdmin>
+                    </DialogInfoOrder>
+                    <DialogInfoOrder>
                         <DialogInfoTitle>Payment Status:</DialogInfoTitle>
                         <DialogInfoOrderText>{paymentStatus}</DialogInfoOrderText>
-                    </DialogInfoOrderAdmin>
-                    <DialogInfoOrderAdmin>
+                    </DialogInfoOrder>
+                    <DialogInfoOrder>
                         <DialogInfoTitle>Order Status:</DialogInfoTitle>
                         <DialogInfoOrderText>{status}</DialogInfoOrderText>
-                    </DialogInfoOrderAdmin>
+                    </DialogInfoOrder>
                 </DialogDetailsSection>
                 <Button onClick={handleDetailsClick}  color="primary" fullWidth>
                     Details
