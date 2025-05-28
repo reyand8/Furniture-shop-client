@@ -3,7 +3,11 @@ import {
     ICategory,
     IProduct,
     IProductQueryParams,
-    IAllProductsResponse
+    IAllProductsResponse,
+    IUpdateCategoryParams,
+    ICreateUpdateCategory,
+    IUpdateProductParams,
+    ICreateProduct
 } from '../../../types/catalog.interface';
 
 
@@ -50,4 +54,30 @@ export const getCategoriesApi = async (): Promise<ICategory[]> => {
         const response =
             await axiosInstance.get<ICategory[]>(`/catalog/categories`);
         return response.data;
+};
+
+export const createCategoryApi = async (data: ICreateUpdateCategory ): Promise<ICategory> => {
+    const response = await axiosInstance.post<ICategory>(`/catalog/category`, data);
+    return response.data;
+};
+
+export const updateCategoryApi =
+    async ({ id, data }: IUpdateCategoryParams): Promise<ICategory> => {
+    const response =
+        await axiosInstance.put<ICategory>(`/catalog/category/${id}`, data);
+    return response.data;
+};
+
+export const updateProductApi =
+    async ({ id, data }: IUpdateProductParams): Promise<IProduct> => {
+    const response =
+        await axiosInstance.put<IProduct>(`/catalog/product/${id}`, data);
+    return response.data;
+};
+
+export const createProductApi =
+    async (data: ICreateProduct): Promise<IProduct> => {
+    const response =
+        await axiosInstance.post<IProduct>('/catalog/product', data);
+    return response.data;
 };
