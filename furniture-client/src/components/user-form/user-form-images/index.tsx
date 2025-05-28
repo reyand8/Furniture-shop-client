@@ -4,6 +4,7 @@ import { Box, TextField, IconButton, Typography, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import { IUserFormImagesProps } from '../../../types/props.interface';
+import theme from '../../../assets/theme';
 
 
 const UserFormImages: React.FC<IUserFormImagesProps> = ({ name, label }) => {
@@ -32,8 +33,12 @@ const UserFormImages: React.FC<IUserFormImagesProps> = ({ name, label }) => {
 
                 return (
                     <Box>
-                        <Typography variant="subtitle1" gutterBottom>{label}</Typography>
-
+                        <Typography variant="subtitle1"
+                                    sx={{ color: theme.palette.text.secondary}}
+                                    gutterBottom
+                        >
+                            {label}
+                        </Typography>
                         {images.length === 0 && (
                             <Typography color="textSecondary" mb={1}>
                                 No images added yet
@@ -51,6 +56,11 @@ const UserFormImages: React.FC<IUserFormImagesProps> = ({ name, label }) => {
                                         onChange={(e) =>
                                             handleChangeUrl(i, e.target.value)}
                                         placeholder="Image URL"
+                                        sx={{
+                                            '& .MuiInputBase-input': {
+                                                color: theme.palette.text.secondary,
+                                            },
+                                        }}
                                     />
                                     <IconButton aria-label="delete" onClick={() => handleRemove(i)}>
                                         <DeleteIcon />

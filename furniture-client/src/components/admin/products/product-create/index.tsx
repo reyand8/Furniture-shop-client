@@ -78,7 +78,7 @@ const ProductCreate: React.FC = () => {
                             variant="contained"
                             fullWidth
                             sx={{ flex: '1 1 100%', mb: 1 }}>
-                            Update
+                            Create product
                         </Button>
                     </Box>
                 </TextFieldBox>

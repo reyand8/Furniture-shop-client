@@ -74,7 +74,7 @@ const CategoryCreate: React.FC = () => {
                         variant="contained"
                         sx={{ margin: '14px 0 38px 0' }}
                         fullWidth>
-                        Add User
+                        Add Category
                     </Button>
                 </TextFieldBox>
                 { loadingCreateCategory && <Loading /> }

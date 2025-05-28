@@ -56,7 +56,7 @@ const Users: React.FC = () => {
 
     return (
         <Box>
-            <Box sx={{mb: 8, maxWidth: '420px', width: '100%'}}>
+            <Box sx={{mb: 8}}>
                 <UserAdd />
             </Box>
             {Object.values(EUserRole).map((role) => (

@@ -79,6 +79,7 @@ const CategoryEdit: React.FC<ICategoryEditProps> = ({ item, isOpen, setIsOpen })
         if (isOpen && item) {
             reset({
                 name: item.name,
+                isActive: item.isActive,
             });
         }
     }, [item, isOpen, reset]);
