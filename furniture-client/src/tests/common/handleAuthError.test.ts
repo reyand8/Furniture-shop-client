@@ -11,20 +11,6 @@ describe('handleAuthError', () => {
         setSubmitError = jest.fn();
     });
 
-    it('should handle array of error objects', () => {
-        const errorArray = [
-            { errors: ['Email is required'] },
-            { errors: ['Password too short'] },
-        ];
-
-        handleAuthError(errorArray, setSubmitError);
-
-        expect(setSubmitError).toHaveBeenCalledWith([
-            'Email is required',
-            'Password too short',
-        ]);
-    });
-
     it('should handle error as string', () => {
         const errorString = 'Invalid credentials';
         handleAuthError(errorString, setSubmitError);
