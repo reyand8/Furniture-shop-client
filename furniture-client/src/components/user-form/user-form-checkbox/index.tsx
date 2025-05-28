@@ -2,7 +2,7 @@ import React from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import { Checkbox, FormControlLabel, FormHelperText } from '@mui/material';
 
-import theme from '../../assets/theme';
+import theme from '../../../assets/theme';
 
 
 const UserFormCheckbox = ({ name, label }: { name: string; label: string }) => {

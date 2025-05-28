@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { InputTextField } from '../../styles/Auth.styles';
+import { InputTextField } from '../../../styles/Auth.styles';
 
 
 const UserFormInput = ({ name, label, type="text" }

@@ -7,7 +7,7 @@ import {
     FormHelperText,
 } from '@mui/material';
 import { useFormContext, Controller } from 'react-hook-form';
-import theme from "../../assets/theme";
+import theme from "../../../assets/theme";
 
 
 const UserFormSelect = ({ name, label, options }: {

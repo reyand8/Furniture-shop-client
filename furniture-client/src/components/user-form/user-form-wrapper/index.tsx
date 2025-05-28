@@ -3,12 +3,12 @@ import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import { Collapse } from '@mui/material';
 
-import { IAddFormWrapperProps } from '../../types/props.interface';
+import { IAddFormWrapperProps } from '../../../types/props.interface';
 import {
     AddFormWrapperBox,
     AddFormWrapperOpenBtn
-} from '../../styles/AddFormWrapper.styles';
-import { iconAddForm } from '../../common/common-items';
+} from '../../../styles/AddFormWrapper.styles';
+import { iconAddForm } from '../../../common/common-items';
 
 
 const AddFormWrapper: React.FC<IAddFormWrapperProps> = ({ children, disabled = false }) => {
