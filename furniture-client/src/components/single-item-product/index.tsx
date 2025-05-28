@@ -55,12 +55,10 @@ const SingleItemProduct: React.FC<ISingleItemProductProps> = ({ item }) => {
     return (
        <SingleItemBox>
            <Box>
-               {selectedImage && (
-                   <SelectedImageBox
-                       src={selectedImage || noImg}
-                       alt="Product img"
-                   />
-               )}
+               <SelectedImageBox
+                   src={selectedImage || noImg}
+                   alt="Product img"
+               />
                <AllImagesBox>
                    {item?.images?.map((img, index) => (
                        <ImageItemBox
