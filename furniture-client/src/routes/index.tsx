@@ -13,14 +13,20 @@ import SingleProduct from '../pages/SingleProduct';
 import NotFound from '../pages/NotFound';
 import Catalog from '../pages/Catalog';
 import Basket from '../pages/Basket';
-import CreateOrder from '../pages/CreateOrder';
+import CreateOrder from '../pages/OrderCreate';
+import OrderList from '../components/order/order-list';
+import Users from '../components/admin/users';
+import Categories from '../components/admin/categories';
+import Products from '../components/admin/products';
+import Orders from '../components/admin/orders';
 
 
 const {
     PROFILE, SIGN_UP, LOGIN, CATALOG,
     CONTACT_INFO, ORDERS, ABOUT, BASKET,
     CONTACT, SINGLE_PRODUCT, UNEXPECTED_PATHS,
-    CREATE_ORDER
+    CREATE_ORDER, ADMIN_USERS, ADMIN_CATEGORIES,
+    ADMIN_PRODUCTS, ADMIN_ORDERS
 } = PATHS;
 
 const AppRoutes = () => (
@@ -29,7 +35,13 @@ const AppRoutes = () => (
         <Route path={PROFILE} element={<Profile />}>
             <Route index element={<ProfileInfo />} />
             <Route path={CONTACT_INFO} element={<ContactInfo />} />
-            <Route path={ORDERS} element={<div>Orders Content</div>} />
+            <Route path={ORDERS} element={<OrderList />} />
+
+            <Route path={ADMIN_USERS} element={<Users />} />
+            <Route path={ADMIN_CATEGORIES} element={<Categories />} />
+            <Route path={ADMIN_PRODUCTS} element={<Products />} />
+            <Route path={ADMIN_ORDERS} element={<Orders />} />
+
         </Route>
         <Route path={SIGN_UP} element={<SignUp />} />
         <Route path={LOGIN} element={<SignIn />} />
