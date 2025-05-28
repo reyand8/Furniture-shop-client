@@ -5,6 +5,7 @@ import theme from '../../assets/theme';
 
 
 export const PAGE_SIZE: number = 4;
+export const PAGE_SIZE_CATALOG_ADMIN: number = 10;
 
 export const PAGE_SIZE_CATALOG: number = 6;
 export const DEFAULT_MIN_FILTER = 0;

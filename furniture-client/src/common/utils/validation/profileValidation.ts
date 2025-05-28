@@ -6,7 +6,7 @@ import { VALIDATION_MESSAGES }  from '../messages/messages';
 const {
     FIRST_NAME_REQUIRED, LAST_NAME_REQUIRED, EMAIL_REQUIRED, EMAIL_INVALID,
     FIRST_NAME_TOO_LONG, LAST_NAME_TOO_LONG, EMAIL_TOO_LONG, FIRST_NAME_INVALID,
-    LAST_NAME_INVALID,
+    LAST_NAME_INVALID, USER_STATUS_REQUIRED, ROLE_REQUIRED, ROLE_INVALID
 } = VALIDATION_MESSAGES;
 
 const namePattern = /^[A-Za-zÀ-ÖØ-öø-ÿ\s-]+$/;
@@ -30,4 +30,14 @@ export const updateProfileSchema = yup.object().shape({
         .required(EMAIL_REQUIRED)
         .email(EMAIL_INVALID)
         .max(60, EMAIL_TOO_LONG),
+});
+
+export const updateUserByAdminSchema = yup.object().shape({
+    isActive: yup
+        .boolean()
+        .required(USER_STATUS_REQUIRED),
+    role: yup
+        .string()
+        .oneOf(['ADMIN', 'USER'], ROLE_INVALID)
+        .required(ROLE_REQUIRED),
 });

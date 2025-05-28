@@ -1,19 +1,17 @@
 import React from 'react';
+import { useFormContext } from 'react-hook-form';
 
 import { InputTextField } from '../../styles/Auth.styles';
-import {useFormContext} from "react-hook-form";
 
 
 const UserFormInput = ({ name, label, type="text" }
                        : { name: string; label: string, type?: string }) => {
-
     const {
         register,
         formState: { errors },
     } = useFormContext();
 
     const error = errors[name];
-
 
     return (
         <InputTextField
