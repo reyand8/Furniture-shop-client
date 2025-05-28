@@ -9,7 +9,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { IUpdateContactInfo } from '../../../types/contactInfo.interface';
-import UserFormInput from '../../user-form-input';
+import UserFormInput from '../../user-form/user-form-input';
 import { TextFieldBox } from '../../../styles/Auth.styles';
 import { AppDispatch } from '../../../store/store';
 import {

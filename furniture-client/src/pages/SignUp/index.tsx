@@ -13,7 +13,7 @@ import { registerRequest, selectAuthUser } from '../../store/slice/authUser/auth
 import { AppDispatch } from '../../store/store';
 import { handleAuthError } from '../../common/utils/error-handler/authErrorHandler';
 import { registerSchema } from '../../common/utils/validation/authValidation';
-import UserFormInput from '../../components/user-form-input';
+import UserFormInput from '../../components/user-form/user-form-input';
 import { IApiError } from '../../types/error.interface';
 import { PATHS } from '../../routes/paths';
 import Header from '../../components/header';
