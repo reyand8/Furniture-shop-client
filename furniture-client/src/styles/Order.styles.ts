@@ -82,7 +82,8 @@ export const OrderItemName = styled(Typography)(({ theme }) => ({
 
 export const OrderAllItemsBox = styled(Box)(({ theme }) => ({
     maxHeight: '890px',
-    width: '520px',
+    maxWidth: '520px',
+    width: '100%',
     overflowY: 'scroll',
     marginTop: '32px',
     padding: '12px',
@@ -112,6 +113,9 @@ export const OrderItemMain = styled(Box)(({ theme }) => ({
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
+    [theme.breakpoints.down('md')]: {
+        maxWidth: '320px',
+    },
 }));
 
 export const OrderSuccessDialog = styled(Dialog)(() => ({

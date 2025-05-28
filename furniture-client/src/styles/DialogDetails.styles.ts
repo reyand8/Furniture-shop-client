@@ -18,7 +18,7 @@ export const DialogInfo = styled(Box)(() => ({
     width: '100%',
 }));
 
-export const DialogInfoOrderAdmin = styled(Box)(({theme}) => ({
+export const DialogInfoOrder = styled(Box)(({theme}) => ({
     display: 'flex',
     justifyContent: 'space-between',
     maxWidth: '420px',
@@ -56,7 +56,7 @@ export const DialogDetailsBtn = styled(Button)(() => ({
     height: '60px',
 }));
 
-export const DialogDetailsMain = styled(Box)(({ theme }) => ({
+export const DialogDetailsMain = styled(Box)(() => ({
     padding: 2,
     maxWidth: '460px',
     width: '100%',
@@ -73,7 +73,7 @@ export const OrderDetailsSubtitle = styled(Typography)(({ theme }) => ({
     padding: '24px 0'
 }));
 
-export const DialogFormBtns = styled(Box)(({ theme }) => ({
+export const DialogFormBtns = styled(Box)(() => ({
     display: 'flex',
     flexDirection: 'row',
     margin: '14px 38px 0',
