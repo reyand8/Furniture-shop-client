@@ -18,6 +18,29 @@ export const DialogInfo = styled(Box)(() => ({
     width: '100%',
 }));
 
+export const DialogInfoOrderAdmin = styled(Box)(({theme}) => ({
+    display: 'flex',
+    justifyContent: 'space-between',
+    maxWidth: '420px',
+    width: '100%',
+    [theme.breakpoints.down('md')]: {
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+    },
+}));
+
+export const DialogInfoOrderText = styled(Typography)(({ theme }) => ({
+    color: theme.palette.text.secondary,
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    maxWidth: '160px',
+    width: '100%',
+    [theme.breakpoints.down('md')]: {
+        maxWidth: '130px',
+    },
+}));
+
 export const DialogInfoTitle = styled(Typography)(({ theme }) => ({
     color: theme.palette.text.secondary,
     fontWeight: 700,

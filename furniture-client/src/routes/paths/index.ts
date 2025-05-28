@@ -14,4 +14,9 @@ export const PATHS = {
     CONTACT: '/contact',
     ABOUT: '/about',
     UNEXPECTED_PATHS: '*',
+
+    ADMIN_USERS: '/profile/admin/users',
+    ADMIN_CATEGORIES: '/profile/admin/categories',
+    ADMIN_PRODUCTS: '/profile/admin/products',
+    ADMIN_ORDERS: '/profile/admin/orders',
 };

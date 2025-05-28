@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, Typography } from '@mui/material';
 
-import UserFormInput from '../../user-form-input';
+import UserFormInput from '../../user-form/user-form-input';
 import { IApiError } from '../../../types/error.interface';
 import { handleAuthError } from '../../../common/utils/error-handler/authErrorHandler';
 import {

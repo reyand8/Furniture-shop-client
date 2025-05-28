@@ -6,7 +6,7 @@ import {
     ICategory,
     IProduct,
     IProductQueryParams,
-    IAllProductsResponse
+    IAllProductsResponse, ICreateUpdateCategory, ICreateProduct
 } from '../../../types/catalog.interface';
 import { SERVER_RESPONSE_ERROR_MESSAGES } from '../../../common/utils/messages/messages';
 
@@ -28,17 +28,30 @@ const initialState: ICatalogState = {
     maxPrice: 2000,
     selectedCategory: null,
 
+    loadingUpdateProduct: false,
+    loadingCreateProduct: false,
+    loadingCreateCategory: false,
+    loadingUpdateCategory: false,
     loadingProductsByIds: false,
     loadingCategories: false,
     loadingSingle: false,
     loadingRelative: false,
     loading: false,
 
+    errorUpdateProduct: null,
+    errorCreateProduct: null,
+    errorCreateCategory: null,
+    errorUpdateCategory: null,
     errorProductsByIds: null,
     errorCategories: null,
     errorSingle: null,
     errorRelative: null,
     error: null,
+
+    successUpdateProduct: false,
+    successCreateProduct: false,
+    successCreateCategory: false,
+    successUpdateCategory: false,
 };
 
 const catalogSlice = createSlice({
@@ -58,6 +71,40 @@ const catalogSlice = createSlice({
         fetchAllProductsFailure(state, action: PayloadAction<string>) {
             state.loading = false;
             state.error = action.payload || UNKNOWN_ERROR;
+        },
+
+
+        createProductRequest(state, _action: PayloadAction<ICreateProduct>) {
+            state.loadingCreateProduct = true;
+            state.errorCreateProduct = null;
+        },
+        createProductSuccess(state, action: PayloadAction<IProduct>) {
+            state.loadingCreateProduct = false;
+            state.allProducts.push(action.payload);
+            state.successCreateProduct = true;
+        },
+        createProductFailure(state, action: PayloadAction<string>) {
+            state.loadingCreateProduct = false;
+            state.errorCreateProduct = action.payload || UNKNOWN_ERROR;
+        },
+
+
+        updateProductRequest(state, _action: PayloadAction<{ data: IProduct; id: string }>) {
+            state.loadingUpdateProduct = true;
+            state.errorUpdateProduct = null;
+        },
+        updateProductSuccess(state, action: PayloadAction<IProduct>) {
+            state.loadingUpdateProduct = false;
+            const updatedProduct = action.payload;
+
+            state.allProducts = state.allProducts.map((product) =>
+                product.id === updatedProduct.id ? updatedProduct : product
+            );
+            state.successUpdateProduct = true;
+        },
+        updateProductFailure(state, action: PayloadAction<string>) {
+            state.loadingUpdateProduct = false;
+            state.errorUpdateProduct = action.payload || UNKNOWN_ERROR;
         },
 
 
@@ -145,6 +192,45 @@ const catalogSlice = createSlice({
         },
 
 
+        createCategoryRequest(state, _action: PayloadAction<{ data: ICreateUpdateCategory }>): void {
+            state.loadingCreateCategory = true;
+            state.errorCreateCategory = null;
+        },
+        createCategorySuccess(state,
+                                 action: PayloadAction<ICategory>): void {
+            state.loadingCreateCategory = false;
+            state.successCreateCategory = true;
+            state.categories.push(action.payload);
+        },
+        createCategoryFailure(state,
+                                 action: PayloadAction<string>): void {
+            state.loadingCreateCategory = false;
+            state.errorCreateCategory = action.payload || UNKNOWN_ERROR;
+        },
+
+
+        updateCategoryRequest(state,
+                                 _action: PayloadAction<{ data: ICreateUpdateCategory, id: string }>): void {
+            state.loadingUpdateCategory = true;
+            state.errorUpdateCategory = null;
+        },
+        updateCategorySuccess(state, action: PayloadAction<ICategory>): void {
+            state.loadingUpdateCategory = false;
+            const index: number = state.categories.findIndex(cat => cat.id === action.payload.id);
+            if (index !== -1) {
+                state.categories[index] = action.payload;
+            } else {
+                state.categories.push(action.payload);
+            }
+            state.successUpdateCategory = true;
+        },
+        updateCategoryFailure(state,
+                                 action: PayloadAction<string>): void {
+            state.loadingUpdateCategory = false;
+            state.errorUpdateCategory = action.payload || UNKNOWN_ERROR;
+        },
+
+
         setFilters(state, action: PayloadAction<{ selectedCategory: string | null; minPrice: number; maxPrice: number }>) {
             state.selectedCategory = action.payload.selectedCategory;
             state.minPrice = action.payload.minPrice;
@@ -152,6 +238,14 @@ const catalogSlice = createSlice({
         },
         clearSearchResults(state) {
             state.searchResults = [];
+        },
+        clearSuccess(state) {
+            state.successUpdateCategory = false;
+            state.successUpdateProduct = false;
+            state.successCreateProduct = false;
+        },
+        clearSuccessCreateCategory(state) {
+            state.successCreateCategory= false;
         }
     },
 });
@@ -159,13 +253,17 @@ const catalogSlice = createSlice({
 export const {
     fetchAllProductsRequest, fetchAllProductsSuccess, fetchAllProductsFailure,
     fetchProductsByIdsRequest, fetchProductsByIdsSuccess, fetchProductsByIdsFailure,
+    createProductRequest, createProductSuccess, createProductFailure,
+    updateProductRequest, updateProductSuccess, updateProductFailure,
     fetchSingleProductRequest, fetchSingleProductSuccess, fetchSingleProductFailure,
     fetchRelativeRequest, fetchRelativeSuccess, fetchRelativeFailure,
     fetchBestSellersRequest, fetchBestSellersSuccess, fetchBestSellersFailure,
     searchRequest, searchSuccess, searchFailure,
     fetchCategoriesRequest, fetchCategoriesSuccess, fetchCategoriesFailure,
-    setFilters,
-    clearSearchResults,
+    createCategoryRequest, createCategorySuccess, createCategoryFailure,
+    updateCategoryRequest, updateCategorySuccess, updateCategoryFailure,
+    setFilters, clearSearchResults, clearSuccess,
+    clearSuccessCreateCategory
 } = catalogSlice.actions;
 
 

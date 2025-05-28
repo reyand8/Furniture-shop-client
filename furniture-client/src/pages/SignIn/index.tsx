@@ -17,7 +17,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import { handleAuthError } from '../../common/utils/error-handler/authErrorHandler';
 import { loginSchema } from '../../common/utils/validation/authValidation';
-import UserFormInput from '../../components/user-form-input';
+import UserFormInput from '../../components/user-form/user-form-input';
 import { AppDispatch } from '../../store/store';
 import { ILogin } from '../../types/authUser.interface';
 import { loginRequest, selectAuthUser } from '../../store/slice/authUser/authUser.slice';

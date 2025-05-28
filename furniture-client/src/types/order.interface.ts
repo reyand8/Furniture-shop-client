@@ -1,5 +1,6 @@
 import { IBasketItem } from './basket.interface';
 import { IContactInfo } from './contactInfo.interface';
+import { IApiError } from './error.interface';
 
 export enum EOrderStatus {
     PENDING = 'PENDING',
@@ -31,6 +32,7 @@ export interface ICreateOrder {
 
 export interface IOrderState {
     allExistedOrders: IExistedOrder[];
+    allAdminOrders: IOrdersGroupedByStatus;
 
     newOrderContactId: string;
     paymentMethod: EPaymentMethod | '';
@@ -38,8 +40,10 @@ export interface IOrderState {
     newOrderNotes: string;
     totalPrice: string;
     loading: boolean;
-    error: string | null;
+    error: IApiError;
+    errorUpdateOrderStatus: IApiError;
     success: boolean;
+    successUpdateOrderStatus: boolean;
 }
 
 interface IOrderUser {
@@ -69,4 +73,12 @@ export interface IExistedOrder {
     paymentStatus: EPaymentStatus;
     totalAmount: number;
     notes: string | null;
+}
+
+export interface IOrdersGroupedByStatus {
+    [status: string]: IExistedOrder[];
+}
+
+export interface IUpdateOrderStatusApi {
+    status: EOrderStatus;
 }

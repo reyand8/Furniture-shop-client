@@ -12,7 +12,13 @@ export const VALIDATION_MESSAGES = {
     EMAIL_INVALID: 'Please provide a valid email address.',
     FIRST_NAME_INVALID: 'First name can only contain letters and hyphens.',
     LAST_NAME_INVALID: 'Last name can only contain letters and hyphens.',
+    ROLE_INVALID: 'Role must be either ADMIN or USER.',
 
+    CATEGORY_STATUS_REQUIRED: 'Category status is required.',
+    ORDER_STATUS_REQUIRED: 'Order status is required.',
+    CATEGORY_NAME_REQUIRED: 'Category name is required.',
+    USER_STATUS_REQUIRED: 'User status is required.',
+    ROLE_REQUIRED: 'Role is required.',
     PHONE_REQUIRED: 'Phone is required.',
     PHONE_INVALID: 'Phone number must be valid and up to 13 digits.',
     ADDRESS_REQUIRED: 'Address is required.',

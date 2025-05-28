@@ -53,6 +53,8 @@ const BestSeller = () => {
         return null;
     }
 
+    if (bestSellers.length < 1) return null;
+
     return (
         <OfferBox>
             <OfferTitle>

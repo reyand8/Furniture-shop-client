@@ -15,7 +15,7 @@ import {
     clearUpdateSuccess, deleteProfileRequest,
     selectUser, updateProfileRequest
 } from '../../../store/slice/user/user.slice';
-import UserFormInput from '../../user-form-input';
+import UserFormInput from '../../user-form/user-form-input';
 import { TextFieldBox } from '../../../styles/Auth.styles';
 import {
     DeleteProfileBtn,
