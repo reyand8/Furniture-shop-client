@@ -5,6 +5,7 @@ import { userSaga } from './slice/user/user.saga';
 import { contactInfoSaga } from './slice/contactInfo/contactInfo.saga';
 import { catalogSaga } from './slice/catalog/catalog.saga';
 import { orderSaga } from './slice/order/order.saga';
+import { adminSaga } from './slice/admin/admin.saga';
 
 
 export default function* rootSaga() {
@@ -14,5 +15,6 @@ export default function* rootSaga() {
         contactInfoSaga(),
         catalogSaga(),
         orderSaga(),
+        adminSaga(),
     ]);
 }

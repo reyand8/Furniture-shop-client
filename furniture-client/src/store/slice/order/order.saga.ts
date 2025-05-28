@@ -7,12 +7,28 @@ import {
     createOrderFailure,
     createOrderRequest,
     createOrderSuccess,
+    fetchOrdersByAdminFailure,
+    fetchOrdersByAdminRequest,
+    fetchOrdersByAdminSuccess,
     fetchOrdersFailure,
     fetchOrdersRequest,
-    fetchOrdersSuccess
+    fetchOrdersSuccess,
+    updateOrderStatusFailure,
+    updateOrderStatusRequest,
+    updateOrderStatusSuccess
 } from './order.slice';
-import { ICreateOrder, IExistedOrder } from '../../../types/order.interface';
-import { createOrderApi, getOrdersApi } from '../../../services/api/order/order.api';
+import {
+    ICreateOrder,
+    IExistedOrder,
+    IOrdersGroupedByStatus,
+    IUpdateOrderStatusApi
+} from '../../../types/order.interface';
+import {
+    createOrderApi,
+    getOrdersApi,
+    getOrdersByAdminApi,
+    updateOrderStatusApi
+} from '../../../services/api/order/order.api';
 
 
 const { FAILED } = SERVER_RESPONSE_ERROR_MESSAGES;
@@ -26,6 +42,15 @@ function* fetchAllOrders() {
     }
 }
 
+function* fetchOrdersByAdmin() {
+    try {
+        const data: IOrdersGroupedByStatus = yield call(getOrdersByAdminApi);
+        yield put(fetchOrdersByAdminSuccess(data));
+    } catch (error: any) {
+        yield put(fetchOrdersByAdminFailure(error.message));
+    }
+}
+
 function* createOrder(action: PayloadAction<ICreateOrder>) {
     try {
         const response: IExistedOrder = yield call(createOrderApi, action.payload);
@@ -35,7 +60,19 @@ function* createOrder(action: PayloadAction<ICreateOrder>) {
     }
 }
 
+function* updateOrderStatus(action: PayloadAction<{ data: IUpdateOrderStatusApi, id: string }>) {
+    try {
+        const response: IExistedOrder = yield call(updateOrderStatusApi, action.payload);
+        yield put(updateOrderStatusSuccess(response));
+    } catch (error: any) {
+        yield put(updateOrderStatusFailure(getErrorMessage(error, FAILED)));
+    }
+}
+
 export function* orderSaga() {
     yield takeLatest(fetchOrdersRequest.type, fetchAllOrders);
+    yield takeLatest(fetchOrdersByAdminRequest.type, fetchOrdersByAdmin);
     yield takeLatest(createOrderRequest.type, createOrder);
+    yield takeLatest(updateOrderStatusRequest.type, updateOrderStatus);
+
 }
