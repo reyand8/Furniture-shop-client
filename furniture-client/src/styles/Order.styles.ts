@@ -1,7 +1,8 @@
 import {
-    Box, Dialog, DialogContent,
+    Box, Card, Dialog, DialogContent, ListItemButton,
     styled, TextField, Typography
 } from '@mui/material';
+import {IStyledProps} from "../types/props.interface";
 
 
 export const CreateOrderItemsSection = styled(Box)(({ theme }) => ({
@@ -123,4 +124,72 @@ export const OrderSuccessDialogContent = styled(DialogContent)(() => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+}));
+
+
+export const OrderListItemButton = styled(ListItemButton, {
+    shouldForwardProp: (prop) => prop !== 'selected',
+})<IStyledProps>(({ theme, selected }) => ({
+    backgroundColor: selected ? theme.palette.primary.main : theme.palette.primary.light,
+    color: selected ? theme.palette.text.primary : 'inherit',
+    borderRadius: theme.shape.borderRadius,
+    opacity: 1,
+
+    '&.Mui-selected': {
+        backgroundColor: theme.palette.primary.main,
+        color: theme.palette.text.primary,
+        opacity: 1,
+    },
+    '&.Mui-selected:hover': {
+        backgroundColor: theme.palette.primary.main,
+        opacity: 1,
+    },
+    '&:hover': {
+        backgroundColor: selected ? theme.palette.primary.main : theme.palette.primary.light,
+    },
+    '&.Mui-disabled': {
+        backgroundColor: theme.palette.grey[200],
+        color: theme.palette.grey[500],
+        opacity: 0.8,
+    },
+}));
+
+export const OrderCard = styled(Card)(() => ({
+    maxWidth: '490px',
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+}));
+
+export const OrderInfoAdminSection = styled(Box)(({theme}) => ({
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 4,
+    mt: 4,
+    [theme.breakpoints.down('lg')]: {
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+}));
+
+
+export const OrderInfoAdminItemsSection = styled(Box)(({ theme }) => ({
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: theme.spacing(2.25),
+    alignItems: 'stretch',
+    maxHeight: '820px',
+    overflowY: 'scroll',
+    paddingRight: theme.spacing(1.75),
+    '&::-webkit-scrollbar': {
+        width: '8px',
+    },
+    '&::-webkit-scrollbar-thumb': {
+        backgroundColor: theme.palette.background.group,
+        borderRadius: '4px',
+    },
+    '&::-webkit-scrollbar-track': {
+        backgroundColor: theme.palette.background.default,
+    },
 }));
