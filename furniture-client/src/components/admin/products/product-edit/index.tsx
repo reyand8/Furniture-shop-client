@@ -8,7 +8,7 @@ import theme from '../../../../assets/theme';
 import { TextFieldBox } from '../../../../styles/Auth.styles';
 import { AppDispatch } from '../../../../store/store';
 import { IProductEditProps } from '../../../../types/props.interface';
-import { updateProductRequest } from '../../../../store/slice/catalog/catalog.slice';
+import { clearSuccess, updateProductRequest } from '../../../../store/slice/catalog/catalog.slice';
 import { productUpdateSchema } from '../../../../common/utils/validation/catalogValidation';
 import { ProductType } from '../../../../types/catalog.interface';
 import Loading from '../../../status/loading';
@@ -41,6 +41,7 @@ const ProductEdit: React.FC<IProductEditProps> = ({ item, isOpen, setIsOpen }) =
     useEffect((): void => {
         if (successUpdateProduct) {
             handleClose();
+            clearSuccess()
             setIsOpen(false);
         }
     }, [successUpdateProduct, handleClose, setIsOpen]);

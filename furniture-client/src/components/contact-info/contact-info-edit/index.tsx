@@ -15,7 +15,8 @@ import { AppDispatch } from '../../../store/store';
 import {
     clearUpdateError,
     selectContactInfo,
-    updateContactInfoRequest
+    updateContactInfoRequest,
+    clearSuccess
 } from '../../../store/slice/contactInfo/contactInfo.slice';
 import { contactInfoSchema } from '../../../common/utils/validation/contactInfoValidation';
 import { IContactInfoEditProps } from '../../../types/props.interface';
@@ -34,6 +35,7 @@ const ContactInfoEdit: React.FC<IContactInfoEditProps> = ({ item, modalEditOpen,
     const handleClose = useCallback(() => {
         dispatch(clearUpdateError());
         setModalEditOpen(false);
+        dispatch(clearSuccess());
         setSubmitError(null);
     }, [setModalEditOpen, dispatch]);
 

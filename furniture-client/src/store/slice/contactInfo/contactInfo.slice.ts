@@ -110,6 +110,8 @@ const contactInfoSlice = createSlice({
 
         clearSuccess(state): void {
             state.success = false;
+            state.updateSuccess = false;
+            state.deleteSuccess = false;
         },
 
         clearUpdateError(state): void {
@@ -123,7 +125,7 @@ export const {
     createContactInfoRequest, createContactInfoSuccess, createContactInfoFailure,
     deleteContactInfoRequest, deleteContactInfoSuccess, deleteContactInfoFailure,
     updateContactInfoRequest, updateContactInfoSuccess, updateContactInfoFailure,
-    clearSuccess, clearUpdateError
+    clearSuccess, clearUpdateError,
 } = contactInfoSlice.actions;
 
 export const selectContactInfo =
