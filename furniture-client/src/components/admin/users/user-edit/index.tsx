@@ -40,15 +40,10 @@ const UserEdit: React.FC<IUserDetailsProps> = ({ item, isOpen, setIsOpen }) => {
         }
     }, [updateUserError]);
 
-    useEffect(() => {
+    useEffect((): void => {
         if (updateUserSuccess) {
-            setShowSuccessMessage(true);
-            const timer = setTimeout(() => {
-                setShowSuccessMessage(false);
-                dispatch(clearUpdateByAdminSuccess());
-                handleClose();
-            }, 3000);
-            return () => clearTimeout(timer);
+            dispatch(clearUpdateByAdminSuccess());
+            handleClose();
         }
     }, [updateUserSuccess, dispatch]);
 

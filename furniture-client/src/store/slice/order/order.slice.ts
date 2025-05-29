@@ -140,6 +140,7 @@ const orderSlice = createSlice({
 
         clearSuccess(state) {
             state.successUpdateOrderStatus = false;
+            state.success = false;
         }
     },
 });
