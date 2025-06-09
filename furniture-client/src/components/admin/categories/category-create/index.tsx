@@ -34,6 +34,9 @@ const CategoryCreate: React.FC = () => {
 
     const methods = useForm({
         resolver: yupResolver(categorySchema),
+        defaultValues: {
+            isActive: true,
+        },
     });
 
     const { handleSubmit, reset } = methods;
