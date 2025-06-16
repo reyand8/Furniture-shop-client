@@ -20,6 +20,9 @@ const SingleProduct: React.FC = () => {
     const { singleProduct, errorSingle } = useSelector(selectCatalog);
     const { id } = useParams();
 
+    /**
+     * Fetch the single product details when the component mounts or `id` changes.
+     */
     useEffect((): void => {
         if (id) {
             dispatch(fetchSingleProductRequest(id));

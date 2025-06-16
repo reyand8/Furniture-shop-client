@@ -23,7 +23,10 @@ import { registerUser } from '../../../services/api/auth/authUser.api';
 
 const { FAILED } = SERVER_RESPONSE_ERROR_MESSAGES;
 
-
+/**
+ * Saga to handle fetching users by role.
+ * @param action - Redux action with the user role to fetch.
+ */
 function* fetchUsersByRole(action: PayloadAction<{ role: EUserRole }>) {
     try {
         const response: IUser[] = yield call(getUsersByRoleApi, action.payload.role);
@@ -33,6 +36,10 @@ function* fetchUsersByRole(action: PayloadAction<{ role: EUserRole }>) {
     }
 }
 
+/**
+ * Saga to handle updating a user by an admin.
+ * @param action - Redux action containing user ID and update data.
+ */
 function* updateUserByAdmin(action: PayloadAction<{ userId: string; data: IUpdateUserByAdmin }>) {
     try {
         const { userId, data } = action.payload;
@@ -43,6 +50,10 @@ function* updateUserByAdmin(action: PayloadAction<{ userId: string; data: IUpdat
     }
 }
 
+/**
+ * Saga to handle registering a new user by an admin.
+ * @param action - Redux action containing registration data.
+ */
 function* registerUserByAdmin(action: PayloadAction<IRegister>) {
     try {
         const response: IAuthResponse = yield call(registerUser, action.payload);
@@ -52,6 +63,9 @@ function* registerUserByAdmin(action: PayloadAction<IRegister>) {
     }
 }
 
+/**
+ * Root saga that watches for admin-related actions and runs corresponding sagas.
+ */
 export function* adminSaga() {
     yield takeLatest(fetchUsersRequest.type, fetchUsersByRole);
     yield takeLatest(registerUserByAdminRequest.type, registerUserByAdmin);

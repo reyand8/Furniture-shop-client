@@ -18,8 +18,19 @@ import { selectCatalog } from '../../../../store/slice/catalog/catalog.slice';
 import { useProductForm } from '../../../../common/utils/products/useProductForm';
 
 
+/**
+ * ProductEdit component allows editing an existing product.
+ * It opens a dialog with a form pre-filled with product data,
+ * handles form submission with validation, shows loading state,
+ * and manages success or error feedback.
+ */
 const ProductEdit: React.FC<IProductEditProps> = ({ item, isOpen, setIsOpen }) => {
     const dispatch = useDispatch<AppDispatch>();
+
+    /**
+     * Custom hook that returns form methods, reset function,
+     * error handlers, close handler, and options for selects.
+     */
     const {
         methods,
         reset,
@@ -34,10 +45,16 @@ const ProductEdit: React.FC<IProductEditProps> = ({ item, isOpen, setIsOpen }) =
     const { errorUpdateProduct, successUpdateProduct, loadingUpdateProduct } = useSelector(selectCatalog);
     const { handleSubmit } = methods;
 
+    /**
+     * Effect to handle any update errors by displaying them.
+     */
     useEffect((): void => {
         handleError(errorUpdateProduct);
     }, [errorUpdateProduct]);
 
+    /**
+     * Effect to handle successful update by closing dialog and clearing success state.
+     */
     useEffect((): void => {
         if (successUpdateProduct) {
             handleClose();
@@ -46,6 +63,9 @@ const ProductEdit: React.FC<IProductEditProps> = ({ item, isOpen, setIsOpen }) =
         }
     }, [successUpdateProduct, handleClose, setIsOpen]);
 
+    /**
+     * Effect to reset form fields with product data when dialog opens.
+     */
     useEffect((): void => {
         if (isOpen && item) {
             reset({
@@ -66,6 +86,12 @@ const ProductEdit: React.FC<IProductEditProps> = ({ item, isOpen, setIsOpen }) =
         }
     }, [isOpen, item, reset]);
 
+    /**
+     * Form submission handler.
+     * Dispatches update product request and clears any previous submit error.
+     *
+     * @param {any} data - Form data submitted by the user.
+     */
     const onSubmit: SubmitHandler<any> = (data): void => {
         setSubmitError(null);
         dispatch(updateProductRequest({ id: item.id, data }));

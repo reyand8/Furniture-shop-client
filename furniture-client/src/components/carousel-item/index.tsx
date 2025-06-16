@@ -15,11 +15,23 @@ import { addToBasket } from '../../common/utils/basket/basket';
 import noImg from '../../assets/img/noImg.png'
 
 
+/**
+ * Renders a single product card in a carousel with:
+ * - image
+ * - name
+ * - price or discount
+ * - button to add to basket
+ *
+ * @param item - Product item props
+ */
 const CarouselItem = (item: IProduct)=>  {
     const { id, name, images, discountPrice, price, currency } = item;
 
     const [added, setAdded] = useState(false);
 
+    /**
+     * Adds item to basket and shows confirmation icon for 1.5 seconds.
+     */
     const handleAddToBasket = (): void => {
         addToBasket(id);
         setAdded(true);

@@ -15,12 +15,25 @@ import {
 import { IUserDetailsProps } from '../../../../types/props.interface';
 
 
-const UserDetails: React.FC<IUserDetailsProps> = ({ item, isOpen, setIsOpen }) => {
+/**
+ * UserDetails component shows detailed information about a user in a dialog.
+ *
+ * @param {IUserDetailsProps} props - Component props.
+ * @param {object} props.item - User object with details to display.
+ * @param {boolean} props.isOpen - Boolean flag controlling dialog visibility.
+ * @param {function} props.setIsOpen - Function to change the dialog visibility state.
+ */
+const UserDetails: React.FC<IUserDetailsProps> = ({ item, isOpen, setIsOpen }: IUserDetailsProps) => {
+
+    /**
+     * Closes the dialog by setting isOpen state to false.
+     */
     const handleClose = (): void => {
         setIsOpen(false);
     };
 
     const { firstName, lastName, email, role, isActive } = item;
+
     return (
         <Dialog open={isOpen} onClose={handleClose} fullWidth maxWidth="sm">
             <DialogTitle color={theme.palette.text.secondary}>User Details</DialogTitle>

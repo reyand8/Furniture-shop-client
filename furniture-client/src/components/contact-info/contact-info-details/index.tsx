@@ -11,7 +11,17 @@ import { IContactFields } from '../../../types/common.interface';
 import { ContactInfoDetailsBox } from '../../../styles/ContactInfo.styles';
 
 
+/**
+ * ContactInfoDetails component displays contact information details in a modal dialog.
+ *
+ * - Renders contact info fields in two columns using provided `item` data
+ * - Uses MUI Dialog for layout and interaction
+ * - Supports closing the modal via `setModalEditOpen`
+ */
 const ContactInfoDetails: React.FC<IContactInfoEditProps> = ({ item, modalEditOpen, setModalEditOpen }) => {
+    /**
+     * Close the modal by updating the parent state.
+     */
     const handleClose = (): void => {
         setModalEditOpen(false);
     };

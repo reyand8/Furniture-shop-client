@@ -20,12 +20,26 @@ import {
 } from '../../../styles/DialogDetails.styles';
 
 
+
+/**
+ * OrderDetails component displays full details of a specific order.
+ *
+ * - Shows order summary, payment info, customer data, and contact info
+ * - Uses a modal dialog to display details
+ * - Accepts order item and modal state management as props
+ */
 const OrderDetails: React.FC<IOrderItemDetailsProps> = ({ item, modalEditOpen, setModalEditOpen }) => {
 
+    /**
+     * Closes the order details modal
+     */
     const handleClose = (): void => {
         setModalEditOpen(false);
     };
 
+    /**
+     * Computes the total quantity from all order items
+     */
     const totalQuantity: number =
         item.orderItems.reduce((sum, item) =>
             sum + item.quantity, 0);

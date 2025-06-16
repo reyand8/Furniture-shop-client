@@ -20,6 +20,10 @@ import { ACCESS_TOKEN_KEY } from '../../../common/common-items';
 
 const { FAILED } = SERVER_RESPONSE_ERROR_MESSAGES;
 
+/**
+ * Fetches the current user's profile from the API.
+ * Removes access token on failure.
+ */
 function* fetchProfile() {
     try {
         const response: IUser = yield call(getProfile);
@@ -30,6 +34,10 @@ function* fetchProfile() {
     }
 }
 
+/**
+ * Updates the current user's profile with provided data.
+ * @param action - Contains updated user data.
+ */
 function* updateProfileSaga(action: { payload: IUpdateUser }) {
     try {
         const response: IUser = yield call(updateProfile, action.payload);
@@ -39,6 +47,10 @@ function* updateProfileSaga(action: { payload: IUpdateUser }) {
     }
 }
 
+/**
+ * Deletes the current user's profile.
+ * On success, triggers logout action.
+ */
 function* deleteProfileSaga() {
     try {
         yield call(deleteProfile);
@@ -49,6 +61,9 @@ function* deleteProfileSaga() {
     }
 }
 
+/**
+ * Root saga watching user profile related actions.
+ */
 export function* userSaga() {
     yield takeLatest(fetchProfileRequest.type, fetchProfile);
     yield takeLatest(updateProfileRequest, updateProfileSaga);

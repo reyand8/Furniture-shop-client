@@ -17,6 +17,13 @@ import {
 import OrderItem from './order-item';
 
 
+/**
+ * Admin component that displays a list of all orders grouped by their status.
+ * Allows selecting a status to view all orders in that category.
+ *
+ * Fetches all orders on mount via Redux, handles loading/error states,
+ * and displays orders using the `OrderItem` component.
+ */
 const Orders: React.FC = () => {
     const dispatch = useDispatch();
     const { allAdminOrders, loading, error } = useSelector(selectOrder);

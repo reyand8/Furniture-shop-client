@@ -12,10 +12,20 @@ import Loading from '../../status/loading';
 import ErrorInfo from '../../status/error';
 
 
+/**
+ * OrderList component fetches and displays a list of existing orders.
+ *
+ * - Dispatches `fetchOrdersRequest` to retrieve orders on mount
+ * - Shows loading, error, or empty state based on Redux state
+ * - Maps and renders `OrderItem` for each order
+ */
 const OrderList: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const { allExistedOrders, loading, error } = useSelector(selectOrder)
 
+    /**
+     * Fetch all orders when the component is first mounted.
+     */
     useEffect((): void => {
         dispatch(fetchOrdersRequest());
     }, [dispatch]);

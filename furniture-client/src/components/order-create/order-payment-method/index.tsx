@@ -14,10 +14,21 @@ import { setPaymentMethod } from '../../../store/slice/order/order.slice';
 import { paymentLabels } from "../../../common/common-items";
 
 
+/**
+ * Component for selecting a payment method for an order.
+ *
+ * - Displays radio buttons for each available payment method.
+ * - Shows a success icon when a method is selected.
+ * - Updates local state and Redux store on selection change.
+ */
 const OrderPaymentMethod: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const [selectedMethod, setSelectedMethod] = useState<EPaymentMethod | null>(null);
 
+    /**
+     * Handles changes to the selected payment method.
+     * Updates component state and dispatches selection to Redux.
+     */
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         setSelectedMethod(event.target.value as EPaymentMethod);
         dispatch(setPaymentMethod(event.target.value as EPaymentMethod))

@@ -25,6 +25,10 @@ import { SERVER_RESPONSE_ERROR_MESSAGES } from '../../../common/utils/messages/m
 
 const { FAILED } = SERVER_RESPONSE_ERROR_MESSAGES;
 
+/**
+ * Fetches paginated contact information from the API.
+ * @param action - Contains pagination parameters: page number and page size.
+ */
 function* fetchContactInfo(action: PayloadAction<{ page: number, pageSize: number }>) {
     try {
         const { page, pageSize } = action.payload;
@@ -35,6 +39,10 @@ function* fetchContactInfo(action: PayloadAction<{ page: number, pageSize: numbe
     }
 }
 
+/**
+ * Creates new contact information via the API.
+ * @param action - Contains the contact info data to be created.
+ */
 function* createContactInfo(action: PayloadAction<IContactInfo>) {
     try {
         const response: IAllContactInfo = yield call(createContactInfoApi, action.payload);
@@ -44,6 +52,10 @@ function* createContactInfo(action: PayloadAction<IContactInfo>) {
     }
 }
 
+/**
+ * Updates existing contact information by ID via the API.
+ * @param action - Contains updated data and the contact info ID.
+ */
 function* updateContactInfoSaga(action: PayloadAction<{ data: IUpdateContactInfo, id: string }>) {
     try {
         const response: IAllContactInfo = yield call(updateContactInfoApi, action.payload.data, action.payload.id);
@@ -53,6 +65,10 @@ function* updateContactInfoSaga(action: PayloadAction<{ data: IUpdateContactInfo
     }
 }
 
+/**
+ * Deletes contact information by ID via the API.
+ * @param action - Contains the ID of the contact info to delete.
+ */
 function* deleteContactInfo(action: PayloadAction<string>) {
     try {
         const response: string = yield call(deleteContactInfoApi, action.payload);
@@ -62,6 +78,9 @@ function* deleteContactInfo(action: PayloadAction<string>) {
     }
 }
 
+/**
+ * Root saga that watches for contact info related actions and triggers respective worker sagas.
+ */
 export function* contactInfoSaga() {
     yield takeLatest(fetchContactInfoRequest.type, fetchContactInfo);
     yield takeLatest(createContactInfoRequest.type, createContactInfo);

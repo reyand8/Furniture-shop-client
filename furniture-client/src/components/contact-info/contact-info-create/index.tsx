@@ -20,6 +20,14 @@ import { contactFieldsFirstColumn, contactFieldsSecondColumn } from '../../../co
 import SubmitError from '../../submit-error';
 
 
+/**
+ * ContactInfoCreate component provides a form to create new contact information.
+ *
+ * - Uses react-hook-form with Yup validation schema
+ * - Dispatches createContactInfoRequest action on form submit
+ * - Handles and displays API errors and success messages
+ * - Resets form on successful submission
+ */
 const ContactInfoCreate: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const [submitError, setSubmitError] = useState<IApiError>(null);
@@ -37,6 +45,9 @@ const ContactInfoCreate: React.FC = () => {
 
     const { handleSubmit, reset } = methods;
 
+    /**
+     * Listen for API errors and update local submitError state.
+     */
     useEffect((): void => {
         if (error) {
             handleAuthError(error, setSubmitError);
@@ -44,6 +55,10 @@ const ContactInfoCreate: React.FC = () => {
         }
     }, [error]);
 
+    /**
+     * On successful submission, show success message,
+     * reset form fields and clear success state in Redux.
+     */
     useEffect(() => {
         if (success) {
             setShowSuccessMessage(true);
@@ -52,6 +67,9 @@ const ContactInfoCreate: React.FC = () => {
         }
     }, [success, dispatch, reset]);
 
+    /**
+     * Handle form submission by dispatching create request.
+     */
     const onSubmit = (data: IContactInfo): void => {
         setSubmitError(null);
         dispatch(createContactInfoRequest(data));

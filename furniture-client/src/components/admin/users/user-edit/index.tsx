@@ -27,19 +27,33 @@ import { IUserDetailsProps } from '../../../../types/props.interface';
 import { DialogFormBtns } from '../../../../styles/DialogDetails.styles';
 
 
-const UserEdit: React.FC<IUserDetailsProps> = ({ item, isOpen, setIsOpen }) => {
+/**
+ * UserEdit component allows admin to edit user role and status via a dialog form.
+ *
+ * @param {IUserDetailsProps} props - Component props
+ * @param {object} props.item - The user object containing current user details.
+ * @param {boolean} props.isOpen - Boolean controlling whether the dialog is open.
+ * @param {function} props.setIsOpen - Function to toggle the dialog visibility.
+ */
+const UserEdit: React.FC<IUserDetailsProps> = ({ item, isOpen, setIsOpen }: IUserDetailsProps) => {
     const dispatch = useDispatch<AppDispatch>();
     const [submitError, setSubmitError] = useState<IApiError>(null);
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
     const {updateUserError, updateUserSuccess } = useSelector(selectAdmin);
 
+    /**
+     * Effect hook to handle update error by showing an error message.
+     */
     useEffect((): void => {
         if (updateUserError) {
             handleAuthError(updateUserError, setSubmitError);
         }
     }, [updateUserError]);
 
+    /**
+     * Effect hook to handle successful user update by clearing success state and closing dialog.
+     */
     useEffect((): void => {
         if (updateUserSuccess) {
             dispatch(clearUpdateByAdminSuccess());
@@ -47,6 +61,9 @@ const UserEdit: React.FC<IUserDetailsProps> = ({ item, isOpen, setIsOpen }) => {
         }
     }, [updateUserSuccess, dispatch]);
 
+    /**
+     * React Hook Form instance with validation schema and default values from the user item.
+     */
     const methods = useForm({
         resolver: yupResolver(updateUserByAdminSchema),
         defaultValues: {
@@ -55,6 +72,9 @@ const UserEdit: React.FC<IUserDetailsProps> = ({ item, isOpen, setIsOpen }) => {
         },
     });
 
+    /**
+     * Closes the dialog and resets error and success states.
+     */
     const handleClose = (): void => {
         setSubmitError(null);
         setShowSuccessMessage(false);
@@ -64,6 +84,9 @@ const UserEdit: React.FC<IUserDetailsProps> = ({ item, isOpen, setIsOpen }) => {
 
     const { handleSubmit, reset } = methods;
 
+    /**
+     * Resets form values when dialog opens or user item changes.
+     */
     useEffect((): void => {
         if (isOpen) {
             reset({
@@ -73,11 +96,19 @@ const UserEdit: React.FC<IUserDetailsProps> = ({ item, isOpen, setIsOpen }) => {
         }
     }, [isOpen, item, reset]);
 
+    /**
+     * Handles form submission to update user details.
+     *
+     * @param {IUpdateUserByAdmin} data - Form data with updated user info.
+     */
     const onSubmit: SubmitHandler<IUpdateUserByAdmin> = (data: IUpdateUserByAdmin): void => {
         setSubmitError(null);
         dispatch(updateUserByAdminRequest({ userId: item.id, data }));
     };
 
+    /**
+     * Options for the user role select input.
+     */
     const roleOptions = useMemo(() => [
         { value: 'USER', label: 'User' },
         { value: 'ADMIN', label: 'Admin' },

@@ -11,6 +11,12 @@ import { handleAuthError } from '../error-handler/authErrorHandler';
 import { clearSuccess } from '../../../store/slice/order/order.slice';
 
 
+/**
+ * Custom hook for managing product form logic.
+ *
+ * @param schema - Validation schema (Yup) used for form validation.
+ * @returns Form methods, select options, and error handling utilities.
+ */
 export const useProductForm = (schema: any) => {
     const dispatch = useDispatch<AppDispatch>();
     const [submitError, setSubmitError] = useState<IApiError | null>(null);

@@ -14,6 +14,11 @@ import OrderDetails from '../../../order/order-details';
 import OrderEdit from '../order-edit';
 
 
+/**
+ * Admin component for displaying a summary of a single order with options to:
+ * - View full order details in a modal.
+ * - Edit the order status via a separate dialog.
+ */
 const OrderItem: React.FC<IOrderItemAdminProps> = ({ item }) => {
     const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);

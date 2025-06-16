@@ -22,6 +22,13 @@ import { IContactInfoProps } from '../../../types/props.interface';
 import ContactInfoDetails from '../contact-info-details';
 
 
+/**
+ * ContactInfoItem component renders a single contact info card.
+ *
+ * - Displays address and city with actions: View Details, Edit, Delete
+ * - Opens corresponding modals for each action
+ * - Dispatches delete request on confirmation
+ */
 const ContactInfoItem: React.FC<IContactInfoProps> = ({ item }) => {
     const dispatch = useDispatch<AppDispatch>();
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -31,24 +38,39 @@ const ContactInfoItem: React.FC<IContactInfoProps> = ({ item }) => {
 
     const { id, address, city, zipCode } = item;
 
+    /**
+     * Open the delete confirmation modal
+     */
     const handleDeleteClick = (): void => {
         setIsDeleteModalOpen(true);
     };
 
+    /**
+     * Open the edit modal
+     */
     const handleEditClick = (): void => {
         setIsEditModalOpen(true);
     };
 
+    /**
+     * Open the details modal
+     */
     const handleDetailsClick = (): void => {
         setIsDetailsModalOpen(true);
     };
 
+    /**
+     * Watch for modalDeleteConfirm flag and trigger deletion
+     */
     useEffect((): void => {
         if (modalDeleteConfirm) {
             handleDeleteConfirm();
         }
     }, [modalDeleteConfirm]);
 
+    /**
+     * Dispatch deleteContactInfoRequest and close modals
+     */
     const handleDeleteConfirm = (): void => {
         dispatch(deleteContactInfoRequest(id));
         setModalDeleteConfirm(false);

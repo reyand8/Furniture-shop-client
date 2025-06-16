@@ -26,31 +26,59 @@ import Empty from '../../status/empty';
 import noImg from '../../../assets/img/noImg.png';
 
 
+/**
+ * Component that displays a detailed list of basket items with quantities and prices.
+ *
+ * - Loads basket items from local storage and merges them with product details from the store.
+ * - Calculates and updates total price in the Redux store.
+ * - Handles loading, error, and empty basket states.
+ * - Renders a styled list of selected products with images, quantities, and total prices.
+ */
 const OrderItems: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const [basketFromStorage, setBasketFromStorage] = useState<IBasketItem[]>([]);
     const { productsByIds, loadingProductsByIds, errorProductsByIds } = useSelector(selectCatalog);
 
+    /**
+     * Loads basket items from local storage on component mount.
+     * Updates local state with basket items.
+     */
     useEffect((): void => {
         loadBasketFromStorage(dispatch, setBasketFromStorage);
     }, [dispatch]);
 
+    /**
+     * Combines product details with basket item quantities.
+     * Memoizes to avoid unnecessary recalculations.
+     */
     const productsWithQuantity: IBasketDetailedItem[] = useMemo(() => {
         return mergeProductsWithQuantities(productsByIds, basketFromStorage);
     }, [productsByIds, basketFromStorage]);
 
+    /**
+     * Calculates the total price of all items in the basket.
+     * Memoized to recalculate only when products or quantities change.
+     */
     const totalPrice: number = useMemo(() => {
         return productsWithQuantity.reduce(
             (acc, product) =>
                 acc + product.price * product.quantity, 0);
     }, [productsWithQuantity]);
 
+    /**
+     * Updates the total price in the Redux store whenever the totalPrice
+     * or products list changes.
+     */
     useEffect((): void => {
         if (productsWithQuantity.length > 0 && productsByIds.length > 0) {
             dispatch(setTotalPrice(`${totalPrice} ${productsByIds[0].currency}`));
         }
     }, [productsWithQuantity, productsByIds, totalPrice, dispatch]);
 
+    /**
+     * Clears basket from local storage if there is an error loading products
+     * or if the basket is empty.
+     */
     useEffect((): void => {
         if (errorProductsByIds || productsWithQuantity.length === 0) {
             localStorage.removeItem(BASKET_KEY);

@@ -15,6 +15,15 @@ import { BASKET_KEY } from '../../../common/common-items';
 import { PATHS } from '../../../routes/paths';
 
 
+/**
+ * Component for creating a new order from basket items.
+ *
+ * - Displays total price and a Buy button.
+ * - Enables order creation only if all required fields are valid.
+ * - Dispatches order creation action to Redux.
+ * - Shows success modal on successful order creation.
+ * - Clears basket and navigates home after order success.
+ */
 const OrderAdd: React.FC = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -25,6 +34,9 @@ const OrderAdd: React.FC = () => {
         newOrderNotes, newOrderItems, success
     } = useSelector(selectOrder);
 
+    /**
+     * Checks if all required data is present and valid to enable the Buy button.
+     */
     const isBuyEnabled: boolean =
         !!totalPrice &&
         !totalPrice.startsWith("0") &&
@@ -32,6 +44,10 @@ const OrderAdd: React.FC = () => {
         !!newOrderContactId &&
         newOrderItems.length > 0;
 
+    /**
+     * Handles the creation of a new order.
+     * Prepares order payload and dispatches create order request.
+     */
     const handleCreateOrder = (): void => {
         const orderPayload: ICreateOrder = {
             contactInfoId: newOrderContactId,
@@ -44,6 +60,11 @@ const OrderAdd: React.FC = () => {
         dispatch(createOrderRequest(orderPayload));
     };
 
+    /**
+     * Effect that runs when the order creation status changes.
+     * If successful, opens success modal, clears basket data,
+     * navigates home after a delay.
+     */
     useEffect(() => {
         if (success) {
             setOpenModal(true);

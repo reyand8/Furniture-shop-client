@@ -25,12 +25,25 @@ import Empty from '../../components/status/empty';
 import { ACCESS_TOKEN_KEY } from '../../common/common-items';
 
 
+/**
+ * OrderCreate component handles the creation of a new order.
+ *
+ * - Redirects to login if the user is not authenticated.
+ * - Fetches user profile data if not already loaded.
+ * - Handles loading and empty user states.
+ * - Displays order creation form sections: items, contact, payment method, notes, and add order.
+ * - Shows header and footer layout.
+ */
 const OrderCreate: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const { user, loading, error } = useSelector(selectUser);
     const token: string | null = localStorage.getItem(ACCESS_TOKEN_KEY);
 
+    /**
+     * Effect to redirect unauthenticated users to login,
+     * and to fetch user profile if needed.
+     */
     useEffect((): void => {
         if (!token && !error) {
             navigate(PATHS.LOGIN);
@@ -41,6 +54,9 @@ const OrderCreate: React.FC = () => {
         }
     }, [dispatch, navigate, token, error, loading, user]);
 
+    /**
+     * Effect to handle errors by logging out user and clearing profile errors.
+     */
     useEffect((): void => {
         if (error) {
             dispatch(logout());

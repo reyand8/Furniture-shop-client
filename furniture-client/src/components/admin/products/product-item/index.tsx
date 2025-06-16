@@ -11,10 +11,18 @@ import { ProductItemAdminPaper, ProductItemAdminSection } from '../../../../styl
 import ProductEdit from "../product-edit";
 
 
+/**
+ * ProductItem component displays product details in admin panel,
+ * showing image, name, price, status, and an edit button.
+ * Clicking the edit button opens the ProductEdit dialog for this product.
+ */
 const ProductItem: React.FC<IProductItemAdminProps> = ({item}) => {
     const {id, images, name, price, discountPrice, isActive, isAvailable, currency} = item;
     const [isProductEditOpen, setIsProductEditOpen] = useState(false);
 
+    /**
+     * Opens the product edit dialog.
+     */
     const handleProductEdit = (): void => {
         setIsProductEditOpen(true);
     };

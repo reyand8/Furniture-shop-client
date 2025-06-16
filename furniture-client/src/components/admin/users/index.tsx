@@ -21,6 +21,12 @@ import { roleLabels } from '../../../common/common-items';
 import UserAdd from './user-add';
 
 
+/**
+ * Users component renders a list of users grouped by their roles in expandable accordions.
+ * Allows viewing and editing user details via dialogs.
+ *
+ * Fetches users by role when accordion expands and refreshes list on successful user update.
+ */
 const Users: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const { user: adminUser } = useSelector(selectUser);
@@ -29,21 +35,39 @@ const Users: React.FC = () => {
     const [isUserEditOpen, setIsUserEditOpen] = useState(false);
     const [expandedRole, setExpandedRole] = useState<EUserRole | false>(false);
 
-    const handleAccordionChange = (role: EUserRole) => (_: React.SyntheticEvent, isExpanded: boolean) => {
+    /**
+     * Handles accordion expand/collapse for a user role.
+     * Fetches users for the expanded role.
+     *
+     * @param {EUserRole} role - The user role corresponding to the accordion.
+     * @returns {(event: React.SyntheticEvent, isExpanded: boolean) => void} Accordion change handler.
+     */
+    const handleAccordionChange =
+        (role: EUserRole): (event: React.SyntheticEvent, isExpanded: boolean) =>
+            void => (_: React.SyntheticEvent, isExpanded: boolean) => {
         setExpandedRole(isExpanded ? role : false);
         if (isExpanded) {
             dispatch(fetchUsersRequest({ role }));
         }
     };
 
+    /**
+     * Opens the user details dialog.
+     */
     const handleUserDetails = (): void  => {
         setIsUserDetailsOpen(true);
     }
 
+    /**
+     * Opens the user edit dialog.
+     */
     const handleUserEdit = (): void  => {
         setIsUserEditOpen(true);
     }
 
+    /**
+     *  Refresh users list on successful update for the expanded role.
+     */
     useEffect((): void => {
         if (updateUserSuccess && expandedRole) {
             dispatch(fetchUsersRequest({ role: expandedRole }));
