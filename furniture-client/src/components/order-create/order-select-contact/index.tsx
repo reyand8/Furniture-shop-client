@@ -25,10 +25,23 @@ import ErrorInfo from '../../status/error';
 import ContactInfoAdd from "../../contact-info/contact-info-add";
 
 
+/**
+ * Component for selecting a contact information entry for an order.
+ *
+ * - Fetches contact info list from the server on mount.
+ * - Displays contacts with address, phone, city, and zip code.
+ * - Allows selecting one contact; shows a check icon when selected.
+ * - Dispatches selected contact ID to the Redux store.
+ * - Shows loading, empty, and error states accordingly.
+ * - Includes embedded component for adding new contact info.
+ */
 const OrderSelectContact: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const [selectedContactId, setSelectedContactId] = useState<string | null>(null);
 
+    /**
+     * Fetch contact information list when component mounts.
+     */
     useEffect((): void => {
         dispatch(fetchContactInfoRequest({ page: 1, pageSize: 40 }));
     }, [dispatch]);
@@ -38,6 +51,10 @@ const OrderSelectContact: React.FC = () => {
     const isLoading: boolean = loading;
     const isLoaded: boolean = !error && !loading;
 
+    /**
+     * Handles user selection of a contact.
+     * Updates local selected ID and Redux store.
+     */
     const handleSelect = (id: string): void => {
         setSelectedContactId(id);
         dispatch(setNewOrderContactId(id))

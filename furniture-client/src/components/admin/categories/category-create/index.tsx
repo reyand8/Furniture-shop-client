@@ -21,6 +21,13 @@ import { ICreateUpdateCategory } from '../../../../types/catalog.interface';
 import Loading from '../../../status/loading';
 
 
+/**
+ * CategoryCreate component handles the creation of a new product category.
+ *
+ * - Uses react-hook-form with Yup validation.
+ * - Displays success and error messages.
+ * - Dispatches Redux actions to create a category.
+ */
 const CategoryCreate: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const [submitError, setSubmitError] = useState<IApiError>(null);

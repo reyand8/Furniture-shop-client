@@ -17,18 +17,33 @@ import Loading from '../status/loading';
 import { addToBasket } from '../../common/utils/basket/basket';
 import noImg from '../../assets/img/noImg.png'
 
-
+/**
+ * SingleItemProduct component displays detailed information about a single product.
+ *
+ * - Shows main product image with selectable thumbnails.
+ * - Displays product name, description, size, color, category, pricing, and availability.
+ * - Allows adding the product to the basket with feedback.
+ * - Handles loading state and fallback image.
+ *
+ */
 const SingleItemProduct: React.FC<ISingleItemProductProps> = ({ item }) => {
     const [isAdded, setIsAdded] = useState(false);
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const { loadingSingle } = useSelector(selectCatalog)
 
+    /**
+     * Sets initial selected image when the item or its images change.
+     */
     useEffect((): void => {
         if (item && item.images.length > 0) {
             setSelectedImage(item.images[0]);
         }
     }, [item]);
 
+    /**
+     * Handles clicking on an image thumbnail to update selected main image.
+     * @param img - The clicked image URL.
+     */
     const handleImageClick = (img: string): void => {
         setSelectedImage(img);
     };
@@ -46,6 +61,10 @@ const SingleItemProduct: React.FC<ISingleItemProductProps> = ({ item }) => {
         isAvailable
     } = item;
 
+    /**
+     * Adds the product to the basket.
+     * Sets temporary feedback state for UI.
+     */
     const handleAddToBasket = (): void => {
         addToBasket(id);
         setIsAdded(true);

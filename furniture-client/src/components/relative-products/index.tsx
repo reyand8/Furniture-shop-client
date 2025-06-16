@@ -18,16 +18,28 @@ import { IRelativeProductsProps } from '../../types/props.interface';
 import Loading from '../status/loading';
 
 
+/**
+ * RelativeProducts component fetches and displays related products in a carousel slider.
+ *
+ * Props:
+ *  - type: string - determines the category or type of related products to fetch.
+ */
 const RelativeProducts: React.FC<IRelativeProductsProps> = ({ type }) => {
     const dispatch = useDispatch<AppDispatch>();
     const { relative, errorRelative, loadingRelative } = useSelector(selectCatalog);
 
+    /**
+     * Fetch relative products when component mounts or when `type` changes
+     */
     useEffect((): void => {
         if (type) {
             dispatch(fetchRelativeRequest({type}));
         }
     }, [dispatch, type]);
 
+    /**
+     * Memoize carousel settings based on the number of relative products
+     */
     const settings = useMemo(() => {
         return carouselSettings({ itemCount: relative?.length || 1 });
     }, [relative]);

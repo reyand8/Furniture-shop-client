@@ -18,6 +18,10 @@ import Loading from '../../status/loading';
 import ErrorInfo from '../../status/error';
 
 
+/**
+ * Products component fetches and displays a paginated list of products in admin panel.
+ * It shows loading, error, empty states, and includes pagination controls and a product add form.
+ */
 const Products: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const {
@@ -28,16 +32,25 @@ const Products: React.FC = () => {
         error,
     } = useSelector(selectCatalog);
 
+    /**
+     * Fetch products on component mount and whenever currentPage changes.
+     */
     useEffect((): void => {
         dispatch(fetchAllProductsRequest({ page: currentPage, pageSize: PAGE_SIZE_CATALOG_ADMIN }));
     }, [dispatch, currentPage]);
 
+    /**
+     * Handles clicking the next page button, dispatching a fetch if not on last page and not loading.
+     */
     const handleNextPage = useCallback((): void => {
         if (currentPage < totalPages && !loading) {
             dispatch(fetchAllProductsRequest({ page: currentPage + 1, pageSize: PAGE_SIZE_CATALOG_ADMIN }));
         }
     }, [currentPage, totalPages, dispatch, loading]);
 
+    /**
+     * Handles clicking the previous page button, dispatching a fetch if not on first page and not loading.
+     */
     const handlePrevPage = useCallback((): void => {
         if (currentPage > 1 && !loading) {
             dispatch(fetchAllProductsRequest({ page: currentPage - 1, pageSize: PAGE_SIZE_CATALOG_ADMIN }));

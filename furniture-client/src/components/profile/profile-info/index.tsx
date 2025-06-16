@@ -27,6 +27,16 @@ import ModalConfirmDelete from '../../modal-confirm-delete';
 import SubmitError from '../../submit-error';
 
 
+/**
+ * ProfileInfo component displays and allows editing
+ * of the user's profile information (first name, last name, email).
+ *
+ * - Initializes the form with current user data.
+ * - Uses react-hook-form with yup for validation.
+ * - Dispatches profile update requests to Redux store.
+ * - Handles API errors and shows success messages.
+ * - Allows profile deletion with confirmation modal.
+ */
 const ProfileInfo = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
@@ -38,6 +48,11 @@ const ProfileInfo = () => {
     const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
+    /**
+     * Effect: handle API errors and success updates.
+     * Shows error messages on failure and success message on update.
+     * Automatically clears success message after 4 seconds.
+     */
     useEffect(() => {
         if (updateError) {
             handleAuthError(updateError, setSubmitError);
@@ -52,12 +67,18 @@ const ProfileInfo = () => {
         }
     }, [updateError, updateSuccess, dispatch]);
 
+    /**
+     * Memoize default form values based on current user data
+     */
     const defaultValues = useMemo(() => ({
         firstName: user?.firstName || '',
         lastName: user?.lastName || '',
         email: user?.email || ''
     }), [user]);
 
+    /**
+     * Initialize react-hook-form with yup validation schema and default values.
+     */
     const methods = useForm<IUpdateUser>({
         resolver: yupResolver(updateProfileSchema),
         defaultValues,
@@ -65,14 +86,24 @@ const ProfileInfo = () => {
 
     const { handleSubmit, reset } = methods;
 
+    /**
+     * Reset form values when user data or defaults change.
+     */
     useEffect((): void => {
         if (user) reset(defaultValues);
     }, [user, reset, defaultValues]);
 
+    /**
+     * Opens the modal to confirm profile deletion.
+     */
     const handleDeleteClick = (): void => {
         setModalDeleteOpen(true);
     };
 
+    /**
+     * Effect: if deletion is confirmed, dispatch delete request.
+     * Close the modal and reset confirmation state afterwards.
+     */
     useEffect(() => {
         if (modalDeleteConfirm) {
             dispatch(deleteProfileRequest());
@@ -81,6 +112,10 @@ const ProfileInfo = () => {
         }
     }, [modalDeleteConfirm, dispatch, navigate]);
 
+    /**
+     * Form submit handler to dispatch profile update.
+     * Clears any previous submit errors before dispatching.
+     */
     const onSubmit: SubmitHandler<IUpdateUser> = (data: IUpdateUser): void => {
         setSubmitError(null);
         dispatch(updateProfileRequest(data));

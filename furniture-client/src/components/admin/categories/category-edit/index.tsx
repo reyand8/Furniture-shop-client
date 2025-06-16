@@ -29,6 +29,18 @@ import UserFormCheckbox from '../../../user-form/user-form-checkbox';
 import Loading from '../../../status/loading';
 
 
+/**
+ * Modal dialog component for editing an existing category.
+ *
+ * - Displays a form with fields for category name and active status.
+ * - Uses react-hook-form with Yup validation schema.
+ * - Shows success and error messages.
+ * - Dispatches Redux action to update the category.
+ *
+ * @param item - The category data to edit.
+ * @param isOpen - Controls whether the dialog is open.
+ * @param setIsOpen - Function to toggle the dialog visibility.
+ */
 const CategoryEdit: React.FC<ICategoryEditProps> = ({ item, isOpen, setIsOpen }) => {
     const dispatch = useDispatch<AppDispatch>();
     const [submitError, setSubmitError] = useState<IApiError>(null);

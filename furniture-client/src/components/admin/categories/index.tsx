@@ -23,6 +23,14 @@ import Loading from '../../status/loading';
 import ErrorInfo from '../../status/error';
 
 
+/**
+ * Admin panel component for managing product categories.
+ *
+ * - Fetches and displays active and inactive categories.
+ * - Allows adding a new category via the `CategoryAdd` component.
+ * - Allows editing a category using a modal (`CategoryEdit`).
+ * - Shows loading and error states appropriately.
+ */
 const Categories: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const { categories, loadingCategories, errorCategories } = useSelector(selectCatalog);

@@ -20,6 +20,11 @@ import { handleAuthError } from '../../../../common/utils/error-handler/authErro
 import { IRegister } from '../../../../types/authUser.interface';
 
 
+/**
+ * UserCreate component for admin to create a new user.
+ * Uses react-hook-form with yup validation.
+ * Shows server-side errors and success messages.
+ */
 const UserCreate: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const [submitError, setSubmitError] = useState<IApiError>(null);
@@ -33,12 +38,20 @@ const UserCreate: React.FC = () => {
 
     const { handleSubmit, reset } = methods;
 
+    /**
+     * Effect runs when registerUserError changes.
+     * Handles server errors by setting submitError state.
+     */
     useEffect((): void => {
         if (registerUserError) {
             handleAuthError(registerUserError, setSubmitError);
         }
     }, [registerUserError]);
 
+    /**
+     * Effect runs when registerUserSuccess changes.
+     * Shows success message, resets form, and clears Redux success state.
+     */
     useEffect((): void => {
         if (registerUserSuccess) {
             setShowSuccessMessage(true);
@@ -47,6 +60,12 @@ const UserCreate: React.FC = () => {
         }
     }, [registerUserSuccess, dispatch, reset]);
 
+    /**
+     * Form submission handler.
+     * Clears previous error and dispatches registration request action.
+     *
+     * @param {IRegister} data - Form data for user registration
+     */
     const onSubmit = (data: IRegister): void => {
         setSubmitError(null);
         dispatch(registerUserByAdminRequest(data));

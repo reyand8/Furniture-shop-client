@@ -53,6 +53,11 @@ import {
 
 const { FAILED } = SERVER_RESPONSE_ERROR_MESSAGES;
 
+/**
+ * Fetch all products based on query parameters.
+ *
+ * @param action - Redux action with product query params.
+ */
 function* fetchAllProducts(action: PayloadAction<IProductQueryParams>) {
     try {
         const response: IAllProductsResponse = yield call(getAllProductsApi, action.payload);
@@ -62,6 +67,11 @@ function* fetchAllProducts(action: PayloadAction<IProductQueryParams>) {
     }
 }
 
+/**
+ * Fetch multiple products by their IDs.
+ *
+ * @param action - Redux action with array of product IDs.
+ */
 function* fetchProductsByIds(action: PayloadAction<{ ids: string[] }>) {
     try {
         const response: IProduct[] = yield call(getAllProductsByIdsApi, action.payload.ids);
@@ -71,6 +81,11 @@ function* fetchProductsByIds(action: PayloadAction<{ ids: string[] }>) {
     }
 }
 
+/**
+ * Fetch a single product by ID.
+ *
+ * @param action - Redux action with product ID as string.
+ */
 function* fetchSingleProduct(action: PayloadAction<string>) {
     try {
         const response: IProduct = yield call(getSingleProductApi, action.payload);
@@ -80,6 +95,11 @@ function* fetchSingleProduct(action: PayloadAction<string>) {
     }
 }
 
+/**
+ * Update an existing product.
+ *
+ * @param action - Redux action with product ID and updated product data.
+ */
 function* updateProduct(action: PayloadAction<{ data: IProduct, id: string }>) {
     try {
         const response: IProduct = yield call(updateProductApi, {
@@ -92,6 +112,11 @@ function* updateProduct(action: PayloadAction<{ data: IProduct, id: string }>) {
     }
 }
 
+/**
+ * Fetch products related to a certain type.
+ *
+ * @param action - Redux action with type string.
+ */
 function* fetchRelativeProducts(action: PayloadAction<{ type: string }>) {
     try {
         const response: IProduct[] = yield call(getRelativeProductsApi, action.payload.type);
@@ -101,6 +126,9 @@ function* fetchRelativeProducts(action: PayloadAction<{ type: string }>) {
     }
 }
 
+/**
+ * Fetch bestSeller products.
+ */
 function* fetchBestSellerProducts() {
     try {
         const response: IProduct[] = yield call(getBestSellerProductsApi);
@@ -110,6 +138,11 @@ function* fetchBestSellerProducts() {
     }
 }
 
+/**
+ * Search products by query string.
+ *
+ * @param action - Redux action with search query.
+ */
 function* fetchProductsBySearchQuery(action: PayloadAction<string>) {
     try {
         const response: IProduct[] = yield call(getProductsBySearchQueryApi, action.payload);
@@ -119,6 +152,9 @@ function* fetchProductsBySearchQuery(action: PayloadAction<string>) {
     }
 }
 
+/**
+ * Fetch all available product categories.
+ */
 function* fetchCategories() {
     try {
         const response: ICategory[] = yield call(getCategoriesApi);
@@ -128,6 +164,11 @@ function* fetchCategories() {
     }
 }
 
+/**
+ * Create a new category.
+ *
+ * @param action - Redux action with new category data.
+ */
 function* createCategory(action: PayloadAction<{ data: ICreateUpdateCategory }>) {
     try {
         const response: ICategory = yield call(createCategoryApi, action.payload.data);
@@ -137,6 +178,11 @@ function* createCategory(action: PayloadAction<{ data: ICreateUpdateCategory }>)
     }
 }
 
+/**
+ * Update an existing category.
+ *
+ * @param action - Redux action with category ID and updated data.
+ */
 function* updateCategories(action: PayloadAction<{ data: ICreateUpdateCategory, id: string }>) {
     try {
         const response: ICategory = yield call(updateCategoryApi, {
@@ -149,6 +195,11 @@ function* updateCategories(action: PayloadAction<{ data: ICreateUpdateCategory, 
     }
 }
 
+/**
+ * Create a new product.
+ *
+ * @param action - Redux action with new product data.
+ */
 function* createProduct(action: PayloadAction<ICreateProduct>) {
     try {
         const response: IProduct = yield call(createProductApi, action.payload);
@@ -158,6 +209,10 @@ function* createProduct(action: PayloadAction<ICreateProduct>) {
     }
 }
 
+/**
+ * Root saga for catalog slice.
+ * Watches for all catalog-related actions and delegates to appropriate sagas.
+ */
 export function* catalogSaga() {
     yield takeLatest(fetchAllProductsRequest.type, fetchAllProducts);
     yield takeLatest(createProductRequest.type, createProduct);

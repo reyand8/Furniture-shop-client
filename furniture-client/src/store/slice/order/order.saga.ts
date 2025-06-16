@@ -33,6 +33,9 @@ import {
 
 const { FAILED } = SERVER_RESPONSE_ERROR_MESSAGES;
 
+/**
+ * Fetches all orders from the API.
+ */
 function* fetchAllOrders() {
     try {
         const response: IExistedOrder[] = yield call(getOrdersApi);
@@ -42,6 +45,9 @@ function* fetchAllOrders() {
     }
 }
 
+/**
+ * Fetches orders grouped by status for admin from the API.
+ */
 function* fetchOrdersByAdmin() {
     try {
         const data: IOrdersGroupedByStatus = yield call(getOrdersByAdminApi);
@@ -51,6 +57,10 @@ function* fetchOrdersByAdmin() {
     }
 }
 
+/**
+ * Creates a new order using provided data.
+ * @param action - Contains order creation data.
+ */
 function* createOrder(action: PayloadAction<ICreateOrder>) {
     try {
         const response: IExistedOrder = yield call(createOrderApi, action.payload);
@@ -60,6 +70,10 @@ function* createOrder(action: PayloadAction<ICreateOrder>) {
     }
 }
 
+/**
+ * Updates the status of an existing order by ID.
+ * @param action - Contains updated status data and order ID.
+ */
 function* updateOrderStatus(action: PayloadAction<{ data: IUpdateOrderStatusApi, id: string }>) {
     try {
         const response: IExistedOrder = yield call(updateOrderStatusApi, action.payload);
@@ -69,10 +83,12 @@ function* updateOrderStatus(action: PayloadAction<{ data: IUpdateOrderStatusApi,
     }
 }
 
+/**
+ * Root saga that watches for order-related actions and triggers worker sagas.
+ */
 export function* orderSaga() {
     yield takeLatest(fetchOrdersRequest.type, fetchAllOrders);
     yield takeLatest(fetchOrdersByAdminRequest.type, fetchOrdersByAdmin);
     yield takeLatest(createOrderRequest.type, createOrder);
     yield takeLatest(updateOrderStatusRequest.type, updateOrderStatus);
-
 }

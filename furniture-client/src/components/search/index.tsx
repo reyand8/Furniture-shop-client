@@ -22,6 +22,15 @@ import {
 import { IProduct } from '../../types/catalog.interface';
 
 
+/**
+ * Search component with autocomplete functionality.
+ *
+ * - Displays a search input field.
+ * - Dispatches search requests with debounce.
+ * - Shows search results in a dropdown.
+ * - Navigates to the selected product page on item click.
+ * - Clears results when clicking outside the component.
+ */
 const Search: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
@@ -30,6 +39,11 @@ const Search: React.FC = () => {
     const { searchResults, loading } = useSelector((state: RootState) => state.catalog);
     const containerRef = useRef<HTMLDivElement>(null);
 
+    /**
+     * Effect to debounce the search input.
+     * Triggers a search request if input length > 1 after 500ms delay.
+     * Clears search results if input is too short.
+     */
     useEffect(() => {
         const delayDebounce = setTimeout(() => {
             if (inputValue.trim().length > 1) {
@@ -41,6 +55,10 @@ const Search: React.FC = () => {
         return (): void => clearTimeout(delayDebounce);
     }, [inputValue, dispatch]);
 
+    /**
+     * Effect to handle clicks outside the search component.
+     * Closes the search results dropdown and clears results on outside click.
+     */
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent): void => {
             if (
@@ -57,11 +75,21 @@ const Search: React.FC = () => {
         };
     }, [dispatch]);
 
+    /**
+     * Handles input value changes.
+     * Updates the input state and sets the anchor element for the Popper.
+     * @param event - The change event from the input.
+     */
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         setInputValue(event.target.value);
         setAnchorEl(event.currentTarget);
     };
 
+    /**
+     * Handles click on a search result item.
+     * Navigates to the product detail page, clears search results, and closes the dropdown.
+     * @param item - The selected product item.
+     */
     const handleItemClick = (item: IProduct): void => {
         navigate(`/single-product/${item.id}`);
         setInputValue(item.name);

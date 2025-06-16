@@ -28,16 +28,31 @@ import Empty from '../status/empty';
 import noImg from '../../assets/img/noImg.png'
 
 
+/**
+ * Shopping basket component that displays items added by the user.
+ *
+ * Allows modifying item quantities, removing items, and proceeding to create an order.
+ * Synchronizes basket state with localStorage and fetches full product data by IDs.
+ */
 const BasketInfo: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const { productsByIds, loading, error } = useSelector(selectCatalog);
     const [basket, setBasket] = useState<IBasketItem[]>([]);
 
+    /**
+     * Load basket items from localStorage on mount and dispatch product fetching by IDs.
+     */
     useEffect((): void => {
         loadBasketFromStorage(dispatch, setBasket);
     }, [dispatch]);
 
+    /**
+     * Increment quantity of a basket item by ID.
+     * Updates localStorage and local state.
+     *
+     * @param {string} id - Product ID
+     */
     const handleIncrement = useCallback((id: string): void => {
         const updated: IBasketItem[] = basket.map((item) =>
             item.id === id ? { ...item, quantity: item.quantity + 1 } : item
@@ -45,6 +60,11 @@ const BasketInfo: React.FC = () => {
         saveBasketToStorage(updated, setBasket);
     }, [basket]);
 
+    /**
+     * Decrement quantity of a basket item by ID (not below 1).
+     *
+     * @param {string} id - Product ID
+     */
     const handleDecrement = useCallback((id: string): void => {
         const updated: IBasketItem[] = basket.map((item: IBasketItem ): IBasketItem =>
             item.id === id && item.quantity > 1 ? { ...item, quantity: item.quantity - 1 } : item
@@ -52,6 +72,12 @@ const BasketInfo: React.FC = () => {
         saveBasketToStorage(updated, setBasket);
     }, [basket]);
 
+    /**
+     * Remove a product from the basket by ID.
+     * Updates both localStorage and Redux product data.
+     *
+     * @param {string} id - Product ID
+     */
     const handleDelete = useCallback((id: string): void => {
         const updated: IBasketItem[] = basket.filter((item: IBasketItem): boolean => item.id !== id);
         saveBasketToStorage(updated, setBasket);
@@ -59,17 +85,27 @@ const BasketInfo: React.FC = () => {
         dispatch(fetchProductsByIdsRequest({ ids: updatedIds }));
     }, [basket, dispatch]);
 
+    /**
+     * Merges stored basket data with fetched product info (images, price, etc).
+     * Filters out products with quantity 0.
+     */
     const productsWithQuantity: IBasketDetailedItem[] = useMemo(() => {
         return mergeProductsWithQuantities(productsByIds, basket)
             .filter(product => product.quantity > 0);
     }, [productsByIds, basket]);
 
+    /**
+     * Calculates the total price of the basket.
+     */
     const totalPrice: number = useMemo(() => {
         return productsWithQuantity.reduce(
             (acc, product) =>
                 acc + product.price * product.quantity, 0);
     }, [productsWithQuantity]);
 
+    /**
+     * Navigate to the order creation page if the basket is not empty.
+     */
     const handleCreateOrder = (): void => {
         if (productsWithQuantity.length > 0) {
             navigate(PATHS.CREATE_ORDER);

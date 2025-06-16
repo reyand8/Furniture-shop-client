@@ -15,13 +15,28 @@ import {
 } from '../../../styles/DialogDetails.styles';
 
 
+/**
+ * OrderItem component displays a summary of a single order.
+ *
+ * - Shows basic order details such as status, payment info, total, and date
+ * - Opens a modal dialog with full details on button click
+ *
+ * Props:
+ * - item: the order item to be displayed
+ */
 const OrderItem: React.FC<IOrderItemProps> = ({item}) => {
     const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
 
+    /**
+     * Opens the order details modal
+     */
     const handleDetailsClick = (): void => {
         setIsDetailsModalOpen(true);
     };
 
+    /**
+     * Formats the created date to a readable string (MM/DD/YYYY)
+     */
     const dateOnly: string = new Date(item.createdAt).toLocaleDateString('en-US');
 
     const { status, paymentStatus, paymentMethod, totalAmount} = item;

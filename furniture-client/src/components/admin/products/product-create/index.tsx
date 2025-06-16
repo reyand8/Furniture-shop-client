@@ -13,8 +13,11 @@ import { productCreateSchema } from '../../../../common/utils/validation/catalog
 import { useProductForm } from '../../../../common/utils/products/useProductForm';
 import { ICreateProduct } from "../../../../types/catalog.interface";
 
-
-
+/**
+ * ProductCreate component handles the creation of new products.
+ * It provides a form with validation, submits data to the store,
+ * and manages UI states like loading, success, and errors.
+ */
 const ProductCreate: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const {
@@ -38,12 +41,18 @@ const ProductCreate: React.FC = () => {
         loadingCreateProduct,
     } = useSelector(selectCatalog);
 
+    /**
+     * Set default category when categories are loaded
+     */
     useEffect(() => {
         if (categories.length > 0) {
             setValue('categoryId', categories[0].id);
         }
     }, [categories, setValue]);
 
+    /**
+     * Reset form and close modal on successful product creation
+     */
     useEffect(() => {
         if (successCreateProduct) {
             handleClose();
@@ -51,10 +60,17 @@ const ProductCreate: React.FC = () => {
         }
     }, [successCreateProduct]);
 
+    /**
+     * Handle errors during product creation
+     */
     useEffect(() => {
         handleError(errorCreateProduct);
     }, [errorCreateProduct]);
 
+    /**
+     * Handle form submit event
+     * @param {ICreateProduct} data - The product data submitted by the form
+     */
     const onSubmit: SubmitHandler<any> = (data) => {
         setSubmitError(null);
         dispatch(createProductRequest(data));

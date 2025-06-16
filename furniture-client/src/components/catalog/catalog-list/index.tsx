@@ -14,6 +14,15 @@ import Pagination from '../../pagination';
 import Empty from '../../status/empty';
 
 
+/**
+ * CatalogList component displays a paginated list of products based on
+ * selected filters (category, price range).
+ *
+ * - Fetches product data on mount and on filter/page changes
+ * - Handles pagination with next/previous page actions
+ * - Displays loading, error, empty states accordingly
+ * - Shows products in a styled list with pagination controls
+ */
 const CatalogList: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const {
@@ -29,6 +38,9 @@ const CatalogList: React.FC = () => {
         maxPrice,
     };
 
+    /**
+     * Fetch products whenever filters or page changes.
+     */
     useEffect((): void => {
         dispatch(fetchAllProductsRequest({
             page: currentPage,
@@ -36,6 +48,9 @@ const CatalogList: React.FC = () => {
         }));
     }, [dispatch, selectedCategory, minPrice, maxPrice, currentPage]);
 
+    /**
+     * Handle moving to the next page if available and not loading.
+     */
     const handleNextPage = useCallback((): void => {
         if (currentPage < totalPages && !loading) {
             dispatch(fetchAllProductsRequest({
@@ -45,6 +60,9 @@ const CatalogList: React.FC = () => {
         }
     }, [currentPage, totalPages, dispatch, selectedCategory, minPrice, maxPrice, loading]);
 
+    /**
+     * Handle moving to the previous page if available and not loading.
+     */
     const handlePrevPage = useCallback((): void => {
         if (currentPage > 1 && !loading) {
             dispatch(fetchAllProductsRequest({
@@ -62,7 +80,6 @@ const CatalogList: React.FC = () => {
             {loading && <Loading />}
             {isEmpty && <Empty />}
             {error && <ErrorInfo />}
-
             {hasData && (
                 <CatalogDataBox>
                     <CatalogProductsBox>

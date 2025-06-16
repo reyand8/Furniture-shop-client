@@ -27,11 +27,23 @@ import SubmitError from '../../submit-error';
 import theme from '../../../assets/theme';
 
 
+/**
+ * ContactInfoEdit component renders a modal dialog with a contact info edit form.
+ *
+ * - Displays input fields grouped in two columns
+ * - Populates fields with `item` data passed as props
+ * - Handles form validation and submission via react-hook-form + yup
+ * - Handles Redux async actions for updating contact info
+ * - Displays errors and closes modal on success
+ */
 const ContactInfoEdit: React.FC<IContactInfoEditProps> = ({ item, modalEditOpen, setModalEditOpen }) => {
     const dispatch = useDispatch<AppDispatch>();
     const [submitError, setSubmitError] = useState<IApiError>(null);
     const { updateError, updateSuccess } = useSelector(selectContactInfo);
 
+    /**
+     * Close the modal and clear all related errors and success states.
+     */
     const handleClose = useCallback(() => {
         dispatch(clearUpdateError());
         setModalEditOpen(false);
@@ -55,6 +67,9 @@ const ContactInfoEdit: React.FC<IContactInfoEditProps> = ({ item, modalEditOpen,
 
     const { handleSubmit, reset } = methods;
 
+    /**
+     * Handle API error on update by setting local submitError state.
+     */
     useEffect((): void => {
         if (updateError) {
             handleAuthError(updateError, setSubmitError);
@@ -62,16 +77,26 @@ const ContactInfoEdit: React.FC<IContactInfoEditProps> = ({ item, modalEditOpen,
         }
     }, [updateError]);
 
+    /**
+     * Close the modal if the update is successful and no error occurred.
+     */
     useEffect((): void => {
         if (updateSuccess && !updateError) {
             handleClose();
         }
     }, [updateSuccess, updateError, handleClose]);
 
+    /**
+     * Reset form fields whenever the provided item changes.
+     */
     useEffect((): void => {
         reset(item);
     }, [item, reset]);
 
+    /**
+     * Handle form submission by filtering valid fields
+     * and dispatching the update request to Redux.
+     */
     const onSubmit = (data: IUpdateContactInfo): void => {
         const formFieldNames: string[] = [
             ...contactFieldsFirstColumn.map(field => field.name),

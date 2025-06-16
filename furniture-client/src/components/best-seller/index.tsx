@@ -19,32 +19,54 @@ import {
 import { carouselSettings } from '../../common/utils/carousel-settings';
 
 
+/**
+ * Component for displaying a carousel of best-selling products.
+ *
+ * - Fetches data from Redux store
+ * - Allows filtering products by category
+ * - Displays filtered products in a carousel slider
+ */
 const BestSeller = () => {
     const dispatch = useDispatch<AppDispatch>();
     const { bestSellers, loading, error } = useSelector(selectCatalog);
 
     const [selectedCategory, setSelectedCategory] = useState('');
 
+    /**
+     * Extract unique product categories from best sellers.
+     */
     const categories: string[] = useMemo((): string[] => {
         const uniqueCategories = new Set(bestSellers.map((item: IProduct) =>
             item.category.name));
         return Array.from(uniqueCategories);
     }, [bestSellers]);
 
+    /**
+     * On component mount, fetch best-selling products.
+     */
     useEffect((): void => {
         dispatch(fetchBestSellersRequest());
     }, [dispatch]);
 
+    /**
+     * Set the first category as default selected if none is selected.
+     */
     useEffect((): void => {
         if (categories.length > 0 && !selectedCategory) {
             setSelectedCategory(categories[0]);
         }
     }, [categories, selectedCategory]);
 
+    /**
+     * Filter products by the currently selected category.
+     */
     const filteredItems: IProduct[] = useMemo((): IProduct[] => {
         return bestSellers.filter((item: IProduct): boolean => item.category.name === selectedCategory);
     }, [bestSellers, selectedCategory]);
 
+    /**
+     * Get carousel settings based on number of visible items.
+     */
     const settings = useMemo(() => {
         return carouselSettings({ itemCount: filteredItems.length });
     }, [filteredItems]);

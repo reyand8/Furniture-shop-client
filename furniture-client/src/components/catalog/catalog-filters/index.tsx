@@ -25,6 +25,15 @@ import { ICategory } from '../../../types/catalog.interface';
 import {DEFAULT_MAX_FILTER, DEFAULT_MIN_FILTER, DEFAULT_RANGE_FILTER} from "../../../common/common-items";
 
 
+/**
+ * CatalogFilters component provides UI for filtering products by category and price.
+ *
+ * - Fetches available categories on mount
+ * - Allows selecting one category via checkbox
+ * - Allows selecting a price range using a slider
+ * - Applies filters and fetches products from the Redux store
+ * - Supports resetting filters to default values
+ */
 const CatalogFilters: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
 
@@ -43,20 +52,36 @@ const CatalogFilters: React.FC = () => {
         ? [Math.min(localPriceRange[0] ?? 0, localPriceRange[1] ?? 0),
             Math.max(localPriceRange[0] ?? 0, localPriceRange[1] ?? 0)] : [0, 0];
 
+    /**
+     * Fetch product categories from the store on component mount.
+     */
     useEffect((): void => {
         dispatch(fetchCategoriesRequest());
     }, [dispatch]);
 
+    /**
+     * Handle change of category checkbox.
+     * Sets local selected category based on checkbox state.
+     */
     const handleCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setLocalCategory(event.target.checked ? event.target.value : null);
     };
 
+    /**
+     * Handle slider value change for price range.
+     * Updates the local price range state.
+     */
     const handlePriceRangeChange = (_: Event, newValue: number | number[]) => {
         if (Array.isArray(newValue) && newValue.length > 0) {
             setLocalPriceRange([newValue[0], newValue[1]]);
         }
     };
 
+    /**
+     * Apply selected filters:
+     * - Updates filters in Redux store
+     * - Dispatches product fetch with filter params
+     */
     const applyFilters = useCallback((category: string | null, range: [number, number]) => {
         dispatch(setFilters({
             selectedCategory: category,
@@ -73,16 +98,22 @@ const CatalogFilters: React.FC = () => {
         }));
     }, [dispatch]);
 
+    /**
+     * Trigger filter application based on current local state.
+     */
     const handleFilterClick = () => {
         applyFilters(localCategory, localPriceRange);
     };
 
+    /**
+     * Reset filters to default category and price range.
+     * Applies default filters via dispatch.
+     */
     const handleResetClick = () => {
         setLocalCategory(null);
         setLocalPriceRange(DEFAULT_RANGE_FILTER);
         applyFilters(null, DEFAULT_RANGE_FILTER);
     };
-
 
     return (
         <FiltersBox>

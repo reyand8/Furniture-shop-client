@@ -20,12 +20,24 @@ import Header from '../../components/header';
 import SubmitError from '../../components/submit-error';
 
 
+/**
+ * SignUp component renders the user registration form and handles sign-up process.
+ *
+ * - Uses react-hook-form with Yup schema validation for input validation.
+ * - Dispatches register request on form submission.
+ * - Displays API errors via custom error handler.
+ * - Redirects to profile page on successful registration.
+ * - Includes navigation link to Sign In page.
+ */
 const SignUp: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const { error, accessToken } = useSelector(selectAuthUser);
     const [submitError, setSubmitError] = useState<IApiError>(null);
 
+    /**
+     * Effect to handle API errors and redirect when user is registered successfully.
+     */
     useEffect((): void => {
         if (error) {
             handleAuthError(error, setSubmitError);
@@ -42,6 +54,10 @@ const SignUp: React.FC = () => {
 
     const { handleSubmit } = methods;
 
+    /**
+     * Handles form submission by dispatching register request.
+     * @param data - Registration form data.
+     */
     const onSubmit = (data: IRegister): void => {
         setSubmitError(null);
         dispatch(registerRequest(data));

@@ -13,6 +13,11 @@ import { finishSession, selectUser } from '../../../store/slice/user/user.slice'
 import { profileMenuAdminItems }  from '../profile-menu-admin-items';
 
 
+/**
+ * ProfileMenu component renders the user profile navigation menu.
+ * It displays menu items based on the user's role (admin or regular user).
+ * Supports logout functionality and navigation to different profile-related pages.
+ */
 const ProfileMenu: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
@@ -22,6 +27,11 @@ const ProfileMenu: React.FC = () => {
 
     const isAdmin: boolean = user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN';
 
+    /**
+     * Handles click events on menu items.
+     * - Logs out and finishes session if "Logout" is clicked.
+     * - Navigates to the item's path otherwise.
+     */
     const handleMenuClick = (item: IProfileMenuItems): void => {
         const { path, label } = item;
         if (label === 'Logout') {

@@ -27,12 +27,24 @@ import Header from '../../components/header';
 import SubmitError from '../../components/submit-error';
 
 
+/**
+ * SignIn component renders the login form and handles user authentication.
+ *
+ * - Uses react-hook-form with Yup schema validation for form inputs.
+ * - Dispatches login request on form submission.
+ * - Displays API errors using custom error handler.
+ * - Redirects to profile page on successful login.
+ * - Includes navigation link to Sign Up page.
+ */
 const SignIn: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const { error, accessToken } = useSelector(selectAuthUser);
     const [submitError, setSubmitError] = useState<IApiError>(null);
 
+    /**
+     * Effect to handle API errors and redirect on successful login.
+     */
     useEffect((): void => {
         if (error) {
             handleAuthError(error, setSubmitError);
@@ -49,7 +61,10 @@ const SignIn: React.FC = () => {
 
     const { handleSubmit } = methods;
 
-
+    /**
+     * Handles form submit by dispatching login request.
+     * @param data - Login form data (email and password).
+     */
     const onSubmit = (data: ILogin): void => {
         setSubmitError(null);
         dispatch(loginRequest(data));

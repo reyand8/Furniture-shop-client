@@ -27,6 +27,18 @@ import { EOrderStatus, IUpdateOrderStatusApi } from '../../../../types/order.int
 import Loading from '../../../status/loading';
 
 
+/**
+ * A dialog form component for editing the status of an order.
+ *
+ * @component
+ * @param {ICategoryEditProps} props - Props including the order item, modal state, and toggle handler.
+ *
+ * Features:
+ * - Displays a modal with a select field for updating the order status.
+ * - Uses `react-hook-form` with `yup` validation.
+ * - Dispatches Redux actions to update the order and handles success/error states.
+ * - Resets form on open and closes on success.
+ */
 const OrderEdit: React.FC<IOrderStatusEditProps> = ({ item, isOpen, setIsOpen }) => {
     const dispatch = useDispatch<AppDispatch>();
     const [submitError, setSubmitError] = useState<IApiError>(null);
